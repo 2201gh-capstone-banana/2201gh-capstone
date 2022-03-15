@@ -20,6 +20,7 @@
 11. Use tensorflow to track movement in the air to paint
    * Tensorflow, web
    * once a day you're asked to paint something, and that is sent to your group of friends. Each friend has to vote on what they think you drew, and you get points depending on 
+12. Game where you try to determine if you're talking to a chatbot or a person
 
 # Team Norms
 
