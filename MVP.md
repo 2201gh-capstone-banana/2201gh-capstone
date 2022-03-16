@@ -32,42 +32,31 @@ Michael has been watching a TV show that includes characters who exclusively use
 ## Tier 1
 # As a user, I want to be able to:
 * As a user, I want to be able to:
- * As a visitor:
- * Sign up as a user
-  * Name (first and last), email, phone number, camera accessibility
- * Login if your account has already been created
- * Will see demo video on homepage so they know what they're signing up for
- * See a header with Routes to Login, Signup, Home, About
- * See a nice logo :)
-* As a logged in visitor:  
- * See a header with Routes to Logout, Home, About, Translate, Lessons
- * See a nice logo :)
- * Can accept or deny access to webcam, if user has already accepted webcam access they don't have to re-accept
- * Put something in local storage that says we have access to this webcam.
- * Can sign 3 phrases(we'll decide those later) and those phrases will be translated on the same page
- * Users will be able to tell when the computer can track their hands, camera was able to pop up because the hand was in the camera view
+  * *As a visitor:*
+    * Sign up as a user
+       * Name (first and last), email, phone number, camera accessibility
+    * Login if your account has already been created
+    * Will see demo video on homepage so they know what they're signing up for
+    * See a header with Routes to Login, Signup, Home, About
+    * See a nice logo :)
+   * *As a logged in visitor:*  
+     * See a header with Routes to Logout, Home, About, Translate, Lessons
+     * See a nice logo :)
+     * Can accept or deny access to webcam, if user has already accepted webcam access they don't have to re-accept
+     * Put something in local storage that says we have access to this webcam.
+     * Can sign 3 phrases(we'll decide those later) and those phrases will be translated on the same page
+     * Users will be able to tell when the computer can track their hands, camera was able to pop up because the hand was in the camera view
 
 * As an engineer, I want to:
- * Ensure User data is secure so no one can access or manipulate user information
- * have a well-seeded database so that I am able to simulate a number of different scenarios for the user stories
-
-## As an engineer, I want to:
-* Ensure User data is secure so no one can access or manipulate user information
-* have a well-seeded database so that I am able to simulate a number of different scenarios for the user stories
+   * Ensure User data is secure so no one can access or manipulate user information
+   * have a well-seeded database so that I am able to simulate a number of different scenarios for the user stories
 
 ## Tier 2
 * Add more sign language, especially more complicated sign language (sign language with movement, both hands, etc.)
 * navigate the website successfully, in a way that is accessible and inclusive.
- * This is a great opportunity to dive into ADA Compliance (screen-reader friendliness, keyboard navigation, colorblind-friendly, etc.).
-  * [A11y Checklist](https://www.a11yproject.com/checklist/)
-
+  * This is a great opportunity to dive into ADA Compliance (screen-reader friendliness, keyboard navigation, colorblind-friendly, etc.).
+    * [A11y Checklist](https://www.a11yproject.com/checklist/)
 
 ## Tier 3
 * We want to attempt to get this working in a React Native mobile app
 * A lesson plan for users who are signed up with the app (like RedPanda)
-
-
-Quesetions for our instructors:
-Seeking advice on what models to use, especially when we might want to include movement of hands at some point
-
-
