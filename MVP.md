@@ -30,7 +30,6 @@ Michael has been watching a TV show that includes characters who exclusively use
 * Heroku
 
 ## Tier 1
-# As a user, I want to be able to:
 * As a user, I want to be able to:
   * *As a visitor:*
     * Sign up as a user
