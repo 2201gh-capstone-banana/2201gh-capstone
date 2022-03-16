@@ -1,4 +1,4 @@
-# MVP 
+# <p align="center"> MVP </p>
 
 ## Intro & Goal
 The problem: Approximately 250,000-500,000 Americans (and some Canadians) use American Sign Language, yet we at Be My Voice believe that number should be higher. Our goal is to make American Sign Language accessible to those who have not yet been exposed to this language and to use these translations to increase knowledge and understanding of ASL. 
