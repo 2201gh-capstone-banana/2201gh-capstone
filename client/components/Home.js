@@ -80,12 +80,10 @@ export const Home = (props) => {
       } else {
         return;
       }
-      console.log("canvasRef", canvasRef);
-      webcam = new tmImage.Webcam(200, 200, true);
-      await webcam.setup(); // request access to the webcam
-      await webcam.play();
-      console.log("webcam--", webcam);
-      let prediction = await model.predict(webcam.webcam);
+      // if (hand.length === 0) {
+      //   setTranslation[null];
+
+      let prediction = await model.predict(video);
       console.log("PREDICTION-----", prediction);
 
       //-------
@@ -93,19 +91,29 @@ export const Home = (props) => {
         const probability = prediction.map(
           (prediction) => prediction.probability
         );
-
+        console.log(probability);
         const maxPro = probability.indexOf(Math.max.apply(null, probability));
-        console.log("MAXPRO", maxPro);
 
-        console.log("gestures name is -", prediction[maxPro].name);
-        setTranslation(prediction[maxPro].className);
-        console.log("TRANSLATION---", translation);
+        if (prediction[maxPro].probability > 0.9) {
+          setTranslation(prediction[maxPro].className);
+        } else {
+          setTranslation(null);
+        }
+        // console.log("gestures name is -", prediction[maxPro].name);
+
+        // console.log("TRANSLATION---", translation);
         // setEmoji(gesture.gestures[maxScore].name);
 
         // console.log("EMOJI", emoji);
       } else {
         return;
       }
+      /*
+      
+      
+      
+      */
+
       //-------
       // for (let i = 0; i < maxPredictions; i++) {
       //   const classPrediction =
@@ -117,7 +125,10 @@ export const Home = (props) => {
       drawHand(hand, ctx);
     }
   }
-  useEffect(() => {loadModel() }, [])
+  useEffect(() => { loadModel() }, [])
+  //only happens when you load the model
+  //state/
+  //use effect will update everytime that state changes
   // const { username } = props;
 
   return (
