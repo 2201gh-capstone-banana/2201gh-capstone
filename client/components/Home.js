@@ -3,14 +3,16 @@ import { connect } from "react-redux";
 import * as tf from "@tensorflow/tfjs";
 import * as tmImage from "@teachablemachine/image";
 import Webcam from "react-webcam";
-//import { drawHand } from "./utilities";
+import { drawHand } from "./utilities";
+import * as handpose from "@tensorflow-models/handpose";
+import * as fp from "fingerpose";
 /**
  * COMPONENT
  */
 
 export const Home = (props) => {
   const webcamRef = useRef(null);
-  // const canvasRef = useRef(null);
+  const canvasRef = useRef(null);
 
   const URL = "https://teachablemachine.withgoogle.com/models/HBBfwFtF-/";
 
@@ -20,15 +22,18 @@ export const Home = (props) => {
   const metadataURL = URL + "metadata.json";
   const loadModel = async () => {
     const model = await tmImage.load(checkpointURL, metadataURL);
-    console.log("model-----", model);
+    console.log("model-----hi", model);
+    console.log("hi");
+    const net = await handpose.load();
+    console.log("net", net);
     setInterval(() => {
-      detect(model);
+      detect(model, net);
     }, 3000);
   };
 
   //Loop and detect hands
 
-  async function detect(model) {
+  async function detect(model, net) {
     // predict can take in an image, video or canvas html element
     // let prediction; what is this?
     if (
@@ -45,18 +50,50 @@ export const Home = (props) => {
       webcamRef.current.video.width = videoWidth;
       webcamRef.current.video.height = videoHeight;
 
-      // Set canvas height and width
-      // canvasRef.current.width = videoWidth;
-      // canvasRef.current.height = videoHeight;
+      //  Set canvas height and width
+      canvasRef.current.width = videoWidth;
+      canvasRef.current.height = videoHeight;
+      //make detections for hand
+      const hand = await net.estimateHands(video);
+      console.log("hand", hand);
 
-      let prediction = await model.predict(webcamRef);
+      //make detections for hands and finger gestures
+      if (hand.length > 0) {
+        const gestureEstimator = new fp.GestureEstimator([
+          // fp.Gestures.VictoryGesture,
+          fp.Gestures.ThumbsUpGesture,
+        ]);
+
+        // 8 is the confidence level
+        const gesture = await gestureEstimator.estimate(hand[0].landmarks, 8);
+        if (gesture.gestures && gesture.gestures.length > 0) {
+          const score = gesture.gestures.map((prediction) => prediction.score);
+
+          const maxScore = score.indexOf(Math.max.apply(null, score));
+
+          console.log("gestures name is -", gesture.gestures[maxScore].name);
+          // setEmoji(gesture.gestures[maxScore].name);
+
+          // console.log("EMOJI", emoji);
+        }
+      } else {
+        return;
+      }
+      console.log("canvasRef", canvasRef);
+      webcam = new tmImage.Webcam(200, 200, true);
+      await webcam.setup(); // request access to the webcam
+      await webcam.play();
+      console.log("webcam--", webcam);
+      let prediction = await model.predict(webcam.webcam);
       console.log("PREDICTION-----", prediction);
       // for (let i = 0; i < maxPredictions; i++) {
-      //     const classPrediction =
-      //         prediction[i].className + ': ' + prediction[i].probability.toFixed(2);
-      //     // labelContainer.childNodes[i].innerHTML = classPrediction;
+      //   const classPrediction =
+      //     prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+      //   // labelContainer.childNodes[i].innerHTML = classPrediction;
       // }
-      //   drawHand();
+      //draw mesh
+      const ctx = canvasRef.current.getContext("2d");
+      drawHand(hand, ctx);
     }
   }
   loadModel();
@@ -76,7 +113,7 @@ export const Home = (props) => {
         }}
       />
 
-      {/* <canvas
+      <canvas
         ref={canvasRef}
         style={{
           position: "absolute",
@@ -87,7 +124,7 @@ export const Home = (props) => {
           height: 480,
           // background: "red",
         }}
-      /> */}
+      />
     </div>
   );
 };
