@@ -15,11 +15,12 @@ export const Home = (props) => {
   const canvasRef = useRef(null);
   const [translation, setTranslation] = useState(null);
   /*
-THIS WAS AN ATTEMPT TO UPDATE 
+THIS WAS AN ATTEMPT TO UPDATE
 TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
   const [handDetection, setHandDetection] = useState(false);
   */
 
+  //const URL = "https://teachablemachine.withgoogle.com/models/SdeOHBnL5/";
   const URL = "https://teachablemachine.withgoogle.com/models/SdeOHBnL5/";
 
   let model, webcam, labelContainer, maxPredictions;
@@ -33,7 +34,7 @@ TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
     console.log("net", net);
     setInterval(() => {
       detect(model, net);
-    }, 1000);
+    }, 500);
   };
 
   //Loop and detect hands
@@ -65,11 +66,11 @@ TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
       //make detections for hands and finger gestures
       if (hand.length > 0) {
         /*
-        THIS WAS AN ATTEMPT TO UPDATE 
+        THIS WAS AN ATTEMPT TO UPDATE
         TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
         setHandDetection(true);
         */
-        console.log('HAND DETECTION -->', handDetection);
+        //  console.log('HAND DETECTION -->', handDetection);
         const gestureEstimator = new fp.GestureEstimator([
           // fp.Gestures.VictoryGesture,
           fp.Gestures.ThumbsUpGesture,
@@ -88,9 +89,11 @@ TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
           // console.log("EMOJI", emoji);
         }
       } else {
+        // Kaia just added the line below
+        setTranslation(null);
         return;
         /*
-        THIS WAS AN ATTEMPT TO UPDATE TRANSLATION 
+        THIS WAS AN ATTEMPT TO UPDATE TRANSLATION
         TO NULL WHEN HAND IS NOT IN FRAME
         setHandDetection(false);
         console.log('HAND DETECTION -->', handDetection);
@@ -110,7 +113,8 @@ TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
         console.log(probability);
         const maxPro = probability.indexOf(Math.max.apply(null, probability));
 
-        if (prediction[maxPro].probability > 0.9) {
+        //// Kaia just added the line below (hand.length > 0)
+        if (prediction[maxPro].probability > 0.9 && hand.length > 0) {
           setTranslation(prediction[maxPro].className);
         } else {
           setTranslation(null);
@@ -135,9 +139,11 @@ TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
       drawHand(hand, ctx);
     }
   }
-  useEffect(() => { loadModel() }, [])
+  useEffect(() => {
+    loadModel();
+  }, []);
   /*
-  THIS WAS AN ATTEMPT TO UPDATE TRANSLATION 
+  THIS WAS AN ATTEMPT TO UPDATE TRANSLATION
   TO NULL WHEN HAND IS NOT IN FRAME
     useEffect(() => {
       if (handDetection === false) {
