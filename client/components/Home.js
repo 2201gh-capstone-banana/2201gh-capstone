@@ -14,6 +14,11 @@ export const Home = (props) => {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const [translation, setTranslation] = useState(null);
+  /*
+THIS WAS AN ATTEMPT TO UPDATE 
+TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
+  const [handDetection, setHandDetection] = useState(false);
+  */
 
   const URL = "https://teachablemachine.withgoogle.com/models/SdeOHBnL5/";
 
@@ -59,6 +64,12 @@ export const Home = (props) => {
 
       //make detections for hands and finger gestures
       if (hand.length > 0) {
+        /*
+        THIS WAS AN ATTEMPT TO UPDATE 
+        TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
+        setHandDetection(true);
+        */
+        console.log('HAND DETECTION -->', handDetection);
         const gestureEstimator = new fp.GestureEstimator([
           // fp.Gestures.VictoryGesture,
           fp.Gestures.ThumbsUpGesture,
@@ -78,6 +89,12 @@ export const Home = (props) => {
         }
       } else {
         return;
+        /*
+        THIS WAS AN ATTEMPT TO UPDATE TRANSLATION 
+        TO NULL WHEN HAND IS NOT IN FRAME
+        setHandDetection(false);
+        console.log('HAND DETECTION -->', handDetection);
+        */
       }
       // if (hand.length === 0) {
       //   setTranslation[null];
@@ -119,6 +136,16 @@ export const Home = (props) => {
     }
   }
   useEffect(() => { loadModel() }, [])
+  /*
+  THIS WAS AN ATTEMPT TO UPDATE TRANSLATION 
+  TO NULL WHEN HAND IS NOT IN FRAME
+    useEffect(() => {
+      if (handDetection === false) {
+        setTranslation(null)
+      }
+    }, [handDetection]);
+    */
+
   //only happens when you load the model
   //state/
   //use effect will update everytime that state changes
