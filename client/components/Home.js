@@ -15,7 +15,7 @@ export const Home = (props) => {
   const canvasRef = useRef(null);
   const [translation, setTranslation] = useState(null);
 
-  const URL = "https://teachablemachine.withgoogle.com/models/HBBfwFtF-/";
+  const URL = "https://teachablemachine.withgoogle.com/models/SdeOHBnL5/";
 
   let model, webcam, labelContainer, maxPredictions;
 
@@ -23,8 +23,7 @@ export const Home = (props) => {
   const metadataURL = URL + "metadata.json";
   const loadModel = async () => {
     const model = await tmImage.load(checkpointURL, metadataURL);
-    console.log("model-----hi", model);
-    console.log("hi");
+    console.log("Model Loaded", model);
     const net = await handpose.load();
     console.log("net", net);
     setInterval(() => {
@@ -108,12 +107,6 @@ export const Home = (props) => {
       } else {
         return;
       }
-      /*
-      
-      
-      
-      */
-
       //-------
       // for (let i = 0; i < maxPredictions; i++) {
       //   const classPrediction =
