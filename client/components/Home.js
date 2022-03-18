@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import * as tf from "@tensorflow/tfjs";
 import * as tmImage from "@teachablemachine/image";
@@ -117,7 +117,7 @@ export const Home = (props) => {
       drawHand(hand, ctx);
     }
   }
-  loadModel();
+  useEffect(() => {loadModel() }, [])
   // const { username } = props;
 
   return (
