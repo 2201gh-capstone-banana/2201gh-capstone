@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { connect } from "react-redux";
 import * as tf from "@tensorflow/tfjs";
 import * as tmImage from "@teachablemachine/image";
@@ -13,6 +13,7 @@ import * as fp from "fingerpose";
 export const Home = (props) => {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
+  const [translation, setTranslation] = useState(null);
 
   const URL = "https://teachablemachine.withgoogle.com/models/HBBfwFtF-/";
 
@@ -28,7 +29,7 @@ export const Home = (props) => {
     console.log("net", net);
     setInterval(() => {
       detect(model, net);
-    }, 3000);
+    }, 1000);
   };
 
   //Loop and detect hands
@@ -86,6 +87,26 @@ export const Home = (props) => {
       console.log("webcam--", webcam);
       let prediction = await model.predict(webcam.webcam);
       console.log("PREDICTION-----", prediction);
+
+      //-------
+      if (prediction && prediction.length > 0) {
+        const probability = prediction.map(
+          (prediction) => prediction.probability
+        );
+
+        const maxPro = probability.indexOf(Math.max.apply(null, probability));
+        console.log("MAXPRO", maxPro);
+
+        console.log("gestures name is -", prediction[maxPro].name);
+        setTranslation(prediction[maxPro].className);
+        console.log("TRANSLATION---", translation);
+        // setEmoji(gesture.gestures[maxScore].name);
+
+        // console.log("EMOJI", emoji);
+      } else {
+        return;
+      }
+      //-------
       // for (let i = 0; i < maxPredictions; i++) {
       //   const classPrediction =
       //     prediction[i].className + ": " + prediction[i].probability.toFixed(2);
@@ -104,7 +125,9 @@ export const Home = (props) => {
       <Webcam
         ref={webcamRef}
         style={{
-          marginTop: -240,
+          // marginTop: -240,
+          marginRight: "auto",
+          marginLeft: "auto",
           position: "absolute",
           zIndex: 9,
           width: 540,
@@ -116,8 +139,10 @@ export const Home = (props) => {
       <canvas
         ref={canvasRef}
         style={{
+          marginLeft: "auto",
+          marginRight: "auto",
           position: "absolute",
-          marginTop: -240,
+          // marginTop: -240,
           textAlign: "center",
           zIndex: 9,
           width: 540,
@@ -125,6 +150,17 @@ export const Home = (props) => {
           // background: "red",
         }}
       />
+      <div
+        style={{
+          backgroundColor: "red",
+          color: "black",
+          fontSize: 30,
+
+          marginLeft: 600,
+        }}
+      >
+        {translation}
+      </div>
     </div>
   );
 };
