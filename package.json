@@ -20,14 +20,20 @@
   "author": "Fullstack Academy of Code",
   "license": "MIT",
   "dependencies": {
+    "@teachablemachine/image": "^0.8.5",
+    "@tensorflow-models/handpose": "^0.0.7",
+    "@tensorflow/tfjs": "^3.14.0",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
     "compression": "^1.7.3",
     "express": "^4.16.4",
+    "fingerpose": "^0.1.0",
     "history": "^4.9.0",
+    "install-peerdeps": "^3.0.3",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
     "pg": "^8.5.1",
+    "react-webcam": "^7.0.0",
     "sequelize": "^6.3.5"
   },
   "devDependencies": {
