@@ -5,7 +5,7 @@ const {
 
 /* /auth/manualsignin */
 /* Route for users to manually signin. */
-router.post('/manualsignin', async (req, res, next) => {
+router.get('/manualsignin', async (req, res, next) => {
 	try {
 		const { username, password } = req.body
 
@@ -47,10 +47,10 @@ router.post('/manualsignin', async (req, res, next) => {
 /* Route for users to signup. */
 router.post('/signup', async (req, res, next) => {
 	try {
-		const { email, password, username } = req.body
+		const { email, password, username, firstName, lastName } = req.body
 
-		/* If the request did not have a 'email', 'password', or 'username'. */
-		if (!email || !password || !username) {
+		/* If the request did not include the above variables. */
+		if (!email || !password || !username || !firstName || !lastName) {
 			return res.send({ alert: 'Someting Went Wrong' })
 		}
 
@@ -66,9 +66,11 @@ router.post('/signup', async (req, res, next) => {
 
 		/* Create an instance. */
 		const user = await User.create({
-			username: username,
-			email: email,
-			password: password
+			username,
+			email,
+			password,
+			firstName,
+			lastName
 		})
 
 		/*
