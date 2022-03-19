@@ -9,6 +9,7 @@ import * as handpose from "@tensorflow-models/handpose";
 import * as fp from "fingerpose";
 import * as blazeface from "@tensorflow-models/blazeface";
 import { paperGesture } from "./phrases/hello-thankyou";
+import { loveYouGesture } from "./phrases/iloveyou";
 /**
  * COMPONENT
  */
@@ -22,7 +23,7 @@ const decideGesture = (gestureName, hand, face) => {
     } else if (tipOfIndex[1] < rightEye[1]) {
       return "hello";
     }
-  }
+  } else return gestureName;
 };
 export const Home = (props) => {
   const webcamRef = useRef(null);
@@ -94,6 +95,7 @@ TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
         const gestureEstimator = new fp.GestureEstimator([
           // fp.Gestures.VictoryGesture,
           paperGesture,
+          loveYouGesture,
         ]);
 
         // 8 is the confidence level
