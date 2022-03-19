@@ -14,8 +14,14 @@ export const Home = (props) => {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const [translation, setTranslation] = useState(null);
+  /*
+THIS WAS AN ATTEMPT TO UPDATE
+TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
+  const [handDetection, setHandDetection] = useState(false);
+  */
 
-  const URL = "https://teachablemachine.withgoogle.com/models/HBBfwFtF-/";
+  //const URL = "https://teachablemachine.withgoogle.com/models/SdeOHBnL5/";
+  const URL = "https://teachablemachine.withgoogle.com/models/SdeOHBnL5/";
 
   let model, webcam, labelContainer, maxPredictions;
 
@@ -23,13 +29,12 @@ export const Home = (props) => {
   const metadataURL = URL + "metadata.json";
   const loadModel = async () => {
     const model = await tmImage.load(checkpointURL, metadataURL);
-    console.log("model-----hi", model);
-    console.log("hi");
+    console.log("Model Loaded", model);
     const net = await handpose.load();
     console.log("net", net);
     setInterval(() => {
       detect(model, net);
-    }, 1000);
+    }, 500);
   };
 
   //Loop and detect hands
@@ -60,6 +65,12 @@ export const Home = (props) => {
 
       //make detections for hands and finger gestures
       if (hand.length > 0) {
+        /*
+        THIS WAS AN ATTEMPT TO UPDATE
+        TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
+        setHandDetection(true);
+        */
+        //  console.log('HAND DETECTION -->', handDetection);
         const gestureEstimator = new fp.GestureEstimator([
           // fp.Gestures.VictoryGesture,
           fp.Gestures.ThumbsUpGesture,
@@ -78,7 +89,15 @@ export const Home = (props) => {
           // console.log("EMOJI", emoji);
         }
       } else {
+        // Kaia just added the line below
+        setTranslation(null);
         return;
+        /*
+        THIS WAS AN ATTEMPT TO UPDATE TRANSLATION
+        TO NULL WHEN HAND IS NOT IN FRAME
+        setHandDetection(false);
+        console.log('HAND DETECTION -->', handDetection);
+        */
       }
       // if (hand.length === 0) {
       //   setTranslation[null];
@@ -94,7 +113,8 @@ export const Home = (props) => {
         console.log(probability);
         const maxPro = probability.indexOf(Math.max.apply(null, probability));
 
-        if (prediction[maxPro].probability > 0.9) {
+        //// Kaia just added the line below (hand.length > 0)
+        if (prediction[maxPro].probability > 0.9 && hand.length > 0) {
           setTranslation(prediction[maxPro].className);
         } else {
           setTranslation(null);
@@ -108,12 +128,6 @@ export const Home = (props) => {
       } else {
         return;
       }
-      /*
-      
-      
-      
-      */
-
       //-------
       // for (let i = 0; i < maxPredictions; i++) {
       //   const classPrediction =
@@ -125,7 +139,19 @@ export const Home = (props) => {
       drawHand(hand, ctx);
     }
   }
-  useEffect(() => { loadModel() }, [])
+  useEffect(() => {
+    loadModel();
+  }, []);
+  /*
+  THIS WAS AN ATTEMPT TO UPDATE TRANSLATION
+  TO NULL WHEN HAND IS NOT IN FRAME
+    useEffect(() => {
+      if (handDetection === false) {
+        setTranslation(null)
+      }
+    }, [handDetection]);
+    */
+
   //only happens when you load the model
   //state/
   //use effect will update everytime that state changes
