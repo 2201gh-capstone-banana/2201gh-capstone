@@ -5,23 +5,35 @@ import * as tmImage from "@teachablemachine/image";
 import Webcam from "react-webcam";
 import { drawHand } from "../utilities/hand";
 import { drawFace } from "../utilities/face";
+import { drawPose } from "../utilities/pose";
 import * as handpose from "@tensorflow-models/handpose";
+import * as poseDetection from "@tensorflow-models/pose-detection";
+import "@tensorflow/tfjs-backend-webgl";
 import * as fp from "fingerpose";
 import * as blazeface from "@tensorflow-models/blazeface";
 import { paperGesture } from "./phrases/hello-thankyou";
 import { loveYouGesture } from "./phrases/iloveyou";
+import { pleaseGesture } from "./phrases/please";
 /**
  * COMPONENT
  */
-const decideGesture = (gestureName, hand, face) => {
+const decideGesture = (gestureName, hand, face, pose) => {
   const tipOfIndex = hand[0].landmarks[8];
+  const tipOfPinky = hand[0].landmarks[20];
   const rightEye = face[0].landmarks[0];
   const mouth = face[0].landmarks[3];
+  const shoulder = pose[0].keypoints[5];
   if (gestureName === "hello-thankyou") {
-    if (Math.abs(tipOfIndex[0] - mouth[0]) <= 50 && tipOfIndex[1] > mouth[1]) {
+    if (
+      Math.abs(tipOfIndex[0] - mouth[0]) <= 50 &&
+      tipOfIndex[1] > mouth[1] &&
+      tipOfPinky[1] < shoulder.y
+    ) {
       return "thank you";
     } else if (tipOfIndex[1] < rightEye[1]) {
       return "hello";
+    } else if (tipOfPinky[1] >= shoulder.y) {
+      return "please";
     }
   } else return gestureName;
 };
@@ -47,15 +59,28 @@ TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
     console.log("Model Loaded", model);
     const net = await handpose.load();
     const netFace = await blazeface.load();
+    //pose
+    const detectorConfig = {
+      architecture: "MobileNetV1",
+      outputStride: 16,
+      inputResolution: { width: 640, height: 480 },
+      multiplier: 0.75,
+    };
+    const netPose = await poseDetection.createDetector(
+      poseDetection.SupportedModels.PoseNet,
+      detectorConfig
+    );
+    console.log("pose detector ", netPose);
+
     console.log("net", net);
     setInterval(() => {
-      detect(model, net, netFace);
+      detect(model, net, netFace, netPose);
     }, 300);
   };
 
   //Loop and detect hands
 
-  async function detect(model, net, netFace) {
+  async function detect(model, net, netFace, netPose) {
     // predict can take in an image, video or canvas html element
     // let prediction; what is this?
     if (
@@ -80,9 +105,12 @@ TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
       //make detections for face
       const returnTensors = false;
       const face = await netFace.estimateFaces(video, returnTensors);
+
+      const pose = await netPose.estimatePoses(video);
       console.log("face is", face);
       // const face = await
       console.log("hand", hand);
+      console.log("pose is", pose);
 
       //make detections for hands and finger gestures
       if (hand.length > 0 && face.length > 0) {
@@ -96,6 +124,7 @@ TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
           // fp.Gestures.VictoryGesture,
           paperGesture,
           loveYouGesture,
+          pleaseGesture,
         ]);
 
         // 8 is the confidence level
@@ -108,7 +137,7 @@ TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
           const gestureName = gesture.gestures[maxScore].name;
           console.log("gestures name is -", gesture.gestures[maxScore].name);
 
-          const result = decideGesture(gestureName, hand, face);
+          const result = decideGesture(gestureName, hand, face, pose);
           console.log("result is ---", result);
           setTranslation(result);
           // setEmoji(gesture.gestures[maxScore].name);
@@ -166,6 +195,7 @@ TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
       const ctx = canvasRef.current.getContext("2d");
       drawHand(hand, ctx);
       drawFace(face, ctx);
+      drawPose(pose, ctx);
     }
   }
   useEffect(() => {

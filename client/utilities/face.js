@@ -16,10 +16,6 @@ export const drawFace = (predictions, ctx) => {
         ctx.beginPath();
         ctx.arc(x, y, 5, 0, 3 * Math.PI);
 
-        //set line colow
-        ctx.fillStyle = "indigo";
-        ctx.fill();
-
         // origin
 
         ctx.fillStyle = "orange";
