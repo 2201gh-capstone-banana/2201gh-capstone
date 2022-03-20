@@ -1,71 +1,82 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {authenticate} from '../store'
+import { connect } from 'react-redux'
 
-/**
- * COMPONENT
- */
-const AuthForm = props => {
-  const {name, displayName, handleSubmit, error} = props
+import Brand from './Brand'
+import AuthInput from './AuthInput'
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="username">
-            <small>Username</small>
-          </label>
-          <input name="username" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-    </div>
-  )
+class AuthForm extends React.Component {
+	constructor() {
+		super()
+		this.state = {
+			signin: true,
+			username: '',
+			password: '',
+			firstName: '',
+			lastName: ''
+		}
+		this.handleAuthType = this.handleAuthType.bind(this)
+		this.handleChange = this.handleChange.bind(this)
+	}
+
+	handleAuthType() {
+		this.setState(prv => {
+			return { signin: !prv.signin }
+		})
+	}
+
+	handleChange(evt) {
+		this.setState({ [evt.target.name]: evt.target.value })
+	}
+
+	render() {
+		console.log(this.state)
+		return (
+			<div className="auth__wrapper">
+				<header className="brand__wrapper">
+					<Brand />
+				</header>
+
+				<form className="authForm">
+					<AuthInput
+						for="username"
+						onChange={this.handleChange}
+						value={this.state.username}
+					/>
+					<AuthInput
+						for="password"
+						onChange={this.handleChange}
+						value={this.state.password}
+					/>
+					{!this.state.signin ? (
+						<>
+							<AuthInput
+								for="firstName"
+								onChange={this.handleChange}
+								value={this.state.firstName}
+							/>
+
+							<AuthInput
+								for="lastName"
+								onChange={this.handleChange}
+								value={this.state.lastName}
+							/>
+						</>
+					) : null}
+
+					<button className="authSubmit" type="submit">
+						Submit
+					</button>
+
+					<button
+						onClick={this.handleAuthType}
+						className="authChange"
+						type="button">
+						{this.state.signin ? 'signup instead' : 'back to signin'}
+					</button>
+				</form>
+			</div>
+		)
+	}
 }
 
-/**
- * CONTAINER
- *   Note that we have two different sets of 'mapStateToProps' functions -
- *   one for Login, and one for Signup. However, they share the same 'mapDispatchToProps'
- *   function, and share the same Component. This is a good example of how we
- *   can stay DRY with interfaces that are very similar to each other!
- */
-const mapLogin = state => {
-  return {
-    name: 'login',
-    displayName: 'Login',
-    error: state.auth.error
-  }
-}
-
-const mapSignup = state => {
-  return {
-    name: 'signup',
-    displayName: 'Sign Up',
-    error: state.auth.error
-  }
-}
-
-const mapDispatch = dispatch => {
-  return {
-    handleSubmit(evt) {
-      evt.preventDefault()
-      const formName = evt.target.name
-      const username = evt.target.username.value
-      const password = evt.target.password.value
-      dispatch(authenticate(username, password, formName))
-    }
-  }
-}
-
-export const Login = connect(mapLogin, mapDispatch)(AuthForm)
-export const Signup = connect(mapSignup, mapDispatch)(AuthForm)
+export default AuthForm

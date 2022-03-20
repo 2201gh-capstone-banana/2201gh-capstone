@@ -1,13 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import Brand from './Brand'
+
 const LandingPage = () => {
 	return (
 		<header className="header">
-			<section className="header__section">
-				<img src="logo.svg" alt="website logo" className="header__logo" />
-				<h1 className="header__title">Be My Voice</h1>
-			</section>
+			<Brand />
 
 			<section className="header__section">
 				<p className="header__about-main">
