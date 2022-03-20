@@ -58,6 +58,8 @@ TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
     const model = await tmImage.load(checkpointURL, metadataURL);
     console.log("Model Loaded", model);
     const net = await handpose.load();
+    net.pipeline.maxHandsNumber = 2;
+
     const netFace = await blazeface.load();
     //pose
     const detectorConfig = {
@@ -72,7 +74,7 @@ TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
     );
     console.log("pose detector ", netPose);
 
-    console.log("net", net);
+    console.log("net", net.pipeline.maxHandsNumber);
     setInterval(() => {
       detect(model, net, netFace, netPose);
     }, 300);
