@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;800&family=Roboto&display=swap');
 @import url('unset.css');
 @import url('landingPage.css');
+@import url('auth.css');
 
 /* Global variables. */
 :root {
