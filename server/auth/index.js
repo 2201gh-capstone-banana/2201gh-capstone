@@ -5,13 +5,13 @@ const {
 
 /* /auth/manualsignin */
 /* Route for users to manually signin. */
-router.get('/manualsignin', async (req, res, next) => {
+router.post('/manualsignin', async (req, res, next) => {
 	try {
 		const { username, password } = req.body
 
 		/* If the request did not have a 'username' or 'password'. */
 		if (!username || !password) {
-			return res.send({ alert: 'Someting Went Wrong' })
+			return res.json({ alert: 'Someting Went Wrong' })
 		}
 
 		/*
@@ -91,7 +91,7 @@ router.post('/signup', async (req, res, next) => {
 
 /* /auth/autosignin */
 /* Route for users to automatically signin. */
-router.get('/autosignin', async (req, res, next) => {
+router.post('/autosignin', async (req, res, next) => {
 	try {
 		const token = req.headers.authorization
 
