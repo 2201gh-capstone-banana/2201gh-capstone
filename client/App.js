@@ -1,15 +1,14 @@
 import React from 'react'
 
-import Navbar from './components/Navbar'
 import Routes from './Routes'
+import '../css/index.css'
 
 const App = () => {
-  return (
-    <div>
-      <Navbar />
-      <Routes />
-    </div>
-  )
+	return (
+		<div>
+			<Routes />
+		</div>
+	)
 }
 
 export default App

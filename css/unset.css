@@ -1,0 +1,25 @@
+/* Remove browser defaults. */
+
+*,
+*::before,
+*::after {
+	text-decoration: none;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	font-size: var(--fnt-siz);
+	margin: 0;
+}
+
+button {
+	cursor: pointer;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}

@@ -1,71 +1,137 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {authenticate} from '../store'
+import { connect } from 'react-redux'
 
-/**
- * COMPONENT
- */
-const AuthForm = props => {
-  const {name, displayName, handleSubmit, error} = props
+/* Components. */
+import Brand from './Brand'
+import AuthInput from './AuthInput'
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="username">
-            <small>Username</small>
-          </label>
-          <input name="username" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-    </div>
-  )
+/* Thunks and action creators. */
+import { manualSignin, _clearAlert, signup } from '../store/auth'
+
+class AuthForm extends React.Component {
+	constructor() {
+		super()
+		this.state = {
+			signin: true,
+			username: '',
+			password: '',
+			firstName: '',
+			lastName: '',
+			email: ''
+		}
+		this.handleAuthType = this.handleAuthType.bind(this)
+		this.handleChange = this.handleChange.bind(this)
+		this.handleSubmit = this.handleSubmit.bind(this)
+	}
+
+	handleAuthType() {
+		/* If there is an alert clear it when the user toggles between signin and signup. */
+		this.props.clearAlert()
+
+		this.setState(prv => {
+			return { signin: !prv.signin }
+		})
+	}
+
+	handleChange(evt) {
+		this.setState({ [evt.target.name]: evt.target.value })
+	}
+
+	handleSubmit(evt) {
+		evt.preventDefault()
+
+		/* Checks if the user is on signin or signup. */
+		if (this.state.signin) {
+			const userData = {
+				username: this.state.username,
+				password: this.state.password
+			}
+			this.props.manualSignin(userData)
+		} else {
+			const userData = {
+				username: this.state.username,
+				password: this.state.password,
+				firstName: this.state.firstName,
+				lastName: this.state.lastName,
+				email: this.state.email
+			}
+
+			this.props.signup(userData)
+		}
+	}
+
+	render() {
+		return (
+			<div className="auth__wrapper">
+				<header className="brand__wrapper">
+					<Brand />
+				</header>
+
+				<form onSubmit={this.handleSubmit} className="authForm">
+					<AuthInput
+						for="username"
+						onChange={this.handleChange}
+						value={this.state.username}
+					/>
+					<AuthInput
+						for="password"
+						onChange={this.handleChange}
+						value={this.state.password}
+					/>
+					{!this.state.signin ? (
+						<>
+							<AuthInput
+								for="firstName"
+								onChange={this.handleChange}
+								value={this.state.firstName}
+							/>
+
+							<AuthInput
+								for="lastName"
+								onChange={this.handleChange}
+								value={this.state.lastName}
+							/>
+
+							<AuthInput
+								for="email"
+								onChange={this.handleChange}
+								value={this.state.email}
+							/>
+						</>
+					) : null}
+
+					{this.props.alert ? (
+						<div className="auth__alert">{this.props.alert}</div>
+					) : null}
+
+					<button className="authSubmit" type="submit">
+						Submit
+					</button>
+
+					<button
+						onClick={this.handleAuthType}
+						className="authChange"
+						type="button">
+						{this.state.signin ? 'signup instead' : 'back to signin'}
+					</button>
+				</form>
+			</div>
+		)
+	}
 }
 
-/**
- * CONTAINER
- *   Note that we have two different sets of 'mapStateToProps' functions -
- *   one for Login, and one for Signup. However, they share the same 'mapDispatchToProps'
- *   function, and share the same Component. This is a good example of how we
- *   can stay DRY with interfaces that are very similar to each other!
- */
-const mapLogin = state => {
-  return {
-    name: 'login',
-    displayName: 'Login',
-    error: state.auth.error
-  }
+const mapStateToProps = state => {
+	return {
+		alert: state.auth.alert
+	}
 }
 
-const mapSignup = state => {
-  return {
-    name: 'signup',
-    displayName: 'Sign Up',
-    error: state.auth.error
-  }
+const mapDispatchToProps = dispatch => {
+	return {
+		manualSignin: userData => dispatch(manualSignin(userData)),
+		clearAlert: () => dispatch(_clearAlert()),
+		signup: userData => dispatch(signup(userData))
+	}
 }
 
-const mapDispatch = dispatch => {
-  return {
-    handleSubmit(evt) {
-      evt.preventDefault()
-      const formName = evt.target.name
-      const username = evt.target.username.value
-      const password = evt.target.password.value
-      dispatch(authenticate(username, password, formName))
-    }
-  }
-}
-
-export const Login = connect(mapLogin, mapDispatch)(AuthForm)
-export const Signup = connect(mapSignup, mapDispatch)(AuthForm)
+export default connect(mapStateToProps, mapDispatchToProps)(AuthForm)
