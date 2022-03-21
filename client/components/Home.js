@@ -2,10 +2,12 @@ import React, { useRef, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import * as tf from "@tensorflow/tfjs";
 import * as tmImage from "@teachablemachine/image";
+import * as handPoseDetection from "@tensorflow-models/hand-pose-detection";
 import Webcam from "react-webcam";
 import { drawHand } from "../utilities/hand";
 import { drawFace } from "../utilities/face";
 import { drawPose } from "../utilities/pose";
+import { drawBothHands } from "../utilities/bothHands";
 import * as handpose from "@tensorflow-models/handpose";
 import * as poseDetection from "@tensorflow-models/pose-detection";
 import "@tensorflow/tfjs-backend-webgl";
@@ -14,9 +16,12 @@ import * as blazeface from "@tensorflow-models/blazeface";
 import { paperGesture } from "./phrases/hello-thankyou";
 import { loveYouGesture } from "./phrases/iloveyou";
 import { pleaseGesture } from "./phrases/please";
+import { youGesture } from "./phrases/you";
+import { niceGesture } from "./phrases/nice";
 /**
  * COMPONENT
  */
+//url = https://teachablemachine.withgoogle.com/models/86Rqg3NFc/
 const decideGesture = (gestureName, hand, face, pose) => {
   const tipOfIndex = hand[0].landmarks[8];
   const tipOfPinky = hand[0].landmarks[20];
@@ -41,24 +46,14 @@ export const Home = (props) => {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const [translation, setTranslation] = useState(null);
-  /*
-THIS WAS AN ATTEMPT TO UPDATE
-TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
-  const [handDetection, setHandDetection] = useState(false);
-  */
 
-  //const URL = "https://teachablemachine.withgoogle.com/models/SdeOHBnL5/";
-  const URL = "https://teachablemachine.withgoogle.com/models/SdeOHBnL5/";
-
-  let model, webcam, labelContainer, maxPredictions;
-
+  const URL = "https://teachablemachine.withgoogle.com/models/86Rqg3NFc/";
   const checkpointURL = URL + "model.json";
   const metadataURL = URL + "metadata.json";
+
   const loadModel = async () => {
     const model = await tmImage.load(checkpointURL, metadataURL);
-    console.log("Model Loaded", model);
     const net = await handpose.load();
-    net.pipeline.maxHandsNumber = 2;
 
     const netFace = await blazeface.load();
     //pose
@@ -72,19 +67,31 @@ TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
       poseDetection.SupportedModels.PoseNet,
       detectorConfig
     );
+
+    //both hands detection
+    const modelBothHands = handPoseDetection.SupportedModels.MediaPipeHands;
+    const detectorConfigBothHands = {
+      runtime: "tfjs",
+      modelType: "full",
+    };
+    const netBothHands = await handPoseDetection.createDetector(
+      modelBothHands,
+      detectorConfigBothHands
+    );
+    console.log("net both hands", netBothHands);
     console.log("pose detector ", netPose);
 
     console.log("net", net.pipeline.maxHandsNumber);
     setInterval(() => {
-      detect(model, net, netFace, netPose);
-    }, 300);
+      detect(model, net, netFace, netPose, netBothHands);
+    }, 100);
   };
 
   //Loop and detect hands
 
-  async function detect(model, net, netFace, netPose) {
+  async function detect(model, net, netFace, netPose, netBothHands) {
     // predict can take in an image, video or canvas html element
-    // let prediction; what is this?
+
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
@@ -103,30 +110,62 @@ TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
       canvasRef.current.width = videoWidth;
       canvasRef.current.height = videoHeight;
       //make detections for hand
+      const estimationConfig = { flipHorizontal: false };
+      const bothHands = await netBothHands.estimateHands(
+        video,
+        estimationConfig
+      );
       const hand = await net.estimateHands(video);
       //make detections for face
       const returnTensors = false;
       const face = await netFace.estimateFaces(video, returnTensors);
 
       const pose = await netPose.estimatePoses(video);
+
       console.log("face is", face);
       // const face = await
       console.log("hand", hand);
+      console.log("both hands are", bothHands);
       console.log("pose is", pose);
 
-      //make detections for hands and finger gestures
-      if (hand.length > 0 && face.length > 0) {
-        /*
-        THIS WAS AN ATTEMPT TO UPDATE
-        TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
-        setHandDetection(true);
-        */
-        //  console.log('HAND DETECTION -->', handDetection);
+      //draw mesh
+      const ctx = canvasRef.current.getContext("2d");
+
+      //drawHand(hand, ctx);
+      drawBothHands(bothHands, ctx);
+      drawFace(face, ctx);
+      drawPose(pose, ctx);
+      // if (bothHands.length === 2) {
+      //   console.log("get inside both hands???");
+      //   const gestureEstimatorForBothHand = new fp.GestureEstimator([
+      //     niceGesture,
+      //   ]);
+      //   const gestureLeftHand = await gestureEstimatorForBothHand.estimate(
+      //     bothHands[0].keypoints,
+      //     8
+      //   );
+      //   console.log("gesture left hand is", gestureLeftHand);
+      //   const gestureRightHand = await gestureEstimatorForBothHand.estimate(
+      //     bothHands[1].keypoints,
+      //     8
+      //   );
+      //   console.log("gesture right hand is", gestureRightHand);
+      //   if (gestureLeftHand.gestures && gestureRightHand.gestures) {
+      //     if (
+      //       gestureLeftHand.gestures[0].name === "nice" &&
+      //       gestureRightHand.gestures[0].name === "nice"
+      //     ) {
+      //       setTranslation("nice");
+      //     }
+      //   }
+      //   //make detections for hands and finger gestures
+      // }
+      if (bothHands.length === 1 && hand.length > 0 && face.length > 0) {
         const gestureEstimator = new fp.GestureEstimator([
-          // fp.Gestures.VictoryGesture,
           paperGesture,
           loveYouGesture,
           pleaseGesture,
+          youGesture,
         ]);
 
         // 8 is the confidence level
@@ -142,88 +181,39 @@ TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
           const result = decideGesture(gestureName, hand, face, pose);
           console.log("result is ---", result);
           setTranslation(result);
-          // setEmoji(gesture.gestures[maxScore].name);
-
-          // console.log("EMOJI", emoji);
         }
-      } else {
-        // Kaia just added the line below
+      } else if (bothHands.length === 2) {
+        let prediction = await model.predict(video);
+        console.log("PREDICTION-----", prediction);
+        if (prediction && prediction.length > 0) {
+          const probability = prediction.map(
+            (prediction) => prediction.probability
+          );
+          console.log(probability);
+          const maxPro = probability.indexOf(Math.max.apply(null, probability));
+
+          //// Kaia just added the line below (hand.length > 0)
+          if (prediction[maxPro].probability > 0.8 && bothHands.length > 0) {
+            setTranslation(prediction[maxPro].className);
+          } else {
+            setTranslation(null);
+          }
+        }
+      } else if (bothHands.length === 0) {
         setTranslation(null);
         return;
-        /*
-        THIS WAS AN ATTEMPT TO UPDATE TRANSLATION
-        TO NULL WHEN HAND IS NOT IN FRAME
-        setHandDetection(false);
-        console.log('HAND DETECTION -->', handDetection);
-        */
       }
-      // if (hand.length === 0) {
-      //   setTranslation[null];
-      //uncomment this for trained model prediction
-      // let prediction = await model.predict(video);
-      // console.log("PREDICTION-----", prediction);
-
-      // //-------
-      // if (prediction && prediction.length > 0) {
-      //   const probability = prediction.map(
-      //     (prediction) => prediction.probability
-      //   );
-      //   console.log(probability);
-      //   const maxPro = probability.indexOf(Math.max.apply(null, probability));
-
-      //   //// Kaia just added the line below (hand.length > 0)
-      //   if (prediction[maxPro].probability > 0.9 && hand.length > 0) {
-      //     setTranslation(prediction[maxPro].className);
-      //   } else {
-      //     setTranslation(null);
-      //   }
-      //   // console.log("gestures name is -", prediction[maxPro].name);
-
-      //   // console.log("TRANSLATION---", translation);
-      //   // setEmoji(gesture.gestures[maxScore].name);
-
-      //   // console.log("EMOJI", emoji);
-      // } else {
-      //   return;
-      // }
-      //uncomment above for trained model prediction
-      //-------
-      // for (let i = 0; i < maxPredictions; i++) {
-      //   const classPrediction =
-      //     prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-      //   // labelContainer.childNodes[i].innerHTML = classPrediction;
-      // }
-      //draw mesh
-      const ctx = canvasRef.current.getContext("2d");
-      drawHand(hand, ctx);
-      drawFace(face, ctx);
-      drawPose(pose, ctx);
     }
   }
   useEffect(() => {
     loadModel();
   }, []);
-  /*
-  THIS WAS AN ATTEMPT TO UPDATE TRANSLATION
-  TO NULL WHEN HAND IS NOT IN FRAME
-    useEffect(() => {
-      if (handDetection === false) {
-        setTranslation(null)
-      }
-    }, [handDetection]);
-    */
-
-  //only happens when you load the model
-  //state/
-  //use effect will update everytime that state changes
-  // const { username } = props;
 
   return (
     <div>
       <Webcam
         ref={webcamRef}
         style={{
-          // marginTop: -240,
           marginRight: "auto",
           marginLeft: "auto",
           position: "absolute",
@@ -240,12 +230,11 @@ TRANSLATION TO NULL WHEN HAND IS NOT IN FRAME
           marginLeft: "auto",
           marginRight: "auto",
           position: "absolute",
-          // marginTop: -240,
+
           textAlign: "center",
           zIndex: 9,
           width: 540,
           height: 480,
-          // background: "red",
         }}
       />
       <div
