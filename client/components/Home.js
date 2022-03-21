@@ -84,6 +84,18 @@ export const Home = (props) => {
     console.log("net", net.pipeline.maxHandsNumber);
     setInterval(() => {
       detect(model, net, netFace, netPose, netBothHands);
+      //this function is being called so quickly, you want to make it as optimized
+      //as possible
+      //"the fact you're using a setInterval could be a problem"
+      //it's asynchronous, so it's possible that two detects can happen at the same time.
+      //detect function sets a state on the component that says detection is happening.
+      //when detect function is completed you change that state back to false
+      //so you can create a gaurd that prevents another detect function
+      //request animation frame
+      //if resources are available, and I can perform this function.
+      //Window.requestAnimationFrame(detect())
+      //then within detect, call this again. sort of recursive for detect
+      //this means that the detect funtions are less likely to overlap with each other
     }, 100);
   };
 
@@ -97,6 +109,11 @@ export const Home = (props) => {
       webcamRef.current !== null &&
       webcamRef.current.video.readyState === 4
     ) {
+      //we don't need to use this every time we call detect. maybe we should move this outside 
+      //of the detect function context.
+      //go through this code and ensure that everything is actually something we have to redo
+      //in order to detect. if not, we can find a way to do it once in load model, keep
+      //a reference using useRef, and use reference to it.
       // Get Video Properties
       const video = webcamRef.current.video;
       const videoWidth = webcamRef.current.video.videoWidth;
@@ -128,6 +145,11 @@ export const Home = (props) => {
       console.log("both hands are", bothHands);
       console.log("pose is", pose);
 
+      //this grabbing of the 2d context, this shouldn't need to be done more than once. 
+      //you should be able to grab context and have reference to it, and use it in
+      //every detect call. we're doing this often enough to make it matter.
+      //want to dig through detect code and sus out whether everything we're doing
+      //in detect code absolutely needed
       //draw mesh
       const ctx = canvasRef.current.getContext("2d");
 
