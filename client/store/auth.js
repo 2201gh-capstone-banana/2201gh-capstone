@@ -7,6 +7,8 @@ const MANUAL_SIGNIN_ERROR = 'MANUAL_SIGNIN_ERROR'
 const CLEAR_ALERT = 'CLEAR_ALERT'
 const SIGN_UP = 'SIGN_UP'
 const SIGN_UP_ERROR = 'SIGN_UP_ERROR'
+const AUTO_SIGNIN = 'AUTO_SIGNIN'
+const RESET_STATE = 'RESET_STATE' /* For users to signout. */
 
 /* Action creators. */
 const _manualSignin = token => ({ type: MANUAL_SIGNIN, token })
@@ -14,6 +16,8 @@ const _manualSigninError = alert => ({ type: MANUAL_SIGNIN_ERROR, alert })
 export const _clearAlert = () => ({ type: CLEAR_ALERT })
 const _signUp = token => ({ type: SIGN_UP, token })
 const _signUpError = alert => ({ type: SIGN_UP_ERROR, alert })
+const _autoSignin = token => ({ type: AUTO_SIGNIN, token })
+export const _resetState = () => ({ type: RESET_STATE })
 
 /* Thunk creators. */
 export const manualSignin = userData => {
@@ -77,6 +81,42 @@ export const signup = userData => {
 	}
 }
 
+export const autoSignin = () => {
+	return async dispatch => {
+		try {
+			const token = localStorage.getItem('token')
+
+			/*
+				If the user have a token in local storage,
+				verify that it matches a user in the database.
+				Else if the token does not match, clear token,
+				and redirect to signin page.
+			*/
+			if (token) {
+				/* Returns true or false. */
+				const { data } = await axios.get('/auth/autosignin', {
+					headers: {
+						authorization: token
+					}
+				})
+
+				let action
+
+				if (data) {
+					action = _autoSignin(token)
+				} else {
+					action = _resetState()
+					localStorage.clear('token')
+				}
+
+				dispatch(action)
+			}
+		} catch (err) {
+			console.error(err)
+		}
+	}
+}
+
 /*
     Initial state.
     'alert' will store a message to be displayed if somthing went wrong with signin or signup.
@@ -96,6 +136,10 @@ const authReducer = (state = init, action) => {
 			return { ...state, alert: '', token: action.token, correctUser: true }
 		case SIGN_UP_ERROR:
 			return { ...state, token: '', alert: action.alert, correctUser: false }
+		case AUTO_SIGNIN:
+			return { alert: '', token: action.token, correctUser: true }
+		case RESET_STATE:
+			return { ...init }
 		default:
 			return state
 	}
