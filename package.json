@@ -20,6 +20,7 @@
   "author": "Fullstack Academy of Code",
   "license": "MIT",
   "dependencies": {
+    "@mediapipe/pose": "^0.5.1635988162",
     "@teachablemachine/image": "^0.8.5",
     "@tensorflow-models/blazeface": "^0.0.7",
     "@tensorflow-models/hand-pose-detection": "^2.0.0",
