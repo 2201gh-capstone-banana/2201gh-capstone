@@ -44,6 +44,12 @@
 	outline: 2px solid var(--clr-two);
 }
 
+.auth__alert {
+	font-family: var(--fnt-fmly);
+	font-weight: var(--fnt-weg-500);
+	margin-top: 1rem;
+}
+
 .authSubmit {
 	margin-top: 1rem;
 	padding: 0.5rem;
