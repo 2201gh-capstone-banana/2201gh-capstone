@@ -2,41 +2,96 @@ import React, { useRef, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import * as tf from "@tensorflow/tfjs";
 import * as tmImage from "@teachablemachine/image";
+import * as handPoseDetection from "@tensorflow-models/hand-pose-detection";
 import Webcam from "react-webcam";
-import { drawHand } from "./utilities";
+import { drawHand } from "../utilities/hand";
+import { drawFace } from "../utilities/face";
+import { drawPose } from "../utilities/pose";
+import { drawBothHands } from "../utilities/bothHands";
 import * as handpose from "@tensorflow-models/handpose";
+import * as poseDetection from "@tensorflow-models/pose-detection";
+import "@tensorflow/tfjs-backend-webgl";
 import * as fp from "fingerpose";
+import * as blazeface from "@tensorflow-models/blazeface";
+import { paperGesture } from "./phrases/hello-thankyou";
+import { loveYouGesture } from "./phrases/iloveyou";
+import { pleaseGesture } from "./phrases/please";
+import { youGesture } from "./phrases/you";
+import { niceGesture } from "./phrases/nice";
 /**
  * COMPONENT
  */
-
+//url = https://teachablemachine.withgoogle.com/models/86Rqg3NFc/
+const decideGesture = (gestureName, hand, face, pose) => {
+  const tipOfIndex = hand[0].landmarks[8];
+  const tipOfPinky = hand[0].landmarks[20];
+  const rightEye = face[0].landmarks[0];
+  const mouth = face[0].landmarks[3];
+  const shoulder = pose[0].keypoints[5];
+  if (gestureName === "hello-thankyou") {
+    if (
+      Math.abs(tipOfIndex[0] - mouth[0]) <= 50 &&
+      tipOfIndex[1] > mouth[1] &&
+      tipOfPinky[1] < shoulder.y
+    ) {
+      return "thank you";
+    } else if (tipOfIndex[1] < rightEye[1]) {
+      return "hello";
+    } else if (tipOfPinky[1] >= shoulder.y) {
+      return "please";
+    }
+  } else return gestureName;
+};
 export const Home = (props) => {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const [translation, setTranslation] = useState(null);
 
-  const URL = "https://teachablemachine.withgoogle.com/models/HBBfwFtF-/";
-
-  let model, webcam, labelContainer, maxPredictions;
-
+  const URL = "https://teachablemachine.withgoogle.com/models/86Rqg3NFc/";
   const checkpointURL = URL + "model.json";
   const metadataURL = URL + "metadata.json";
+
   const loadModel = async () => {
     const model = await tmImage.load(checkpointURL, metadataURL);
-    console.log("model-----hi", model);
-    console.log("hi");
     const net = await handpose.load();
-    console.log("net", net);
+
+    const netFace = await blazeface.load();
+    //pose
+    const detectorConfig = {
+      architecture: "MobileNetV1",
+      outputStride: 16,
+      inputResolution: { width: 640, height: 480 },
+      multiplier: 0.75,
+    };
+    const netPose = await poseDetection.createDetector(
+      poseDetection.SupportedModels.PoseNet,
+      detectorConfig
+    );
+
+    //both hands detection
+    const modelBothHands = handPoseDetection.SupportedModels.MediaPipeHands;
+    const detectorConfigBothHands = {
+      runtime: "tfjs",
+      modelType: "full",
+    };
+    const netBothHands = await handPoseDetection.createDetector(
+      modelBothHands,
+      detectorConfigBothHands
+    );
+    console.log("net both hands", netBothHands);
+    console.log("pose detector ", netPose);
+
+    console.log("net", net.pipeline.maxHandsNumber);
     setInterval(() => {
-      detect(model, net);
-    }, 1000);
+      detect(model, net, netFace, netPose, netBothHands);
+    }, 100);
   };
 
   //Loop and detect hands
 
-  async function detect(model, net) {
+  async function detect(model, net, netFace, netPose, netBothHands) {
     // predict can take in an image, video or canvas html element
-    // let prediction; what is this?
+
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
@@ -55,88 +110,110 @@ export const Home = (props) => {
       canvasRef.current.width = videoWidth;
       canvasRef.current.height = videoHeight;
       //make detections for hand
+      const estimationConfig = { flipHorizontal: false };
+      const bothHands = await netBothHands.estimateHands(
+        video,
+        estimationConfig
+      );
       const hand = await net.estimateHands(video);
-      console.log("hand", hand);
+      //make detections for face
+      const returnTensors = false;
+      const face = await netFace.estimateFaces(video, returnTensors);
 
-      //make detections for hands and finger gestures
-      if (hand.length > 0) {
+      const pose = await netPose.estimatePoses(video);
+
+      console.log("face is", face);
+      // const face = await
+      console.log("hand", hand);
+      console.log("both hands are", bothHands);
+      console.log("pose is", pose);
+
+      //draw mesh
+      const ctx = canvasRef.current.getContext("2d");
+
+      //drawHand(hand, ctx);
+      drawBothHands(bothHands, ctx);
+      drawFace(face, ctx);
+      drawPose(pose, ctx);
+      // if (bothHands.length === 2) {
+      //   console.log("get inside both hands???");
+      //   const gestureEstimatorForBothHand = new fp.GestureEstimator([
+      //     niceGesture,
+      //   ]);
+      //   const gestureLeftHand = await gestureEstimatorForBothHand.estimate(
+      //     bothHands[0].keypoints,
+      //     8
+      //   );
+      //   console.log("gesture left hand is", gestureLeftHand);
+      //   const gestureRightHand = await gestureEstimatorForBothHand.estimate(
+      //     bothHands[1].keypoints,
+      //     8
+      //   );
+      //   console.log("gesture right hand is", gestureRightHand);
+      //   if (gestureLeftHand.gestures && gestureRightHand.gestures) {
+      //     if (
+      //       gestureLeftHand.gestures[0].name === "nice" &&
+      //       gestureRightHand.gestures[0].name === "nice"
+      //     ) {
+      //       setTranslation("nice");
+      //     }
+      //   }
+      //   //make detections for hands and finger gestures
+      // }
+      if (bothHands.length === 1 && hand.length > 0 && face.length > 0) {
         const gestureEstimator = new fp.GestureEstimator([
-          // fp.Gestures.VictoryGesture,
-          fp.Gestures.ThumbsUpGesture,
+          paperGesture,
+          loveYouGesture,
+          pleaseGesture,
+          youGesture,
         ]);
 
         // 8 is the confidence level
         const gesture = await gestureEstimator.estimate(hand[0].landmarks, 8);
+        console.log("gesture is ", gesture);
         if (gesture.gestures && gesture.gestures.length > 0) {
           const score = gesture.gestures.map((prediction) => prediction.score);
 
           const maxScore = score.indexOf(Math.max.apply(null, score));
-
+          const gestureName = gesture.gestures[maxScore].name;
           console.log("gestures name is -", gesture.gestures[maxScore].name);
-          // setEmoji(gesture.gestures[maxScore].name);
 
-          // console.log("EMOJI", emoji);
+          const result = decideGesture(gestureName, hand, face, pose);
+          console.log("result is ---", result);
+          setTranslation(result);
         }
-      } else {
+      } else if (bothHands.length === 2) {
+        let prediction = await model.predict(video);
+        console.log("PREDICTION-----", prediction);
+        if (prediction && prediction.length > 0) {
+          const probability = prediction.map(
+            (prediction) => prediction.probability
+          );
+          console.log(probability);
+          const maxPro = probability.indexOf(Math.max.apply(null, probability));
+
+          //// Kaia just added the line below (hand.length > 0)
+          if (prediction[maxPro].probability > 0.8 && bothHands.length > 0) {
+            setTranslation(prediction[maxPro].className);
+          } else {
+            setTranslation(null);
+          }
+        }
+      } else if (bothHands.length === 0) {
+        setTranslation(null);
         return;
       }
-      // if (hand.length === 0) {
-      //   setTranslation[null];
-
-      let prediction = await model.predict(video);
-      console.log("PREDICTION-----", prediction);
-
-      //-------
-      if (prediction && prediction.length > 0) {
-        const probability = prediction.map(
-          (prediction) => prediction.probability
-        );
-        console.log(probability);
-        const maxPro = probability.indexOf(Math.max.apply(null, probability));
-
-        if (prediction[maxPro].probability > 0.9) {
-          setTranslation(prediction[maxPro].className);
-        } else {
-          setTranslation(null);
-        }
-        // console.log("gestures name is -", prediction[maxPro].name);
-
-        // console.log("TRANSLATION---", translation);
-        // setEmoji(gesture.gestures[maxScore].name);
-
-        // console.log("EMOJI", emoji);
-      } else {
-        return;
-      }
-      /*
-      
-      
-      
-      */
-
-      //-------
-      // for (let i = 0; i < maxPredictions; i++) {
-      //   const classPrediction =
-      //     prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-      //   // labelContainer.childNodes[i].innerHTML = classPrediction;
-      // }
-      //draw mesh
-      const ctx = canvasRef.current.getContext("2d");
-      drawHand(hand, ctx);
     }
   }
-  useEffect(() => { loadModel() }, [])
-  //only happens when you load the model
-  //state/
-  //use effect will update everytime that state changes
-  // const { username } = props;
+  useEffect(() => {
+    loadModel();
+  }, []);
 
   return (
     <div>
       <Webcam
         ref={webcamRef}
         style={{
-          // marginTop: -240,
           marginRight: "auto",
           marginLeft: "auto",
           position: "absolute",
@@ -153,12 +230,11 @@ export const Home = (props) => {
           marginLeft: "auto",
           marginRight: "auto",
           position: "absolute",
-          // marginTop: -240,
+
           textAlign: "center",
           zIndex: 9,
           width: 540,
           height: 480,
-          // background: "red",
         }}
       />
       <div

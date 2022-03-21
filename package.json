@@ -21,8 +21,12 @@
   "license": "MIT",
   "dependencies": {
     "@teachablemachine/image": "^0.8.5",
+    "@tensorflow-models/blazeface": "^0.0.7",
+    "@tensorflow-models/hand-pose-detection": "^2.0.0",
     "@tensorflow-models/handpose": "^0.0.7",
+    "@tensorflow-models/pose-detection": "^2.0.0",
     "@tensorflow/tfjs": "^3.14.0",
+    "@tensorflow/tfjs-backend-webgl": "^3.14.0",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
     "compression": "^1.7.3",
