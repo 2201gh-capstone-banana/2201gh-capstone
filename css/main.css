@@ -1,0 +1,17 @@
+.flex {
+	display: flex;
+}
+
+.wrap {
+	flex-wrap: wrap;
+}
+
+.input,
+.output {
+	flex-direction: column;
+	width: 550px;
+    height: 490px;
+	border: 4px solid black;
+}
+
+
