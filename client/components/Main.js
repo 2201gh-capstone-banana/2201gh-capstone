@@ -18,6 +18,7 @@ import { loveYouGesture } from './phrases/iloveyou'
 import { pleaseGesture } from './phrases/please'
 import { youGesture } from './phrases/you'
 import { niceGesture } from './phrases/nice'
+import { letters } from "./letters";
 /**
  * COMPONENT
  */
