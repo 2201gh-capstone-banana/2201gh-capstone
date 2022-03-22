@@ -19,6 +19,7 @@ export const Home = props => {
 	const webcamRef = useRef(null)
 	const canvasRef = useRef(null)
 	const [translation, setTranslation] = useState(null)
+	const [word, setWord] = useState(null)
 
 	const runHandpose = async () => {
 		const net = await handpose.load()
@@ -28,7 +29,7 @@ export const Home = props => {
 			detect(net)
 		}, 1000)
 	}
-
+	const array = []
 	async function detect(net) {
 		// predict can take in an image, video or canvas html element
 
@@ -72,7 +73,13 @@ export const Home = props => {
 					const maxScore = score.indexOf(Math.max.apply(null, score))
 					const gestureName = gesture.gestures[maxScore].name
 					console.log('gestures name is -', gesture.gestures[maxScore].name)
+
+					array.push(gestureName)
+					console.log('array=====', array)
+					let result=array.join('')
+					console.log('result=====', result)
 					setTranslation(gestureName)
+					setWord(result)
 				}
 			}
 			const ctx = canvasRef.current.getContext('2d')
@@ -82,44 +89,40 @@ export const Home = props => {
 	useEffect(() => {
 		runHandpose()
 	}, [])
-
+	console.log('translation====', translation)
+	console.log('word=====', word)
 	return (
 		<div>
 			<h1>Online translator </h1>
-			<section class="flex wrap">
-				<div class="input">
-					<Webcam
-						ref={webcamRef}
-						style={{
-							marginRight: 'auto',
-							marginLeft: 'auto',
-							position: 'absolute',
-							zIndex: 9,
-							width: 540,
-							height: 480,
-							backgroundColor: 'black'
-						}}
-					/>
+			<h2>Letter:{translation} </h2>
+			<h2>Word:{word} </h2>
 
-					<canvas
-						ref={canvasRef}
-						style={{
-							marginLeft: 'auto',
-							marginRight: 'auto',
-							position: 'absolute',
+			<Webcam
+				ref={webcamRef}
+				style={{
+					marginRight: 'auto',
+					marginLeft: 'auto',
+					position: 'absolute',
+					zIndex: 9,
+					width: 540,
+					height: 480,
+					backgroundColor: 'black'
+				}}
+			/>
 
-							textAlign: 'center',
-							zIndex: 9,
-							width: 540,
-							height: 480
-						}}
-					/>
-				</div>
-				<div class="output">
-					<h2>translating...</h2>
-					{translation}
-				</div>
-			</section>
+			<canvas
+				ref={canvasRef}
+				style={{
+					marginLeft: 'auto',
+					marginRight: 'auto',
+					position: 'absolute',
+
+					textAlign: 'center',
+					zIndex: 9,
+					width: 540,
+					height: 480
+				}}
+			/>
 		</div>
 	)
 }
