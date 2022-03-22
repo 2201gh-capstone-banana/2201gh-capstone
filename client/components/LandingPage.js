@@ -2,10 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import Brand from './Brand'
+import Navbar from './Navbar'
 
 const LandingPage = () => {
 	return (
 		<header className="header">
+			<Navbar/>
 			<Brand />
 
 			<section className="header__section">
@@ -20,6 +22,7 @@ const LandingPage = () => {
 				<Link className="header__link" to="/signin">
 					Get started
 				</Link>
+				
 			</section>
 		</header>
 	)
