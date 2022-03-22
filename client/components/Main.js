@@ -18,6 +18,7 @@ import { loveYouGesture } from './phrases/iloveyou'
 import { pleaseGesture } from './phrases/please'
 import { youGesture } from './phrases/you'
 import { niceGesture } from './phrases/nice'
+import { letters } from "./letters";
 /**
  * COMPONENT
  */
@@ -42,7 +43,7 @@ const decideGesture = (gestureName, hand, face, pose) => {
 		}
 	} else return gestureName
 }
-export const Home = props => {
+export const Main = props => {
 	const webcamRef = useRef(null)
 	const canvasRef = useRef(null)
 	const [translation, setTranslation] = useState(null)
@@ -278,4 +279,4 @@ const mapState = state => {
 	}
 }
 
-export default connect(mapState)(Home)
+export default connect(mapState)(Main)
