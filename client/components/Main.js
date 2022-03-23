@@ -18,7 +18,7 @@ import { loveYouGesture } from './phrases/iloveyou'
 import { pleaseGesture } from './phrases/please'
 import { youGesture } from './phrases/you'
 import { niceGesture } from './phrases/nice'
-import { letters } from "./letters";
+import { letters } from './letters'
 /**
  * COMPONENT
  */
@@ -180,8 +180,10 @@ export const Main = props => {
 			//   }
 			//   //make detections for hands and finger gestures
 			// }
+
 			if (bothHands.length === 1 && hand.length > 0 && face.length > 0) {
 				const gestureEstimator = new fp.GestureEstimator([
+					...letters.allLetters,
 					paperGesture,
 					loveYouGesture,
 					pleaseGesture,
