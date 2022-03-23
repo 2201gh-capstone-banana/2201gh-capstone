@@ -1,6 +1,7 @@
 import {Finger, FingerCurl, FingerDirection, GestureDescription} from 'fingerpose';
 
-export const letterG = new GestureDescription('G');
+const letterG = new GestureDescription('G')
+export default letterG
 
 
 //Thumb

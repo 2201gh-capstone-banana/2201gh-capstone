@@ -1,6 +1,7 @@
 import {Finger, FingerCurl, FingerDirection, GestureDescription} from 'fingerpose';
 
-export const letterH = new GestureDescription('H');
+const letterH = new GestureDescription('H')
+export default letterH
 
 //Thumb
 letterH.addCurl(Finger.Thumb, FingerCurl.NoCurl, 1.0);
