@@ -3,21 +3,21 @@ import {Finger, FingerCurl, FingerDirection, GestureDescription} from 'fingerpos
 export const letterD = new GestureDescription('D');
 
 //Thumb
-dSign.addCurl(Finger.Thumb, FingerCurl.HalfCurl, 1.0);
-dSign.addDirection(Finger.Index, FingerDirection.VerticalUp, 0.70);
+letterD.addCurl(Finger.Thumb, FingerCurl.HalfCurl, 1.0);
+letterD.addDirection(Finger.Index, FingerDirection.VerticalUp, 0.70);
 
 //Index
-dSign.addCurl(Finger.Index, FingerCurl.NoCurl, 1);
-dSign.addDirection(Finger.Index, FingerDirection.VerticalUp, 0.70);
+letterD.addCurl(Finger.Index, FingerCurl.NoCurl, 1);
+letterD.addDirection(Finger.Index, FingerDirection.VerticalUp, 0.70);
 
 //Middle
-dSign.addCurl(Finger.Middle, FingerCurl.FullCurl, 1);
-dSign.addDirection(Finger.Middle, FingerDirection.VerticalUp, 0.70);
+letterD.addCurl(Finger.Middle, FingerCurl.FullCurl, 1);
+letterD.addDirection(Finger.Middle, FingerDirection.VerticalUp, 0.70);
 
 //Ring
-dSign.addCurl(Finger.Ring, FingerCurl.FullCurl, 1);
-dSign.addDirection(Finger.Ring, FingerDirection.VerticalUp, 0.70);
+letterD.addCurl(Finger.Ring, FingerCurl.FullCurl, 1);
+letterD.addDirection(Finger.Ring, FingerDirection.VerticalUp, 0.70);
 
 //Pinky
-dSign.addCurl(Finger.Pinky, FingerCurl.FullCurl, 1);
-dSign.addDirection(Finger.Pinky, FingerDirection.VerticalUp, 0.70);
+letterD.addCurl(Finger.Pinky, FingerCurl.FullCurl, 1);
+letterD.addDirection(Finger.Pinky, FingerDirection.VerticalUp, 0.70);
