@@ -2,24 +2,25 @@
    
 import {Finger, FingerCurl, FingerDirection, GestureDescription} from 'fingerpose';
 
-export const letterF = new GestureDescription('F');
+const letterF = new GestureDescription('F')
+export default letterF
 
 //Thumb
-fSign.addCurl(Finger.Thumb, FingerCurl.HalfCurl, 1.0);
-fSign.addDirection(Finger.Index, FingerDirection.DiagonalUpRight, 0.70);
+letterF.addCurl(Finger.Thumb, FingerCurl.HalfCurl, 1.0);
+letterF.addDirection(Finger.Index, FingerDirection.DiagonalUpRight, 0.70);
 
 //Index
-fSign.addCurl(Finger.Index, FingerCurl.FullCurl, 1);
-fSign.addDirection(Finger.Index, FingerDirection.DiagonalUpRight, 0.70);
+letterF.addCurl(Finger.Index, FingerCurl.FullCurl, 1);
+letterF.addDirection(Finger.Index, FingerDirection.DiagonalUpRight, 0.70);
 
 //Middle
-fSign.addCurl(Finger.Middle, FingerCurl.NoCurl, 1);
-fSign.addDirection(Finger.Middle, FingerDirection.VerticalUp, 0.70);
+letterF.addCurl(Finger.Middle, FingerCurl.NoCurl, 1);
+letterF.addDirection(Finger.Middle, FingerDirection.VerticalUp, 0.70);
 
 //Ring
-fSign.addCurl(Finger.Ring, FingerCurl.NoCurl, 1);
-fSign.addDirection(Finger.Ring, FingerDirection.VerticalUp, 0.70);
+letterF.addCurl(Finger.Ring, FingerCurl.NoCurl, 1);
+letterF.addDirection(Finger.Ring, FingerDirection.VerticalUp, 0.70);
 
 //Pinky
-fSign.addCurl(Finger.Pinky, FingerCurl.NoCurl, 1);
-fSign.addDirection(Finger.Pinky, FingerDirection.VerticalUp, 0.70);
+letterF.addCurl(Finger.Pinky, FingerCurl.NoCurl, 1);
+letterF.addDirection(Finger.Pinky, FingerDirection.VerticalUp, 0.70);
