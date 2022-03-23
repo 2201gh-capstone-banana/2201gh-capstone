@@ -1,23 +1,23 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react'
 import { connect } from 'react-redux'
-import * as tf from '@tensorflow/tfjs'
-import * as tmImage from '@teachablemachine/image'
-import * as handPoseDetection from '@tensorflow-models/hand-pose-detection'
+// import * as tf from '@tensorflow/tfjs'
+// import * as tmImage from '@teachablemachine/image'
+// import * as handPoseDetection from '@tensorflow-models/hand-pose-detection'
 import Webcam from 'react-webcam'
 import { drawHand } from '../utilities/hand'
-import { drawFace } from '../utilities/face'
-import { drawPose } from '../utilities/pose'
-import { drawBothHands } from '../utilities/bothHands'
+// import { drawFace } from '../utilities/face'
+// import { drawPose } from '../utilities/pose'
+// import { drawBothHands } from '../utilities/bothHands'
 import * as handpose from '@tensorflow-models/handpose'
-import * as poseDetection from '@tensorflow-models/pose-detection'
+// import * as poseDetection from '@tensorflow-models/pose-detection'
 import '@tensorflow/tfjs-backend-webgl'
 import * as fp from 'fingerpose'
-import * as blazeface from '@tensorflow-models/blazeface'
-import { paperGesture } from './phrases/hello-thankyou'
-import { loveYouGesture } from './phrases/iloveyou'
-import { pleaseGesture } from './phrases/please'
-import { youGesture } from './phrases/you'
-import { niceGesture } from './phrases/nice'
+// import * as blazeface from '@tensorflow-models/blazeface'
+// import { paperGesture } from './phrases/hello-thankyou'
+// import { loveYouGesture } from './phrases/iloveyou'
+// import { pleaseGesture } from './phrases/please'
+// import { youGesture } from './phrases/you'
+// import { niceGesture } from './phrases/nice'
 import { letters } from './letters'
 /**
  * COMPONENT
@@ -118,14 +118,15 @@ export const Main = props => {
 			if (hand.length > 0) {
 				const gestureEstimator = new fp.GestureEstimator([
 					...letters.allLetters,
-					paperGesture,
-					loveYouGesture,
-					pleaseGesture,
-					youGesture
+					// paperGesture,
+					// loveYouGesture,
+					// pleaseGesture,
+					// youGesture
 				])
 
 				// 8 is the confidence level
 				const gesture = await gestureEstimator.estimate(hand[0].landmarks, 8)
+				console.log("THIS IS THE GESTURE:", gesture)
 				if (gesture.gestures && gesture.gestures.length > 0) {
 					const score = gesture.gestures.map(prediction => prediction.score)
 
