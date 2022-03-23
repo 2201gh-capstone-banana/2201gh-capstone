@@ -48,39 +48,15 @@ export const Main = props => {
 	console.log("WEBCAM REF", webcamRef)
 	const canvasRef = useRef(null)
 	const [translation, setTranslation] = useState(null)
-	const [isDetectRunning, setIsDetectRunning] = useState(false)
-
+	const [isDetectRunning, setIsDetectRunning] = useState(false);
 	const netRef = useRef(null);
+	const handRef = useRef(null);
 
 	const loadModel = async () => {
 
 		const net = await handpose.load()
 		console.log("THIS IS NET IN LOADMODEL --->", net)
-		// const netFace = await blazeface.load()
-		// //pose
-		// const detectorConfig = {
-		// 	architecture: 'MobileNetV1',
-		// 	outputStride: 16,
-		// 	inputResolution: { width: 640, height: 480 },
-		// 	multiplier: 0.75
-		// }
-		// const netPose = await poseDetection.createDetector(
-		// 	poseDetection.SupportedModels.PoseNet,
-		// 	detectorConfig
-		// )
-
-		// //both hands detection
-		// const modelBothHands = handPoseDetection.SupportedModels.MediaPipeHands
-		// const detectorConfigBothHands = {
-		// 	runtime: 'tfjs',
-		// 	modelType: 'full'
-		// }
-		// const netBothHands = await handPoseDetection.createDetector(
-		// 	modelBothHands,
-		// 	detectorConfigBothHands
-		// )
-		// setNet(net);
-		// netRef = net;
+	
 		netRef.current = net;
 		// setModel(net);
 		webcamInit();
@@ -117,84 +93,52 @@ export const Main = props => {
 			//  Set canvas height and width
 			canvasRef.current.width = videoWidth
 			canvasRef.current.height = videoHeight
+			// console.log("this is before requestanimationframe")
 
-			console.log("this is before requestanimationframe")
-
-			window.requestAnimationFrame(loop)
+			// window.requestAnimationFrame(loop)
+			console.log("IS DETECT RUNNING?", isDetectRunning)
+			setInterval(() => {
+				if (isDetectRunning === false){
+					detect(netRef.current);
+				}
+			}, 1000)
 		} else {
 			console.log("this is in the else part of webcam Init, it did not make it through if")
 		}
 	}
 
-	async function loop() {
-		console.log('inside loop')
-		await detect(netRef.current)
-		window.requestAnimationFrame(loop)
-		const ctx = canvasRef.current.getContext('2d')
-		drawHand(hand, ctx);
-		// const requestanimationframe = window.requestAnimationFrame(loop)
-		// requestanimationframe(net)
-	}
+	// async function loop() {
+	// 	console.log('inside loop')
+	// 	await detect(netRef.current)
+	// 	window.requestAnimationFrame(loop)
+	// 	// const requestanimationframe = window.requestAnimationFrame(loop)
+	// 	// requestanimationframe(net)
+	// }
 
 	//Loop and detect hands
 
 	// async function detect(model, net, netFace, netPose, netBothHands) {
 	async function detect(net) {
+		setIsDetectRunning(true);
 		// const net = await handpose.load()
 		console.log("this is placed at the top of detect")
 		const video = webcamRef.current.video
 		// predict can take in an image, video or canvas html element
 		//make detections for hand
 		const estimationConfig = { flipHorizontal: false }
-		// const bothHands = await netBothHands.estimateHands(video, estimationConfig)
-		// const net = await handpose.load()
+
 		console.log("THIS IS VIDEO -->", video)
 		console.log("THIS IS NET -->", net)
 		const hand = await net.estimateHands(video)
+		handRef.current = hand;
+
 		console.log("THIS IS HAND -->", hand)
+
+		const ctx = canvasRef.current.getContext('2d')
+
+		drawHand(handRef.current, ctx);
 		//make detections for face
-		const returnTensors = false
-		// const face = await netFace.estimateFaces(video, returnTensors)
-
-		// const pose = await netPose.estimatePoses(video)
-
-		//this grabbing of the 2d context, this shouldn't need to be done more than once.
-		//you should be able to grab context and have reference to it, and use it in
-		//every detect call. we're doing this often enough to make it matter.
-		//want to dig through detect code and sus out whether everything we're doing
-		//in detect code absolutely needed
-		//draw mesh
-		// const ctx = canvasRef.current.getContext('2d')
-
-		// drawHand(hand, ctx);
-		// drawBothHands(bothHands, ctx)
-		// drawFace(face, ctx)
-		// drawPose(pose, ctx)
-		// if (bothHands.length === 2) {
-		//   console.log("get inside both hands???");
-		//   const gestureEstimatorForBothHand = new fp.GestureEstimator([
-		//     niceGesture,
-		//   ]);
-		//   const gestureLeftHand = await gestureEstimatorForBothHand.estimate(
-		//     bothHands[0].keypoints,
-		//     8
-		//   );
-		//   console.log("gesture left hand is", gestureLeftHand);
-		//   const gestureRightHand = await gestureEstimatorForBothHand.estimate(
-		//     bothHands[1].keypoints,
-		//     8
-		//   );
-		//   console.log("gesture right hand is", gestureRightHand);
-		//   if (gestureLeftHand.gestures && gestureRightHand.gestures) {
-		//     if (
-		//       gestureLeftHand.gestures[0].name === "nice" &&
-		//       gestureRightHand.gestures[0].name === "nice"
-		//     ) {
-		//       setTranslation("nice");
-		//     }
-		//   }
-		//   //make detections for hands and finger gestures
-		// }
+		// const returnTensors = false
 
 		if (hand.length > 0) {
 			const gestureEstimator = new fp.GestureEstimator([
@@ -218,10 +162,12 @@ export const Main = props => {
 				// console.log('result is ---', result)
 				setTranslation(gestureName)
 			}
+
 		} else if (hand.length === 0) {
 			setTranslation(null)
 			return
 		}
+		setIsDetectRunning(false);
 	}
 
 	useEffect(() => {
