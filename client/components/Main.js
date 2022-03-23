@@ -22,80 +22,70 @@ import { letters } from './letters'
 /**
  * COMPONENT
  */
-const decideGesture = (gestureName, hand, face, pose) => {
-	const tipOfIndex = hand[0].landmarks[8]
-	const tipOfPinky = hand[0].landmarks[20]
-	const rightEye = face[0].landmarks[0]
-	const mouth = face[0].landmarks[3]
-	const shoulder = pose[0].keypoints[5]
-	if (gestureName === 'hello-thankyou') {
-		if (
-			Math.abs(tipOfIndex[0] - mouth[0]) <= 50 &&
-			tipOfIndex[1] > mouth[1] &&
-			tipOfPinky[1] < shoulder.y
-		) {
-			return 'thank you'
-		} else if (tipOfIndex[1] < rightEye[1]) {
-			return 'hello'
-		} else if (tipOfPinky[1] >= shoulder.y) {
-			return 'please'
-		}
-	} else return gestureName
-}
+// const decideGesture = (gestureName, hand, face, pose) => {
+// 	const tipOfIndex = hand[0].landmarks[8]
+// 	const tipOfPinky = hand[0].landmarks[20]
+// 	// const rightEye = face[0].landmarks[0]
+// 	// const mouth = face[0].landmarks[3]
+// 	// const shoulder = pose[0].keypoints[5]
+// 	if (gestureName === 'hello-thankyou') {
+// 		if (
+// 			Math.abs(tipOfIndex[0] - mouth[0]) <= 50 &&
+// 			tipOfIndex[1] > mouth[1] &&
+// 			tipOfPinky[1] < shoulder.y
+// 		) {
+// 			return 'thank you'
+// 		} else if (tipOfIndex[1] < rightEye[1]) {
+// 			return 'hello'
+// 		} else if (tipOfPinky[1] >= shoulder.y) {
+// 			return 'please'
+// 		}
+// 	} else return gestureName
+// }
 export const Main = props => {
 	const webcamRef = useRef(null)
-	// const [webcam, setWebcam] = useState(null)
+	// const [turnOnWebcam, setTurnOnWebcam] = useState(false);
 	console.log("WEBCAM REF", webcamRef)
 	const canvasRef = useRef(null)
 	const [translation, setTranslation] = useState(null)
+	const [isDetectRunning, setIsDetectRunning] = useState(false)
+
+	const netRef = useRef(null);
 
 	const loadModel = async () => {
-		// const model = await tmImage.load(checkpointURL, metadataURL)
+
 		const net = await handpose.load()
+		console.log("THIS IS NET IN LOADMODEL --->", net)
+		// const netFace = await blazeface.load()
+		// //pose
+		// const detectorConfig = {
+		// 	architecture: 'MobileNetV1',
+		// 	outputStride: 16,
+		// 	inputResolution: { width: 640, height: 480 },
+		// 	multiplier: 0.75
+		// }
+		// const netPose = await poseDetection.createDetector(
+		// 	poseDetection.SupportedModels.PoseNet,
+		// 	detectorConfig
+		// )
 
-		const netFace = await blazeface.load()
-		//pose
-		const detectorConfig = {
-			architecture: 'MobileNetV1',
-			outputStride: 16,
-			inputResolution: { width: 640, height: 480 },
-			multiplier: 0.75
-		}
-		const netPose = await poseDetection.createDetector(
-			poseDetection.SupportedModels.PoseNet,
-			detectorConfig
-		)
-
-		//both hands detection
-		const modelBothHands = handPoseDetection.SupportedModels.MediaPipeHands
-		const detectorConfigBothHands = {
-			runtime: 'tfjs',
-			modelType: 'full'
-		}
-		const netBothHands = await handPoseDetection.createDetector(
-			modelBothHands,
-			detectorConfigBothHands
-		)
-		console.log('net both hands', netBothHands)
-		console.log('pose detector ', netPose)
-
-		console.log('net', net.pipeline.maxHandsNumber)
-
-		// setInterval(() => {
-		// 	detect(model, net, netFace, netPose, netBothHands)
-		// 	//this function is being called so quickly, you want to make it as optimized
-		// 	//as possible
-		// 	//"the fact you're using a setInterval could be a problem"
-		// 	//it's asynchronous, so it's possible that two detects can happen at the same time.
-		// 	//detect function sets a state on the component that says detection is happening.
-		// 	//when detect function is completed you change that state back to false
-		// 	//so you can create a gaurd that prevents another detect function
-		// 	//request animation frame
-		// 	//if resources are available, and I can perform this function.
-		// 	//Window.requestAnimationFrame(detect())
-		// 	//then within detect, call this again. sort of recursive for detect
-		// 	//this means that the detect funtions are less likely to overlap with each other
-		// }, 100)
+		// //both hands detection
+		// const modelBothHands = handPoseDetection.SupportedModels.MediaPipeHands
+		// const detectorConfigBothHands = {
+		// 	runtime: 'tfjs',
+		// 	modelType: 'full'
+		// }
+		// const netBothHands = await handPoseDetection.createDetector(
+		// 	modelBothHands,
+		// 	detectorConfigBothHands
+		// )
+		// setNet(net);
+		// netRef = net;
+		netRef.current = net;
+		// setModel(net);
+		webcamInit();
+		// const requestanimationframe = window.requestAnimationFrame(loop)
+		// requestanimationframe(net);
 	}
 
 	const webcamInit = () => {
@@ -105,8 +95,8 @@ export const Main = props => {
 		console.log("Is webcamRef undefined?", webcamRef.current === 'undefined')
 		console.log("Is webcamRef readystate = 4?", webcamRef.current.video.readyState === 4)
 		if (
-			// typeof webcamRef !== 'undefined' &&
-			webcamRef !== null &&
+			webcamRef.current !== 'undefined' &&
+			webcamRef.current !== null &&
 			webcamRef.current.video.readyState === 4
 		) {
 
@@ -138,20 +128,28 @@ export const Main = props => {
 
 	async function loop() {
 		console.log('inside loop')
-		await detect()
+		await detect(netRef.current)
 		window.requestAnimationFrame(loop)
+		const ctx = canvasRef.current.getContext('2d')
+		drawHand(hand, ctx);
+		// const requestanimationframe = window.requestAnimationFrame(loop)
+		// requestanimationframe(net)
 	}
 
 	//Loop and detect hands
 
-	async function detect(model, net, netFace, netPose, netBothHands) {
+	// async function detect(model, net, netFace, netPose, netBothHands) {
+	async function detect(net) {
+		// const net = await handpose.load()
 		console.log("this is placed at the top of detect")
+		const video = webcamRef.current.video
 		// predict can take in an image, video or canvas html element
 		//make detections for hand
 		const estimationConfig = { flipHorizontal: false }
 		// const bothHands = await netBothHands.estimateHands(video, estimationConfig)
 		// const net = await handpose.load()
-
+		console.log("THIS IS VIDEO -->", video)
+		console.log("THIS IS NET -->", net)
 		const hand = await net.estimateHands(video)
 		console.log("THIS IS HAND -->", hand)
 		//make detections for face
@@ -166,9 +164,9 @@ export const Main = props => {
 		//want to dig through detect code and sus out whether everything we're doing
 		//in detect code absolutely needed
 		//draw mesh
-		const ctx = canvasRef.current.getContext('2d')
+		// const ctx = canvasRef.current.getContext('2d')
 
-		drawHand(hand, ctx);
+		// drawHand(hand, ctx);
 		// drawBothHands(bothHands, ctx)
 		// drawFace(face, ctx)
 		// drawPose(pose, ctx)
@@ -216,9 +214,9 @@ export const Main = props => {
 				const gestureName = gesture.gestures[maxScore].name
 				console.log('gestures name is -', gesture.gestures[maxScore].name)
 
-				const result = decideGesture(gestureName, hand, face, pose)
-				console.log('result is ---', result)
-				setTranslation(result)
+				// const result = decideGesture(gestureName, hand)
+				// console.log('result is ---', result)
+				setTranslation(gestureName)
 			}
 		} else if (hand.length === 0) {
 			setTranslation(null)
@@ -234,23 +232,33 @@ export const Main = props => {
 	}, [])
 
 	// useEffect(() => {
+	// 	window.requestAnimationFrame(loop);
+	// 	console.log('webcamInit useeffect call')
+	// 	// webcamInit()
+	// 	// console.log('after webcam init')
+	// }, [model])
+
+	// useEffect(() => {
 	// 	console.log('UseEffect for webcam Init called');
+	// 	loadModel()
 	// 	webcamInit();
 	// 	console.log('UseEffect for webcam Init finished');
 	// 	console.log("webcam ref is equal to:",webcamRef)
+	// }, [turnOnWebcam])
+	// useCallback(() => {
+	// 	console.log('UseEffect for webcam Init called');
+	// 	webcamInit();
+	// 	console.log('UseEffect for webcam Init finished');
+	// 	console.log("webcam ref is equal to:", webcamRef)
 	// }, [webcamRef])
-	useCallback(() => {
-		console.log('UseEffect for webcam Init called');
-		webcamInit();
-		console.log('UseEffect for webcam Init finished');
-		console.log("webcam ref is equal to:", webcamRef)
-	}, [webcamRef])
 
 
 	return (
+
 		<div>
 			<Webcam
 				ref={webcamRef}
+				// onLoad={() => webcamInit()}
 				style={{
 					marginRight: 'auto',
 					marginLeft: 'auto',
@@ -261,7 +269,6 @@ export const Main = props => {
 					backgroundColor: 'black'
 				}}
 			/>
-
 			<canvas
 				ref={canvasRef}
 				style={{
