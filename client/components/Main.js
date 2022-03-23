@@ -48,15 +48,13 @@ export const Main = props => {
 	console.log("WEBCAM REF", webcamRef)
 	const canvasRef = useRef(null)
 	const [translation, setTranslation] = useState(null)
-	const [isDetectRunning, setIsDetectRunning] = useState(false);
+	// const [isDetectRunning, setIsDetectRunning] = useState(false)
 	const netRef = useRef(null);
 	const handRef = useRef(null);
 
 	const loadModel = async () => {
 
-		const net = await handpose.load()
-		console.log("THIS IS NET IN LOADMODEL --->", net)
-	
+		const net = await handpose.load()	
 		netRef.current = net;
 		// setModel(net);
 		webcamInit();
@@ -65,27 +63,15 @@ export const Main = props => {
 	}
 
 	const webcamInit = () => {
-		console.log("this is at the top of webcam init")
-		console.log("webcamRef.current", webcamRef.current)
-		console.log("Is webcamRef null?", webcamRef.current === null)
-		console.log("Is webcamRef undefined?", webcamRef.current === 'undefined')
-		console.log("Is webcamRef readystate = 4?", webcamRef.current.video.readyState === 4)
+		console.log("webcamInit is running...")
 		if (
 			webcamRef.current !== 'undefined' &&
 			webcamRef.current !== null &&
 			webcamRef.current.video.readyState === 4
 		) {
-
-			//we don't need to use this every time we call detect. maybe we should move this outside
-			//of the detect function context.
-			//go through this code and ensure that everything is actually something we have to redo
-			//in order to detect. if not, we can find a way to do it once in load model, keep
-			//a reference using useRef, and use reference to it.
-			// Get Video Properties
 			const video = webcamRef.current.video
 			const videoWidth = webcamRef.current.video.videoWidth
 			const videoHeight = webcamRef.current.video.videoHeight
-			console.log("video", video)
 			// Set video width
 			webcamRef.current.video.width = videoWidth
 			webcamRef.current.video.height = videoHeight
@@ -93,50 +79,39 @@ export const Main = props => {
 			//  Set canvas height and width
 			canvasRef.current.width = videoWidth
 			canvasRef.current.height = videoHeight
-			// console.log("this is before requestanimationframe")
 
-			// window.requestAnimationFrame(loop)
-			console.log("IS DETECT RUNNING?", isDetectRunning)
-			setInterval(() => {
-				if (isDetectRunning === false){
-					detect(netRef.current);
-				}
-			}, 1000)
+			window.requestAnimationFrame(loop)
+
 		} else {
 			console.log("this is in the else part of webcam Init, it did not make it through if")
 		}
 	}
 
-	// async function loop() {
-	// 	console.log('inside loop')
-	// 	await detect(netRef.current)
-	// 	window.requestAnimationFrame(loop)
-	// 	// const requestanimationframe = window.requestAnimationFrame(loop)
-	// 	// requestanimationframe(net)
-	// }
+	async function loop() {
+		console.log('inside loop')
+		await detect(netRef.current)
+		window.requestAnimationFrame(loop)
+		// const requestanimationframe = window.requestAnimationFrame(loop)
+		// requestanimationframe(net)
+	}
 
 	//Loop and detect hands
 
 	// async function detect(model, net, netFace, netPose, netBothHands) {
 	async function detect(net) {
-		setIsDetectRunning(true);
+		// setIsDetectRunning(true);
 		// const net = await handpose.load()
-		console.log("this is placed at the top of detect")
+		console.log("detect function is running...")
 		const video = webcamRef.current.video
 		// predict can take in an image, video or canvas html element
 		//make detections for hand
 		const estimationConfig = { flipHorizontal: false }
 
-		console.log("THIS IS VIDEO -->", video)
-		console.log("THIS IS NET -->", net)
 		const hand = await net.estimateHands(video)
-		handRef.current = hand;
-
-		console.log("THIS IS HAND -->", hand)
 
 		const ctx = canvasRef.current.getContext('2d')
 
-		drawHand(handRef.current, ctx);
+		drawHand(hand, ctx);
 		//make detections for face
 		// const returnTensors = false
 
@@ -158,8 +133,6 @@ export const Main = props => {
 				const gestureName = gesture.gestures[maxScore].name
 				console.log('gestures name is -', gesture.gestures[maxScore].name)
 
-				// const result = decideGesture(gestureName, hand)
-				// console.log('result is ---', result)
 				setTranslation(gestureName)
 			}
 
@@ -167,12 +140,12 @@ export const Main = props => {
 			setTranslation(null)
 			return
 		}
-		setIsDetectRunning(false);
+		// setIsDetectRunning(false);
 	}
 
 	useEffect(() => {
 		loadModel()
-		console.log('first use effect')
+		console.log('use effect for component did mount')
 		// webcamInit()
 		// console.log('after webcam init')
 	}, [])
