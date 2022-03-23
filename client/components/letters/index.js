@@ -1,12 +1,12 @@
-// import from "./letterA";
-// import from "./letterB";
-// import from "./letterC";
-// import from "./letterD";
-// import from "./letterE";
-// import from "./letterF";
-// import from "./letterG";
-// import from "./letterH";
-// import from "./letterI";
+import letterA from "./letterA";
+import letterB from "./letterB";
+import letterC from "./letterC";
+import letterD from "./letterD";
+import letterE from "./letterE";
+import letterF from "./letterF";
+import letterG from "./letterG";
+import letterH from "./letterH";
+import letterI from "./letterI";
 // import from "./letterJ";
 // import from "./letterK";
 // import from "./letterL";
@@ -26,15 +26,15 @@ import letterY from "./letterY";
 import letterZ from "./letterZ";
 
 export const letters = {
-//   A: ,
-//   B: ,
-//   C: ,
-//   D: ,
-//   E: ,
-//   F: ,
-//   G: ,
-//   H: ,
-//   I: ,
+  A: letterA,
+  B: letterB,
+  C: letterC,
+  D: letterD,
+  E: letterE,
+  F: letterF,
+  G: letterG,
+  H: letterH,
+  I: letterI,
 //   J: ,
 //   K: ,
 //   L: ,
