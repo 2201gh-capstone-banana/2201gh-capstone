@@ -145,28 +145,6 @@ export const Main = props => {
 		loadModel();
 	}, [])
 
-	// useEffect(() => {
-	// 	window.requestAnimationFrame(loop);
-	// 	console.log('webcamInit useeffect call')
-	// 	// webcamInit()
-	// 	// console.log('after webcam init')
-	// }, [model])
-
-	// useEffect(() => {
-	// 	console.log('UseEffect for webcam Init called');
-	// 	loadModel()
-	// 	webcamInit();
-	// 	console.log('UseEffect for webcam Init finished');
-	// 	console.log("webcam ref is equal to:",webcamRef)
-	// }, [turnOnWebcam])
-	// useCallback(() => {
-	// 	console.log('UseEffect for webcam Init called');
-	// 	webcamInit();
-	// 	console.log('UseEffect for webcam Init finished');
-	// 	console.log("webcam ref is equal to:", webcamRef)
-	// }, [webcamRef])
-
-
 	return (
 
 		<div>
