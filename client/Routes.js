@@ -9,6 +9,7 @@ import { autoSignin } from './store/auth'
 import LandingPage from './components/LandingPage'
 import AuthForm from './components/AuthForm'
 import Main from './components/Main'
+import Learning from './components/Learning'
 
 class Routes extends React.Component {
 	componentDidMount() {
@@ -27,6 +28,7 @@ class Routes extends React.Component {
 					{this.props.correctUser ? <Redirect to="/main" /> : <AuthForm />}
 				</Route>
 				<Route path="/main" component={Main} />
+				<Route path="/learning" component={Learning} />
 			</Switch>
 		)
 	}
