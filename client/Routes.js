@@ -20,8 +20,9 @@ class Routes extends React.Component {
 
 	render() {
 		return (
-			<Switch>
+			<Router>
 			<Navbar />
+			<Switch>
 				<Route exact path="/" component={LandingPage} />
 				{/*
 					For auto signin when token is in local storage.
@@ -34,6 +35,7 @@ class Routes extends React.Component {
 				<Route path="/main" component={Main} />
 				<Route path="/learning" component={Learning} />
 			</Switch>
+</Router>
 		)
 	}
 }
