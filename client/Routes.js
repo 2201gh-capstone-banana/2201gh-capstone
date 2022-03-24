@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 /* Thunk. */
@@ -9,6 +9,8 @@ import { autoSignin } from './store/auth'
 import LandingPage from './components/LandingPage'
 import AuthForm from './components/AuthForm'
 import Main from './components/Main'
+import Navbar from './components/Navbar'
+import Home from './components/Home'
 
 class Routes extends React.Component {
 	componentDidMount() {
@@ -17,17 +19,27 @@ class Routes extends React.Component {
 
 	render() {
 		return (
-			<Switch>
-				<Route exact path="/" component={LandingPage} />
-				{/*
-					For auto signin when token is in local storage.
-					Hide the signin page if token is valid.
-				*/}
-				<Route path="/signin">
-					{this.props.correctUser ? <Redirect to="/main" /> : <AuthForm />}
-				</Route>
-				<Route path="/main" component={Main} />
-			</Switch>
+			// <Switch>
+			// 	<Route exact path="/" component={LandingPage} />
+			// 	{/*
+			// 		For auto signin when token is in local storage.
+			// 		Hide the signin page if token is valid.
+			// 	*/}
+			// 	<Route path="/signin">
+			// 		{this.props.correctUser ? <Redirect to="/main" /> : <AuthForm />}
+			// 	</Route>
+			// 	<Route path="/main" component={Main} />
+			// </Switch>
+			<Router>
+				<Navbar />
+				<Home />
+				<Switch>
+					<Route exact path="/" component={LandingPage} />
+					<Route exact path="/home" component={Home} />
+					<Route exact path="/main" component={Main} />
+					<Route exact path="/signin" component={AuthForm} />
+				</Switch>
+			</Router>
 		)
 	}
 }

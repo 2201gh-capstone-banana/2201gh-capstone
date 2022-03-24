@@ -17,7 +17,7 @@ const LandingPage = () => {
 				<p className="header__about-notice">
 					This app needs permission to access your webcam
 				</p>
-				<Link className="header__link" to="/signin">
+				<Link className="header__link" to="/home">
 					Get started
 				</Link>
 			</section>
