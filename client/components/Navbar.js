@@ -20,7 +20,6 @@ function Navbar() {
 						<FontAwesomeIcon icon={click ? faX : faAlignJustify} />
 					</div>
 					<ul className={click ? 'nav-menu active' : 'nav-menu'}>
-						
 						<li>
 							<Link
 								to="/home"
@@ -39,7 +38,7 @@ function Navbar() {
 						</li>
 						<li>
 							<Link
-								to="/game"
+								to="/main"
 								className="nav-links"
 								onClick={closeMobileMenu}>
 								Game

@@ -32,7 +32,7 @@ class Routes extends React.Component {
 			// </Switch>
 			<Router>
 				<Navbar />
-				<Home />
+
 				<Switch>
 					<Route exact path="/" component={LandingPage} />
 					<Route exact path="/home" component={Home} />
