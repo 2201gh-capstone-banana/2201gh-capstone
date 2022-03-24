@@ -1,26 +1,25 @@
-
-   
-import {Finger, FingerCurl, FingerDirection, GestureDescription} from 'fingerpose';
+import { Finger, FingerCurl, FingerDirection, GestureDescription } from 'fingerpose'
 
 const letterF = new GestureDescription('F')
 export default letterF
 
-//Thumb
-letterF.addCurl(Finger.Thumb, FingerCurl.HalfCurl, 1.0);
-letterF.addDirection(Finger.Index, FingerDirection.DiagonalUpRight, 0.70);
+//thumb
+letterF.addCurl(Finger.Thumb, FingerCurl.HalfCurl, 1.0)
+letterF.addCurl(Finger.Thumb, FingerCurl.NoCurl, 0.9)
+letterF.addDirection(Finger.Thumb, FingerDirection.VerticalUp, 1.0)
+letterF.addDirection(Finger.Thumb, FingerDirection.DiagonalUpRight, 0.9)
+letterF.addDirection(Finger.Thumb, FingerDirection.DiagonalUpLeft, 0.9)
 
-//Index
-letterF.addCurl(Finger.Index, FingerCurl.FullCurl, 1);
-letterF.addDirection(Finger.Index, FingerDirection.DiagonalUpRight, 0.70);
+//index
+letterF.addCurl(Finger.Index, FingerCurl.FullCurl, 1.0)
+letterF.addCurl(Finger.Index, FingerCurl.HalfCurl, 0.9)
+letterF.addDirection(Finger.Index, FingerDirection.VerticalUp, 1.0)
+letterF.addDirection(Finger.Index, FingerDirection.DiagonalUpLeft, 0.9)
+letterF.addDirection(Finger.Index, FingerDirection.DiagonalUpRight, 0.9)
 
-//Middle
-letterF.addCurl(Finger.Middle, FingerCurl.NoCurl, 1);
-letterF.addDirection(Finger.Middle, FingerDirection.VerticalUp, 0.70);
-
-//Ring
-letterF.addCurl(Finger.Ring, FingerCurl.NoCurl, 1);
-letterF.addDirection(Finger.Ring, FingerDirection.VerticalUp, 0.70);
-
-//Pinky
-letterF.addCurl(Finger.Pinky, FingerCurl.NoCurl, 1);
-letterF.addDirection(Finger.Pinky, FingerDirection.VerticalUp, 0.70);
+for (let finger of [Finger.Ring, Finger.Pinky, Finger.Middle]) {
+	letterF.addCurl(finger, FingerCurl.NoCurl, 1.0)
+	letterF.addDirection(finger, FingerDirection.VerticalUp, 1.0)
+	letterF.addDirection(finger, FingerDirection.DiagonalUpLeft, 0.9)
+	letterF.addDirection(finger, FingerDirection.DiagonalUpRight, 0.9)
+}
