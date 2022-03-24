@@ -21,6 +21,7 @@ function Learning() {
 	}, [])
 
 	console.log(allLetterInfo);
+	
 	return (
 		<div>
 			<p>hello</p>
