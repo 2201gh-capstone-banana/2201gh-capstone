@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect, useContext } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchAllLetters } from '../store/letters'
 import * as handpose from '@tensorflow-models/handpose'
@@ -8,11 +8,33 @@ import Webcam from 'react-webcam'
 import { drawHand } from '../utilities/hand'
 import letters from '../store/letters'
 
+
 function Learning() {
+	// const allLetterInfo = useSelector(state => state.lettersReducer) || []
+	// // const {store} = 
+	// console.log("THIS IS ALLLETTERINFO ----->", allLetterInfo)
+	const dispatch = useDispatch()
+	const allLetterInfo = useSelector(state => state.lettersReducer) || [];
+	// console.log(allLetterInfo);
+	useEffect(() => {
+		dispatch(fetchAllLetters());
+	}, [])
+
+	console.log(allLetterInfo);
+	return (
+		<div>
+			<p>hello</p>
+		</div>
+	)
+}
+
+export default Learning;
+
+/* 
 	const allLetterInfo = useSelector(state => state.letters) || []
 	console.log('all letter info', allLetterInfo)
 	const letterArr = allLetterInfo.map(letter => letter.letter)
-	const dispatch = useDispatch()
+	// const dispatch = useDispatch()
 	const [currentLetter, setCurrentLetter] = useState(null)
 	const [image, setImage] = useState(null)
 	const [translation, setTranslation] = useState(null)
@@ -20,6 +42,7 @@ function Learning() {
 	const canvasRef = useRef(null)
 	const netRef = useRef(null)
 	let timeIntervalBetweenLetters
+	// const {allLetterInfo, letters} = useContext(LettersContext)
 
 	//componentDidMount equivalent
 	useEffect(() => {
@@ -30,6 +53,7 @@ function Learning() {
 			netRef.current = net
 			webcamInit()
 		}
+
 		function webcamInit() {
 			if (
 				webcamRef.current !== 'undefined' &&
@@ -232,233 +256,234 @@ function Learning() {
 }
 export default Learning
 
-//-------------------------------------
-// import React, { useRef, useState, useEffect } from 'react'
-// import { useSelector, useDispatch } from 'react-redux'
-// import { fetchAllLetters } from '../store/letters'
-// import * as handpose from '@tensorflow-models/handpose'
-// import '@tensorflow/tfjs-backend-webgl'
-// import * as fp from 'fingerpose'
-// import Webcam from 'react-webcam'
-// import { drawHand } from '../utilities/hand'
-// import lettersReducer from '../store/letters'
-// import { letters } from './letters'
+-------------------------------------
+import React, { useRef, useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchAllLetters } from '../store/letters'
+import * as handpose from '@tensorflow-models/handpose'
+import '@tensorflow/tfjs-backend-webgl'
+import * as fp from 'fingerpose'
+import Webcam from 'react-webcam'
+import { drawHand } from '../utilities/hand'
+import lettersReducer from '../store/letters'
+import { letters } from './letters'
 
-// function Learning() {
-// 	const allLetterInfo = useSelector(state => state.lettersReducer)
-// 	console.log('all letter info', allLetterInfo)
-// 	const letterArr = allLetterInfo.map(letter => letter.letter)
-// 	const dispatch = useDispatch()
-// 	const [currentLetter, setCurrentLetter] = useState(null)
-// 	const [image, setImage] = useState(null)
-// 	const [translation, setTranslation] = useState(null)
-// 	const webcamRef = useRef(null)
-// 	const canvasRef = useRef(null)
-// 	const netRef = useRef(null)
-// 	let timeIntervalBetweenLetters
+function Learning() {
+	const allLetterInfo = useSelector(state => state.lettersReducer)
+	console.log('all letter info', allLetterInfo)
+	const letterArr = allLetterInfo.map(letter => letter.letter)
+	const dispatch = useDispatch()
+	const [currentLetter, setCurrentLetter] = useState(null)
+	const [image, setImage] = useState(null)
+	const [translation, setTranslation] = useState(null)
+	const webcamRef = useRef(null)
+	const canvasRef = useRef(null)
+	const netRef = useRef(null)
+	let timeIntervalBetweenLetters
 
-// 	//componentDidMount equivalent
-// 	useEffect(() => {
-// 		dispatch(fetchAllLetters())
-// 	}, [])
+	//componentDidMount equivalent
+	useEffect(() => {
+		dispatch(fetchAllLetters())
+	}, [])
 
-// 	//componentWillUpdate equivalent
-// 	useEffect(() => {
-// 		const loop = async () => {
-// 			const reqId = await runHandPose()
-// 			return reqId
-// 		}
-// 		const requestId = loop()
+	//componentWillUpdate equivalent
+	useEffect(() => {
+		const loop = async () => {
+			const reqId = await runHandPose()
+			return reqId
+		}
+		const requestId = loop()
 
-// 		//ComponentWillUnmount equivalent
-// 		// return async () => {
-// 		// 	clearInterval(await requestId)
-// 		// 	clearTimeout(timeIntervalBetweenLetters)
-// 		// }
-// 	}, [currentLetter])
+		//ComponentWillUnmount equivalent
+		// return async () => {
+		// 	clearInterval(await requestId)
+		// 	clearTimeout(timeIntervalBetweenLetters)
+		// }
+	}, [currentLetter])
 
-// 	// ComponentWillUpdate equivalent
-// 	// allLetterInfo.reduce transform arr to obj with key and value pairs
-// 	// [ { letter: 'A', url: 'aa', textUrl: 'AA' }, { letter: 'B', url: 'bb', textUrl: 'BB' }]  ---> { A: [ 'aa', 'AA' ], B: [ 'bb', 'BB' ] }
+	// ComponentWillUpdate equivalent
+	// allLetterInfo.reduce transform arr to obj with key and value pairs
+	// [ { letter: 'A', url: 'aa', textUrl: 'AA' }, { letter: 'B', url: 'bb', textUrl: 'BB' }]  ---> { A: [ 'aa', 'AA' ], B: [ 'bb', 'BB' ] }
 
-// 	useEffect(() => {
-// 		// allLetterInfo[0] ? setCurrentLetter(allLetterInfo[0].letterwords) : ''
-// 		allLetterInfo[0] ? setCurrentLetter('O') : ''
-// 		setImage(
-// 			allLetterInfo.reduce((acc, letter) => {
-// 				acc[letter.letter] = [letter.imageUrl, letter.textUrl]
-// 				return acc
-// 			}, {})
-// 		)
-// 	}, [allLetterInfo])
+	useEffect(() => {
+		// allLetterInfo[0] ? setCurrentLetter(allLetterInfo[0].letterwords) : ''
+		allLetterInfo[0] ? setCurrentLetter('O') : ''
+		setImage(
+			allLetterInfo.reduce((acc, letter) => {
+				acc[letter.letter] = [letter.imageUrl, letter.textUrl]
+				return acc
+			}, {})
+		)
+	}, [allLetterInfo])
 
-// 	const runHandPose = async () => {
-// 		const net = await handpose.load()
-// 		let requestId = setInterval(async () => {
-// 			let result = await detect(net)
-// 			if (result === currentLetter) {
-// 				clearInterval(requestId)
+	const runHandPose = async () => {
+		const net = await handpose.load()
+		let requestId = setInterval(async () => {
+			let result = await detect(net)
+			if (result === currentLetter) {
+				clearInterval(requestId)
 
-// 				let letterIndex = letterArr.indexOf(currentLetter) + 1
+				let letterIndex = letterArr.indexOf(currentLetter) + 1
 
-// 				if (letterIndex < letterArr.length) {
-// 					timeIntervalBetweenLetters = setTimeout(() => {
-// 						setCurrentLetter(letterArr[letterIndex])
-// 					}, 1100)
-// 				}
-// 			}
-// 		}, 100)
-// 		return requestId
-// 	}
+				if (letterIndex < letterArr.length) {
+					timeIntervalBetweenLetters = setTimeout(() => {
+						setCurrentLetter(letterArr[letterIndex])
+					}, 1100)
+				}
+			}
+		}, 100)
+		return requestId
+	}
 
-// 	async function detect(net) {
-// 		if (
-// 			typeof webcamRef.current !== 'undefined' &&
-// 			webcamRef.current !== null &&
-// 			webcamRef.current.video.readyState === 4
-// 		) {
-// 			//Get video properties
-// 			const video = webcamRef.current.video
-// 			const videoWidth = webcamRef.current.video.videoWidth
-// 			const videoHeight = webcamRef.current.video.videoHeight
+	async function detect(net) {
+		if (
+			typeof webcamRef.current !== 'undefined' &&
+			webcamRef.current !== null &&
+			webcamRef.current.video.readyState === 4
+		) {
+			//Get video properties
+			const video = webcamRef.current.video
+			const videoWidth = webcamRef.current.video.videoWidth
+			const videoHeight = webcamRef.current.video.videoHeight
 
-// 			//Set video height and width
-// 			webcamRef.current.video.width = videoWidth
-// 			webcamRef.current.video.height = videoHeight
+			//Set video height and width
+			webcamRef.current.video.width = videoWidth
+			webcamRef.current.video.height = videoHeight
 
-// 			//Set canvas height and width
-// 			canvasRef.current.width = videoWidth
-// 			canvasRef.current.height = videoHeight
-// 			const hand = await net.estimateHands(video)
-// 			const ctx = canvasRef.current.getContext('2d')
-// 			drawHand(hand, ctx)
+			//Set canvas height and width
+			canvasRef.current.width = videoWidth
+			canvasRef.current.height = videoHeight
+			const hand = await net.estimateHands(video)
+			const ctx = canvasRef.current.getContext('2d')
+			drawHand(hand, ctx)
 
-// 			if (hand.length > 0) {
-// 				const gestureEstimator = new fp.GestureEstimator([...letters.allLetters])
+			if (hand.length > 0) {
+				const gestureEstimator = new fp.GestureEstimator([...letters.allLetters])
 
-// 				const gesture = await gestureEstimator.estimate(hand[0].landmarks, 8)
+				const gesture = await gestureEstimator.estimate(hand[0].landmarks, 8)
 
-// 				console.log('THIS IS THE GESTURE:', gesture)
-// 				if (gesture.gestures && gesture.gestures.length > 0) {
-// 					const score = gesture.gestures.map(prediction => prediction.score)
+				console.log('THIS IS THE GESTURE:', gesture)
+				if (gesture.gestures && gesture.gestures.length > 0) {
+					const score = gesture.gestures.map(prediction => prediction.score)
 
-// 					const maxScore = score.indexOf(Math.max.apply(null, score))
-// 					const gestureName = gesture.gestures[maxScore].name
-// 					if (gesture.gestures[maxScore].score >= 9) {
-// 						setTranslation(gestureName)
-// 						return gestureName
-// 					}
-// 				}
-// 			}
-// 		}
-// 	}
-// 	console.log('image is ---', image)
+					const maxScore = score.indexOf(Math.max.apply(null, score))
+					const gestureName = gesture.gestures[maxScore].name
+					if (gesture.gestures[maxScore].score >= 9) {
+						setTranslation(gestureName)
+						return gestureName
+					}
+				}
+			}
+		}
+	}
+	console.log('image is ---', image)
 
-// 	console.log('current letter is----', currentLetter)
-// 	image && image[currentLetter]
-// 		? console.log('new image is', image[currentLetter][0])
-// 		: console.log('nothing')
-// 	return (
-// 		<div className="App">
-// 			<header className="App-header">
-// 				<Webcam
-// 					ref={webcamRef}
-// 					className=" bg-yellow-300 border-4 border-gray-600"
-// 					style={{
-// 						position: 'absolute',
-// 						marginLeft: 'auto',
-// 						marginRight: 'auto',
-// 						marginTop: '8%',
+	console.log('current letter is----', currentLetter)
+	image && image[currentLetter]
+		? console.log('new image is', image[currentLetter][0])
+		: console.log('nothing')
+	return (
+		<div className="App">
+			<header className="App-header">
+				<Webcam
+					ref={webcamRef}
+					className=" bg-yellow-300 border-4 border-gray-600"
+					style={{
+						position: 'absolute',
+						marginLeft: 'auto',
+						marginRight: 'auto',
+						marginTop: '8%',
 
-// 						left: 0,
-// 						right: 0,
-// 						textAlign: 'center',
-// 						zindex: 9,
-// 						width: 900,
-// 						height: 600
-// 					}}
-// 				/>
-// 				<canvas
-// 					ref={canvasRef}
-// 					style={{
-// 						position: 'absolute',
-// 						marginLeft: 'auto',
-// 						marginRight: 'auto',
-// 						marginTop: '8%',
+						left: 0,
+						right: 0,
+						textAlign: 'center',
+						zindex: 9,
+						width: 900,
+						height: 600
+					}}
+				/>
+				<canvas
+					ref={canvasRef}
+					style={{
+						position: 'absolute',
+						marginLeft: 'auto',
+						marginRight: 'auto',
+						marginTop: '8%',
 
-// 						left: 0,
-// 						right: 0,
-// 						textAlign: 'center',
-// 						zindex: 9,
-// 						width: 900,
-// 						height: 600
-// 					}}
-// 				/>
+						left: 0,
+						right: 0,
+						textAlign: 'center',
+						zindex: 9,
+						width: 900,
+						height: 600
+					}}
+				/>
 
-// 				{image && image[currentLetter] ? (
-// 					<div>
-// 						<img
-// 							src={image[currentLetter][0]}
-// 							style={{
-// 								position: 'relative',
-// 								marginLeft: 'auto',
-// 								marginRight: 'auto',
-// 								left: 30,
-// 								bottom: '-20vh',
-// 								right: 100,
-// 								textAlign: 'center',
-// 								height: 100
-// 							}}
-// 						/>
-// 						<img
-// 							src={image[currentLetter][1]}
-// 							style={{
-// 								position: 'relative',
-// 								marginLeft: 'auto',
-// 								marginRight: 'auto',
-// 								left: -100,
-// 								bottom: '-10vh',
-// 								right: 100,
-// 								textAlign: 'center',
-// 								height: 100
-// 							}}
-// 						/>
-// 					</div>
-// 				) : null}
+				{image && image[currentLetter] ? (
+					<div>
+						<img
+							src={image[currentLetter][0]}
+							style={{
+								position: 'relative',
+								marginLeft: 'auto',
+								marginRight: 'auto',
+								left: 30,
+								bottom: '-20vh',
+								right: 100,
+								textAlign: 'center',
+								height: 100
+							}}
+						/>
+						<img
+							src={image[currentLetter][1]}
+							style={{
+								position: 'relative',
+								marginLeft: 'auto',
+								marginRight: 'auto',
+								left: -100,
+								bottom: '-10vh',
+								right: 100,
+								textAlign: 'center',
+								height: 100
+							}}
+						/>
+					</div>
+				) : null}
 
-// 				{translation === currentLetter ? (
-// 					<img
-// 						src="checkmark.gif"
-// 						style={{
-// 							position: 'relative',
-// 							marginLeft: 'auto',
-// 							marginRight: 'auto',
-// 							left: 110,
-// 							right: 0,
-// 							textAlign: 'center',
-// 							height: 100
-// 						}}
-// 					/>
-// 				) : null}
-// 			</header>
-// 			{translation ? (
-// 				<div
-// 					style={{
-// 						fontSize: 30,
-// 						position: 'absolute',
-// 						marginLeft: 'auto',
-// 						marginRight: 'auto',
-// 						left: 0,
-// 						right: 0,
-// 						top: '90vh',
-// 						textAlign: 'center',
-// 						height: '10%',
-// 						width: '40%'
-// 					}}>
-// 					Detecting {translation}
-// 				</div>
-// 			) : null}
-// 		</div>
-// 	)
-// }
-// export default Learning
+				{translation === currentLetter ? (
+					<img
+						src="checkmark.gif"
+						style={{
+							position: 'relative',
+							marginLeft: 'auto',
+							marginRight: 'auto',
+							left: 110,
+							right: 0,
+							textAlign: 'center',
+							height: 100
+						}}
+					/>
+				) : null}
+			</header>
+			{translation ? (
+				<div
+					style={{
+						fontSize: 30,
+						position: 'absolute',
+						marginLeft: 'auto',
+						marginRight: 'auto',
+						left: 0,
+						right: 0,
+						top: '90vh',
+						textAlign: 'center',
+						height: '10%',
+						width: '40%'
+					}}>
+					Detecting {translation}
+				</div>
+			) : null}
+		</div>
+	)
+}
+export default Learning
+*/

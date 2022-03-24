@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import './Home.css'
 import Main from './Main'
+import { fetchAllLetters } from '../store/letters'
 
-function Home() {
+export const LettersContext = React.createContext();
+
+const Home = () => {
+
 	const redirectToGame = () => {
 		window.location.pathname = '/main'
 	}
 	const redirectToLearning = () => {
 		window.location.pathname = '/learning'
 	}
+
 	return (
 		<div className="hero-container">
 			<video
