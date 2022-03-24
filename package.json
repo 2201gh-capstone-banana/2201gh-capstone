@@ -20,6 +20,9 @@
   "author": "Fullstack Academy of Code",
   "license": "MIT",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/react-fontawesome": "^0.1.18",
     "@mediapipe/hands": "^0.4.1646424915",
     "@mediapipe/pose": "^0.5.1635988162",
     "@teachablemachine/image": "^0.8.5",
