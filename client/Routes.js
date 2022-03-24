@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import IdleTimer from 'react-idle-timer'
 
 /* Thunk. */
-import { autoSignin } from './store/auth'
+import { autoSignin, autoSignout } from './store/auth'
 
 /* Components. */
 import LandingPage from './components/LandingPage'
@@ -19,59 +19,86 @@ class Routes extends React.Component {
 	constructor() {
 		super()
 		this.state = {
-			timeout: 900000 /* 15 minutes...i hope. */,
+			warningTimer: 780000 /* 13 minutes...i hope */,
 			isTimedOut: false
 		}
 
 		this.idelTimerRef = React.createRef(null)
 		this.onIdle = this.onIdle.bind(this)
-		this.onAction = this.onAction.bind(this)
+		this.onActive = this.onActive.bind(this)
 	}
 	componentDidMount() {
 		this.props.autoSignin()
 	}
 
 	onIdle() {
+		/* Changing state to display a warning. */
 		this.setState({ isTimedOut: true })
+
+		/* Wait two mintues after warning. */
+		setTimeout(() => {
+			/* If the user hasn't interacted after warning. */
+			if (this.state.isTimedOut) {
+				this.props.autoSignout()
+				window.location.href = '/'
+			}
+		}, 120000) /* Two minutes i hope. */
 	}
 
-	onAction = () => {
+	onActive = () => {
 		this.setState({ isTimedOut: false })
 	}
 
 	render() {
 		return (
-			// <Switch>
-			// 	<Route exact path="/" component={LandingPage} />
-			// 	{/*
-			// 		For auto signin when token is in local storage.
-			// 		Hide the signin page if token is valid.
-			// 	*/}
-			// 	<Route path="/signin">
-			// 		{this.props.correctUser ? <Redirect to="/main" /> : <AuthForm />}
-			// 	</Route>
-			// 	<Route path="/main" component={Main} />
-			// </Switch>
-			<IdleTimer
-				ref={this.idelTimerRef}
-				timeout={this.state.timeout}
-				crossTab={true}
-				onIdle={this.onIdle}
-				onActive={this.onAction}>
-				{!this.state.isTimedOut ? null : <Idle />}
+			<>
+				{/* <Switch>
+					<Route exact path="/" component={LandingPage} />
+					{/*
+					For auto signin when token is in local storage.
+					Hide the signin page if token is valid.
+				
+					<Route path="/signin">
+						{this.props.correctUser ? <Redirect to="/main" /> : <AuthForm />}
+					</Route>
+					<Route path="/main" component={Main} />
+				</Switch> */}
 
-				<Router>
-					<Navbar />
+				{this.props.correctUser ? (
+					<IdleTimer
+						ref={this.idelTimerRef}
+						timeout={this.state.warningTimer}
+						crossTab={true}
+						onIdle={this.onIdle}
+						onActive={this.onActive}>
+						{!this.state.isTimedOut ? null : <Idle />}
 
-					<Switch>
-						<Route exact path="/" component={LandingPage} />
-						<Route exact path="/home" component={Home} />
-						<Route exact path="/main" component={Main} />
-						<Route exact path="/signin" component={AuthForm} />
-						<Route exact path="/learning" component={Learning} />
-					</Switch>
-				</Router>
-			</IdleTimer>
+						<Router>
+							<Navbar />
+
+							<Switch>
+								<Route exact path="/" component={LandingPage} />
+								<Route exact path="/home" component={Home} />
+								<Route exact path="/main" component={Main} />
+								<Route exact path="/signin" component={AuthForm} />
+								<Route exact path="/learning" component={Learning} />
+							</Switch>
+						</Router>
+					</IdleTimer>
+				) : (
+					<Router>
+						<Navbar />
+
+						<Switch>
+							<Route exact path="/" component={LandingPage} />
+							<Route exact path="/home" component={Home} />
+							<Route exact path="/main" component={Main} />
+							<Route exact path="/signin" component={AuthForm} />
+							<Route exact path="/learning" component={Learning} />
+						</Switch>
+					</Router>
+				)}
+			</>
 		)
 	}
 }
@@ -84,7 +111,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		autoSignin: () => dispatch(autoSignin())
+		autoSignin: () => dispatch(autoSignin()),
+		autoSignout: () => dispatch(autoSignout())
 	}
 }
 

@@ -121,7 +121,14 @@ export const autoSignin = () => {
 	}
 }
 
-export const autoSignout = () => {}
+export const autoSignout = () => {
+	return dispatch => {
+		localStorage.clear('token')
+		const action = _autoSignout()
+		dispatch(action)
+		history.push('/') /* Redirects to main page. */
+	}
+}
 
 /*
     Initial state.
