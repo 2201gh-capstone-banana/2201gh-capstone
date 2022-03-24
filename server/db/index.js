@@ -4,7 +4,7 @@ const db = require('./db')
 
 const User = require('./models/User')
 
-const Word = require('./models/Word')
+const Answer = require('./models/Answer')
 
 //associations could go here!
 
@@ -12,6 +12,6 @@ module.exports = {
   db,
   models: {
     User,
-    Word
+    Answer
   },
 }

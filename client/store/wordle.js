@@ -2,16 +2,22 @@ import axios from 'axios'
 
 const TOKEN = 'token'
 
-const SET_GUESSES = 'SET_WORDS';
+const SET_ANSWER = 'SET_WORDS';
 const ADD_GUESS = 'ADD_GUESS';
 
 
-const setGuesses = (words) => {
+// const setGuesses = (words) => {
+//     return {
+//         type: SET_GUESSES,
+//         words
+//     }
+// };
+const getAnswer = () => {
     return {
-        type: SET_GUESSES,
-        words
+        type: SET_ANSWER,
     }
 };
+
 const addGuess = (word) => {
     return {
         type: ADD_GUESS,
@@ -19,7 +25,23 @@ const addGuess = (word) => {
     }
 };
 
-export const fetchGuesses = () => {
+// export const fetchGuesses = () => {
+//     return async (dispatch) => {
+//         try {
+//             const token = window.localStorage.getItem(TOKEN);
+//             const { data } = await axios.get('/api/wordle', {
+//                 headers: {
+//                     authorization: token
+//                 }
+//             });
+//             dispatch(setGuesses(data));
+//         } catch (error) {
+//             console.log(error);
+//         }
+//     }
+// };
+
+export const fetchAnswer = () => {
     return async (dispatch) => {
         try {
             const token = window.localStorage.getItem(TOKEN);
