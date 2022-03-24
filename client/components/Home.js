@@ -1,7 +1,14 @@
 import React from 'react'
 import './Home.css'
+import Main from './Main'
 
 function Home() {
+	const redirectToGame = () => {
+		window.location.pathname = '/main'
+	}
+	const redirectToLearning = () => {
+		window.location.pathname = '/learning'
+	}
 	return (
 		<div className="hero-container">
 			<video
@@ -13,9 +20,11 @@ function Home() {
 			<h1>BE MY VOICE</h1>
 			<p>What are you waiting for?</p>
 			<div className="hero-btns">
-				<button className="btn btn-primary">Learning Center</button>
-				<button className="btn btn-primary">
-					Wordle Game <i className="far fa-play-circle" />
+				<button className="btn btn-primary" onClick={redirectToLearning}>
+					Learning Center
+				</button>
+				<button className="btn btn-primary" onClick={redirectToGame}>
+					Wordle Game
 				</button>
 			</div>
 		</div>

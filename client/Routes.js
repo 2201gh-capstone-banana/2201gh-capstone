@@ -11,6 +11,7 @@ import AuthForm from './components/AuthForm'
 import Main from './components/Main'
 import Navbar from './components/Navbar'
 import Home from './components/Home'
+import Learning from './components/Learning'
 
 class Routes extends React.Component {
 	componentDidMount() {
@@ -38,6 +39,7 @@ class Routes extends React.Component {
 					<Route exact path="/home" component={Home} />
 					<Route exact path="/main" component={Main} />
 					<Route exact path="/signin" component={AuthForm} />
+					<Route exact path="/learning" component={Learning} />
 				</Switch>
 			</Router>
 		)
