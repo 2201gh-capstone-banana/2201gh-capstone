@@ -1,12 +1,13 @@
-import React from 'react'
+import React from 'react';
 
-function LetterCell({index, value}) {
+
+function LetterCell({index, attemptNum}) {
     //maybe use react hooks in here somehow?
   return (
-    <div>
-      Letter
+    <div className='letter-cell'>
+      Cell
     </div>
   )
 }
 
-export default LetterCell
+export default LetterCell;

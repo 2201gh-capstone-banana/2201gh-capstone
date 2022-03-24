@@ -7,7 +7,9 @@ class WordleApp extends Component {
         return (
             <div className='wordle-app'>
                 <h1>Wordle</h1>
-                <WordleBoard />
+                <div className='game'>
+                    <WordleBoard />
+                </div>
                 {/* <Webcam/> or <Translation/> component */}
             </div>
         )
