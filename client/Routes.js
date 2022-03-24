@@ -11,6 +11,7 @@ import AuthForm from './components/AuthForm'
 import Main from './components/Main'
 import Learning from './components/Learning'
 import Home from './components/Home'
+import Navbar from './components/Navbar'
 
 class Routes extends React.Component {
 	componentDidMount() {
@@ -20,6 +21,7 @@ class Routes extends React.Component {
 	render() {
 		return (
 			<Switch>
+			<Navbar />
 				<Route exact path="/" component={LandingPage} />
 				{/*
 					For auto signin when token is in local storage.
