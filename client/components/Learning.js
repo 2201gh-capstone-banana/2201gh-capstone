@@ -23,9 +23,9 @@ function Learning() {
 	let timeIntervalBetweenLetters
 
 	//componentDidMount equivalent
-	useEffect(() => {
-		dispatch(fetchAllLetters())
-	}, [])
+	// useEffect(() => {
+	// 	dispatch(fetchAllLetters())
+	// }, [])
 
 	//componentWillUpdate equivalent
 	useEffect(() => {

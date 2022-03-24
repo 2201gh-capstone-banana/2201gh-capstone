@@ -4,10 +4,9 @@ import './Home.css'
 import Main from './Main'
 import { fetchAllLetters } from '../store/letters'
 
-export const LettersContext = React.createContext();
+export const LettersContext = React.createContext()
 
 const Home = () => {
-
 	const redirectToGame = () => {
 		window.location.pathname = '/main'
 	}
