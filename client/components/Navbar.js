@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import './Navbar.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUpAZ, faAlignJustify, faX } from '@fortawesome/free-solid-svg-icons'
-import { _manualSignout } from '../store/auth'
+import { signout } from '../store/auth'
 import { connect } from 'react-redux'
 
 function Navbar(props) {
@@ -12,7 +12,7 @@ function Navbar(props) {
 	const closeMobileMenu = () => setClick(false)
 	const closeAndSignOut = () => {
 		setClick(false)
-		props.manualSignin()
+		props.signout()
 	}
 	return (
 		<>
@@ -90,7 +90,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		manualSignin: () => dispatch(_manualSignout())
+		signout: () => dispatch(signout())
 	}
 }
 

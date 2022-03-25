@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import IdleTimer from 'react-idle-timer'
 
 /* Thunk. */
-import { autoSignin, autoSignout } from './store/auth'
+import { autoSignin, signout } from './store/auth'
 
 /* Components. */
 import LandingPage from './components/LandingPage'
@@ -27,6 +27,7 @@ class Routes extends React.Component {
 		this.onIdle = this.onIdle.bind(this)
 		this.onActive = this.onActive.bind(this)
 	}
+
 	componentDidMount() {
 		this.props.autoSignin()
 	}
@@ -39,10 +40,10 @@ class Routes extends React.Component {
 		setTimeout(() => {
 			/* If the user hasn't interacted after warning. */
 			if (this.state.isTimedOut) {
-				this.props.autoSignout()
-				window.location.href = '/'
+				this.props.signout()
+				// window.location.href = '/'
 			}
-		}, 120000) /* Two minutes i hope. */
+		}, 120000) /* 2 minutes. */
 	}
 
 	onActive = () => {
@@ -112,7 +113,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		autoSignin: () => dispatch(autoSignin()),
-		autoSignout: () => dispatch(autoSignout())
+		signout: () => dispatch(signout())
 	}
 }
 
