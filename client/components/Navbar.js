@@ -34,6 +34,7 @@ function Navbar(props) {
 								Home
 							</Link>
 						</li>
+
 						<li>
 							<Link
 								to="/learning"
@@ -42,6 +43,16 @@ function Navbar(props) {
 								Learning
 							</Link>
 						</li>
+
+						<li>
+							<Link
+								to="/about"
+								className="nav-links"
+								onClick={closeMobileMenu}>
+								About
+							</Link>
+						</li>
+
 						<li>
 							<Link
 								to="/main"
