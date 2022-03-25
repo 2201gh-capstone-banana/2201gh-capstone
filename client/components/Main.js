@@ -14,16 +14,24 @@ import PopUp from './PopUp'
 
 export const Main = props => {
 	const webcamRef = useRef(null)
-	console.log("WEBCAM REF", webcamRef)
+	console.log('WEBCAM REF', webcamRef)
 	const canvasRef = useRef(null)
 	const [translation, setTranslation] = useState(null)
-	const netRef = useRef(null);
+	const [guess, setGuess] = useState(['*', '*', '*', '*', '*'])
+	const [timer, setTimer] = useState(3)
+	const [finalAns, setFinalAns] = useState([])
 
+	console.log('GUESS --->', guess)
+	const netRef = useRef(null)
+
+	// handleGuess(){
+
+	// }
 	useEffect(() => {
 		const loadModel = async () => {
 			const net = await handpose.load()
-			netRef.current = net;
-			webcamInit();
+			netRef.current = net
+			webcamInit()
 		}
 
 		const webcamInit = () => {
@@ -46,7 +54,7 @@ export const Main = props => {
 
 				window.requestAnimationFrame(loop)
 			} else {
-				console.log("Web cam did not initialize")
+				console.log('Web cam did not initialize')
 			}
 		}
 
@@ -65,13 +73,10 @@ export const Main = props => {
 
 			const hand = await net.estimateHands(video)
 			const ctx = canvasRef.current.getContext('2d')
-			drawHand(hand, ctx);
-
+			drawHand(hand, ctx)
 
 			if (hand.length > 0) {
-				const gestureEstimator = new fp.GestureEstimator([
-					...letters.allLetters,
-				])
+				const gestureEstimator = new fp.GestureEstimator([...letters.allLetters])
 
 				// 8 is the confidence level
 				const gesture = await gestureEstimator.estimate(hand[0].landmarks, 8)
@@ -82,15 +87,64 @@ export const Main = props => {
 					const maxScore = score.indexOf(Math.max.apply(null, score))
 					const gestureName = gesture.gestures[maxScore].name
 					setTranslation(gestureName)
+					// setTimeout(handleSubmit(), 3000)
 				}
 			} else if (hand.length === 0) {
 				setTranslation(null)
 				return
 			}
+			// else if (guess !== null){
+			// handleGuess();
+			//Do you want to submit this letter?
+			/*
+				const gestureEstimator = new fp.GestureEstimator([
+					yes,
+					no
+				])
+				const gesture = await gestureEstimator.estimate(hand[0].landmarks, 8)
+				console.log('THIS IS THE GESTURE:', gesture)
+				if (gesture.gestures && gesture.gestures.length > 0) {
+					const score = gesture.gestures.map(prediction => prediction.score)
+
+					const maxScore = score.indexOf(Math.max.apply(null, score))
+					const gestureName = gesture.gestures[maxScore].name
+					setTranslation(gestureName)
+				*/
+			// }
 		}
 		loadModel()
 	}, [])
 
+	useEffect(() => {
+		let t
+		clearTimeout(t)
+		if (translation !== null) {
+			//	const timeIntervalBetweenGuesses = setTimeout(() => { setGuess(translation) }, 3000)
+			console.log('tranlation in use effect is -----', translation)
+			// if (timer > 0) {
+			// 	setInterval(() => {
+			// 		timer > 0 ? setTimer(timer - 1) : setTimer('time is up')
+			// 	}, 1000)
+			// }
+			t = setTimeout(() => {
+				console.log('get in set time out')
+				//	setGuess(translation)
+
+				const copyGuessWord = guess.slice()
+				for (let i = 0; i < 6; i++) {
+					if (copyGuessWord[i] === '*') {
+						copyGuessWord[i] = translation
+						console.log('new copy guessed word------', copyGuessWord)
+						break
+					}
+				}
+				setGuess(copyGuessWord)
+				console.log('GUESS AFTER TRANSLATION-------', guess)
+			}, 3000)
+		}
+	}, [translation])
+
+	console.log('new guess is', guess)
 	return (
 		<div>
 			<div className="container">
@@ -122,13 +176,25 @@ export const Main = props => {
 			/>
 			<div
 				style={{
-					backgroundColor: 'red',
+					backgroundColor: 'pink',
 					color: 'black',
 					fontSize: 30,
 
 					marginLeft: 600
 				}}>
+				Detecting:
 				{translation}
+			</div>
+			<div
+				style={{
+					backgroundColor: 'orange',
+					color: 'black',
+					fontSize: 30,
+
+					marginLeft: 600
+				}}>
+				Guessed word is: {guess}
+				{/* <div>Timer: {timer}</div> */}
 			</div>
 		</div>
 	)
