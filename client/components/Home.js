@@ -11,9 +11,7 @@ function Home() {
 	}
 	return (
 		<div className="hero-container">
-			<video src="Animation.mp4" autoPlay loop muted />
-			{/* <video src="Spelling.mp4" autoPlay loop muted /> */}
-			{/* <video src="Bee.mp4" autoPlay loop muted /> */}
+			<video src="Bee.mp4" autoPlay loop muted />
 			<h1>BE MY VOICE</h1>
 			<p>What are you waiting for?</p>
 			<div className="hero-btns">
