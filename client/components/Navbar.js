@@ -19,8 +19,8 @@ function Navbar(props) {
 			<nav className="navbar">
 				<div className="navbar-container">
 					<Link to="/" className="navbar-logo">
-						BE MY VOICE
-						<FontAwesomeIcon icon={faArrowUpAZ} />
+						<img src="logo.svg" alt="website logo" className="navbar__logo" />{' '}
+						&nbsp; BE MY VOICE
 					</Link>
 					<div className="menu-icon" onClick={handleClick}>
 						<FontAwesomeIcon icon={click ? faX : faAlignJustify} />
@@ -95,3 +95,4 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar)
+
