@@ -8,8 +8,7 @@ const CLEAR_ALERT = 'CLEAR_ALERT'
 const SIGN_UP = 'SIGN_UP'
 const SIGN_UP_ERROR = 'SIGN_UP_ERROR'
 const AUTO_SIGNIN = 'AUTO_SIGNIN'
-const MANUAL_SIGNOUT = 'MANUAL_SIGNOUT'
-const AUTO_SIGNOUT = 'AUTO_SIGNOUT'
+const SIGNOUT = 'SIGNOUT'
 
 /* Action creators. */
 const _manualSignin = token => ({ type: MANUAL_SIGNIN, token })
@@ -18,9 +17,7 @@ export const _clearAlert = () => ({ type: CLEAR_ALERT })
 const _signUp = token => ({ type: SIGN_UP, token })
 const _signUpError = alert => ({ type: SIGN_UP_ERROR, alert })
 const _autoSignin = token => ({ type: AUTO_SIGNIN, token })
-/* Manual signout. Does not need thunk. */
-export const _manualSignout = () => ({ type: MANUAL_SIGNOUT })
-const _autoSignout = () => ({ type: AUTO_SIGNOUT })
+const _signout = () => ({ type: SIGNOUT })
 
 /* Thunk creators. */
 export const manualSignin = userData => {
@@ -109,7 +106,7 @@ export const autoSignin = () => {
 					action = _autoSignin(token)
 				} else {
 					/* If data returns false clear token. */
-					action = _manualSignout()
+					action = _signout()
 					localStorage.clear('token')
 				}
 
@@ -121,10 +118,10 @@ export const autoSignin = () => {
 	}
 }
 
-export const autoSignout = () => {
+export const signout = () => {
 	return dispatch => {
 		localStorage.clear('token')
-		const action = _autoSignout()
+		const action = _signout()
 		dispatch(action)
 		history.push('/') /* Redirects to main page. */
 	}
@@ -151,7 +148,7 @@ const authReducer = (state = init, action) => {
 			return { ...state, token: '', alert: action.alert, correctUser: false }
 		case AUTO_SIGNIN:
 			return { alert: '', token: action.token, correctUser: true }
-		case MANUAL_SIGNOUT:
+		case SIGNOUT:
 			return { ...init }
 		default:
 			return state
