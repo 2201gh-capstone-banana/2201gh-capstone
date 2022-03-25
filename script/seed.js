@@ -1,29 +1,139 @@
 'use strict'
 
-const { db, models: { User } } = require('../server/db')
+const {
+	db,
+	models: { User, Alphabet }
+} = require('../server/db')
 
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
  */
 async function seed() {
-  await db.sync({ force: true }) // clears db and matches models to tables
-  console.log('db synced!')
+	await db.sync({ force: true }) // clears db and matches models to tables
+	console.log('db synced!')
 
-  // Creating Users
-  const users = await Promise.all([
-    User.create({ username: 'cody', firstName: 'Cody', lastName: 'Roy', email: 'cody@gmail.com', password: '123' }),
-    User.create({ username: 'murphy', firstName: 'Murphy', lastName: 'Lin', email: 'murphy@gmail.com', password: '123', password: '123' }),
-  ])
+	// Creating Users
+	const users = await Promise.all([
+		User.create({
+			username: 'cody',
+			firstName: 'Cody',
+			lastName: 'Roy',
+			email: 'cody@gmail.com',
+			password: '123'
+		}),
+		User.create({
+			username: 'murphy',
+			firstName: 'Murphy',
+			lastName: 'Lin',
+			email: 'murphy@gmail.com',
+			password: '123'
+		})
+	])
 
-  console.log(`seeded ${users.length} users`)
-  console.log(`seeded successfully`)
-  return {
-    users: {
-      cody: users[0],
-      murphy: users[1]
-    }
-  }
+	//letter
+	const alphabet = [
+		'A',
+		'B',
+		'C',
+		'D',
+		'E',
+		'F',
+		'G',
+		'H',
+		'I',
+		'J',
+		'K',
+		'L',
+		'M',
+		'N',
+		'O',
+		'P',
+		'Q',
+		'R',
+		'S',
+		'T',
+		'U',
+		'V',
+		'W',
+		'X',
+		'Y',
+		'Z'
+	]
+	const letterImageUrl = [
+		'letterA.png',
+		'letterB.png',
+		'letterC.png',
+		'letterD.png',
+		'letterE.png',
+		'letterF.png',
+		'letterG.png',
+		'letterH.png',
+		'letterI.png',
+		'letterJ.png',
+		'letterK.png',
+		'letterL.png',
+		'letterM.png',
+		'letterN.png',
+		'letterO.png',
+		'letterP.png',
+		'letterQ.png',
+		'letterR.png',
+		'letterS.png',
+		'letterT.png',
+		'letterU.png',
+		'letterV.png',
+		'letterW.png',
+		'letterX.png',
+		'letterY.png',
+		'letterZ.png'
+	]
+
+	const letterTextUrl = [
+		'texta.png',
+		'textb.png',
+		'textc.png',
+		'textd.png',
+		'texte.png',
+		'textf.png',
+		'textg.png',
+		'texth.png',
+		'texti.png',
+		'textj.png',
+		'textk.png',
+		'textl.png',
+		'textm.png',
+		'textn.png',
+		'texto.png',
+		'textp.png',
+		'textq.png',
+		'textr.png',
+		'texts.png',
+		'textt.png',
+		'textu.png',
+		'textv.png',
+		'textw.png',
+		'textx.png',
+		'texty.png',
+		'textz.png'
+	]
+
+	for (let i = 0; i < alphabet.length; i++) {
+		await Alphabet.create({
+			letter: alphabet[i],
+			imageUrl: letterImageUrl[i],
+			textUrl: letterTextUrl[i]
+		})
+	}
+
+	console.log(`seeded ${users.length} users`)
+	console.log(`seeded successfully`)
+	return {
+		users: {
+			cody: users[0],
+			murphy: users[1]
+		}
+	}
 }
 
 /*
@@ -32,17 +142,17 @@ async function seed() {
  The `seed` function is concerned only with modifying the database.
 */
 async function runSeed() {
-  console.log('seeding...')
-  try {
-    await seed()
-  } catch (err) {
-    console.error(err)
-    process.exitCode = 1
-  } finally {
-    console.log('closing db connection')
-    await db.close()
-    console.log('db connection closed')
-  }
+	console.log('seeding...')
+	try {
+		await seed()
+	} catch (err) {
+		console.error(err)
+		process.exitCode = 1
+	} finally {
+		console.log('closing db connection')
+		await db.close()
+		console.log('db connection closed')
+	}
 }
 
 /*
@@ -51,7 +161,7 @@ async function runSeed() {
   any errors that might occur inside of `seed`.
 */
 if (module === require.main) {
-  runSeed()
+	runSeed()
 }
 
 // we export the seed function for testing purposes (see `./seed.spec.js`)
