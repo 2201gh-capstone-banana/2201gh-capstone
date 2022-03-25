@@ -17,8 +17,13 @@ export const Main = props => {
 	console.log("WEBCAM REF", webcamRef)
 	const canvasRef = useRef(null)
 	const [translation, setTranslation] = useState(null)
+	const [guess, setGuess] = useState(null);
+	console.log("GUESS --->", guess);
 	const netRef = useRef(null);
 
+	// handleGuess(){
+
+	// }
 	useEffect(() => {
 		const loadModel = async () => {
 			const net = await handpose.load()
@@ -67,8 +72,7 @@ export const Main = props => {
 			const ctx = canvasRef.current.getContext('2d')
 			drawHand(hand, ctx);
 
-
-			if (hand.length > 0) {
+			if (hand.length > 0 && guess === null) {
 				const gestureEstimator = new fp.GestureEstimator([
 					...letters.allLetters,
 				])
@@ -82,14 +86,40 @@ export const Main = props => {
 					const maxScore = score.indexOf(Math.max.apply(null, score))
 					const gestureName = gesture.gestures[maxScore].name
 					setTranslation(gestureName)
+					// setTimeout(handleSubmit(), 3000)
 				}
 			} else if (hand.length === 0) {
 				setTranslation(null)
 				return
-			}
+			} 
+			// else if (guess !== null){
+				// handleGuess();
+				//Do you want to submit this letter?
+				/*
+				const gestureEstimator = new fp.GestureEstimator([
+					yes,
+					no
+				])
+				const gesture = await gestureEstimator.estimate(hand[0].landmarks, 8)
+				console.log('THIS IS THE GESTURE:', gesture)
+				if (gesture.gestures && gesture.gestures.length > 0) {
+					const score = gesture.gestures.map(prediction => prediction.score)
+
+					const maxScore = score.indexOf(Math.max.apply(null, score))
+					const gestureName = gesture.gestures[maxScore].name
+					setTranslation(gestureName)
+				*/
+			// }
 		}
 		loadModel()
 	}, [])
+
+	useEffect(() => {
+		if (translation !== null) {
+			const timeIntervalBetweenGuesses = setTimeout(() => { setGuess(translation) }, 3000)
+			clearTimeout(timeIntervalBetweenGuesses);
+		}
+	}, [translation])
 
 	return (
 		<div>
