@@ -8,6 +8,7 @@ import Webcam from 'react-webcam'
 import { drawHand } from '../utilities/hand'
 import lettersReducer from '../store/letters'
 import { letters } from './letters'
+import CheatSheet from './CheatSheet'
 
 function Learning() {
 	const allLetterInfo = useSelector(state => state.lettersReducer)
@@ -17,6 +18,7 @@ function Learning() {
 	const [currentLetter, setCurrentLetter] = useState(null)
 	const [image, setImage] = useState(null)
 	const [translation, setTranslation] = useState(null)
+	const [cheatsheetOpen, setCheatsheetOpen] = useState(false)
 	const webcamRef = useRef(null)
 	const canvasRef = useRef(null)
 	const netRef = useRef(null)
@@ -35,11 +37,11 @@ function Learning() {
 		}
 		const requestId = loop()
 
-		//ComponentWillUnmount equivalent
-		// return async () => {
-		//  clearInterval(await requestId)
-		//  clearTimeout(timeIntervalBetweenLetters)
-		// }
+		//	ComponentWillUnmount equivalent
+		return async () => {
+			clearInterval(await requestId)
+			clearTimeout(timeIntervalBetweenLetters)
+		}
 	}, [currentLetter])
 
 	// ComponentWillUpdate equivalent
@@ -48,7 +50,7 @@ function Learning() {
 
 	useEffect(() => {
 		// allLetterInfo[0] ? setCurrentLetter(allLetterInfo[0].letterwords) : ''
-		allLetterInfo[0] ? setCurrentLetter('O') : ''
+		allLetterInfo[0] ? setCurrentLetter('A') : ''
 		setImage(
 			allLetterInfo.reduce((acc, letter) => {
 				acc[letter.letter] = [letter.imageUrl, letter.textUrl]
@@ -126,6 +128,23 @@ function Learning() {
 	return (
 		<div className="App">
 			<header className="App-header">
+				<div className="container">
+					<button
+						id="btn-cheatsheet"
+						className="header__link"
+						onClick={() => {
+							setCheatsheetOpen(!cheatsheetOpen)
+						}}>
+						Cheat Sheet
+					</button>
+					{cheatsheetOpen ? (
+						<CheatSheet
+							cheatsheetOpen={[cheatsheetOpen, setCheatsheetOpen]}
+							currentLetter={[currentLetter, setCurrentLetter]}
+						/>
+					) : null}
+				</div>
+
 				<Webcam
 					ref={webcamRef}
 					className=" bg-yellow-300 border-4 border-gray-600"

@@ -19,6 +19,7 @@ import * as fp from 'fingerpose'
 // import { youGesture } from './phrases/you'
 // import { niceGesture } from './phrases/nice'
 import { letters } from './letters'
+import PopUp from './PopUp'
 /**
  * COMPONENT
  */
@@ -45,27 +46,28 @@ import { letters } from './letters'
 export const Main = props => {
 	const webcamRef = useRef(null)
 	// const [turnOnWebcam, setTurnOnWebcam] = useState(false);
-	console.log("WEBCAM REF", webcamRef)
+	console.log('WEBCAM REF', webcamRef)
 	const canvasRef = useRef(null)
 	const [translation, setTranslation] = useState(null)
+
 	// const [isDetectRunning, setIsDetectRunning] = useState(false)
-	const netRef = useRef(null);
-	console.log("NET REF IS THIS:", netRef)
-	const handRef = useRef(null);
+	const netRef = useRef(null)
+	console.log('NET REF IS THIS:', netRef)
+	const handRef = useRef(null)
 
 	useEffect(() => {
 		const loadModel = async () => {
-			console.log("PLEASE ONLY BE CALLED ONCE")
+			console.log('PLEASE ONLY BE CALLED ONCE')
 			const net = await handpose.load()
-			netRef.current = net;
+			netRef.current = net
 			// setModel(net);
-			webcamInit();
+			webcamInit()
 			// const requestanimationframe = window.requestAnimationFrame(loop)
 			// requestanimationframe(net);
 		}
 
 		const webcamInit = () => {
-			console.log("webcamInit is running...")
+			console.log('webcamInit is running...')
 			if (
 				webcamRef.current !== 'undefined' &&
 				webcamRef.current !== null &&
@@ -83,9 +85,10 @@ export const Main = props => {
 				canvasRef.current.height = videoHeight
 
 				window.requestAnimationFrame(loop)
-
 			} else {
-				console.log("this is in the else part of webcam Init, it did not make it through if")
+				console.log(
+					'this is in the else part of webcam Init, it did not make it through if'
+				)
 			}
 		}
 
@@ -101,7 +104,7 @@ export const Main = props => {
 
 		async function detect(net) {
 			// setIsDetectRunning(true);
-			console.log("detect function is running...")
+			console.log('detect function is running...')
 			const video = webcamRef.current.video
 			// predict can take in an image, video or canvas html element
 			//make detections for hand
@@ -111,13 +114,13 @@ export const Main = props => {
 
 			const ctx = canvasRef.current.getContext('2d')
 
-			drawHand(hand, ctx);
+			drawHand(hand, ctx)
 			//make detections for face
 			// const returnTensors = false
 
 			if (hand.length > 0) {
 				const gestureEstimator = new fp.GestureEstimator([
-					...letters.allLetters,
+					...letters.allLetters
 					// paperGesture,
 					// loveYouGesture,
 					// pleaseGesture,
@@ -126,7 +129,7 @@ export const Main = props => {
 
 				// 8 is the confidence level
 				const gesture = await gestureEstimator.estimate(hand[0].landmarks, 8)
-				console.log("THIS IS THE GESTURE:", gesture)
+				console.log('THIS IS THE GESTURE:', gesture)
 				if (gesture.gestures && gesture.gestures.length > 0) {
 					const score = gesture.gestures.map(prediction => prediction.score)
 
@@ -136,19 +139,20 @@ export const Main = props => {
 
 					setTranslation(gestureName)
 				}
-
 			} else if (hand.length === 0) {
 				setTranslation(null)
 				return
 			}
 			// setIsDetectRunning(false);
 		}
-		loadModel();
+		loadModel()
 	}, [])
 
 	return (
-
 		<div>
+			<div className="container">
+				<PopUp />
+			</div>
 			<Webcam
 				ref={webcamRef}
 				// onLoad={() => webcamInit()}
