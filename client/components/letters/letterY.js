@@ -1,26 +1,26 @@
-import {Finger, FingerCurl, FingerDirection, GestureDescription} from 'fingerpose';
+import { Finger, FingerCurl, FingerDirection, GestureDescription } from 'fingerpose'
 
-const letterY = new GestureDescription('Y');
+const letterY = new GestureDescription('Y')
 
 //Thumb
-letterY.addCurl(Finger.Thumb, FingerCurl.NoCurl, 1.0);
-letterY.addDirection(Finger.Index, FingerDirection.DiagonalUpRight, 0.70);
+letterY.addCurl(Finger.Thumb, FingerCurl.NoCurl, 1.0)
+letterY.addDirection(Finger.Index, FingerDirection.DiagonalUpRight, 0.7)
 
 //Index
-letterY.addCurl(Finger.Index, FingerCurl.FullCurl, 1);
-letterY.addDirection(Finger.Index, FingerDirection.VerticalUp, 0.70);
+letterY.addCurl(Finger.Index, FingerCurl.FullCurl, 1)
+letterY.addDirection(Finger.Index, FingerDirection.VerticalUp, 0.7)
 
 //Middle
-letterY.addCurl(Finger.Middle, FingerCurl.FullCurl, 1);
-letterY.addDirection(Finger.Middle, FingerDirection.VerticalUp, 0.70);
+letterY.addCurl(Finger.Middle, FingerCurl.FullCurl, 1)
+letterY.addDirection(Finger.Middle, FingerDirection.VerticalUp, 0.7)
 
 //Ring
-letterY.addCurl(Finger.Ring, FingerCurl.FullCurl, 1);
-letterY.addDirection(Finger.Ring, FingerDirection.VerticalUp, 0.70);
+letterY.addCurl(Finger.Ring, FingerCurl.FullCurl, 1)
+letterY.addDirection(Finger.Ring, FingerDirection.VerticalUp, 0.7)
 
 //Pinky
-letterY.addCurl(Finger.Pinky, FingerCurl.NoCurl, 1);
-letterY.addDirection(Finger.Pinky, FingerDirection.DiagonalUpLeft, 0.70);
+letterY.addCurl(Finger.Pinky, FingerCurl.NoCurl, 1)
+letterY.addDirection(Finger.Pinky, FingerDirection.DiagonalUpLeft, 0.7)
 
 /*
 letterY.addCurl(fp.Finger.Thumb, fp.FingerCurl.NoCurl, 1.0);
@@ -39,4 +39,4 @@ letterY.addCurl(fp.Finger.Pinky, fp.FingerCurl.NoCurl, 1.0);
 letterY.addDirection(fp.Finger.Pinky, fp.FingerDirection.DiagonalUpRight, 1.0);
 letterY.addDirection(fp.Finger.Pinky, fp.FingerDirection.DiagonalUpLeft, 1.0);
 */
-export default letterY;
+export default letterY

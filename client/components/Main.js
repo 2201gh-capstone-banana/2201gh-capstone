@@ -7,6 +7,7 @@ import '@tensorflow/tfjs-backend-webgl'
 import * as fp from 'fingerpose'
 
 import { letters } from './letters'
+import PopUp from './PopUp'
 /**
  * COMPONENT
  */
@@ -26,7 +27,7 @@ export const Main = props => {
 		}
 
 		const webcamInit = () => {
-			console.log("webcamInit is running...")
+			console.log('webcamInit is running...')
 			if (
 				webcamRef.current !== 'undefined' &&
 				webcamRef.current !== null &&
@@ -44,7 +45,6 @@ export const Main = props => {
 				canvasRef.current.height = videoHeight
 
 				window.requestAnimationFrame(loop)
-
 			} else {
 				console.log("Web cam did not initialize")
 			}
@@ -75,7 +75,7 @@ export const Main = props => {
 
 				// 8 is the confidence level
 				const gesture = await gestureEstimator.estimate(hand[0].landmarks, 8)
-				console.log("THIS IS THE GESTURE:", gesture)
+				console.log('THIS IS THE GESTURE:', gesture)
 				if (gesture.gestures && gesture.gestures.length > 0) {
 					const score = gesture.gestures.map(prediction => prediction.score)
 
@@ -83,18 +83,19 @@ export const Main = props => {
 					const gestureName = gesture.gestures[maxScore].name
 					setTranslation(gestureName)
 				}
-
 			} else if (hand.length === 0) {
 				setTranslation(null)
 				return
 			}
 		}
-		loadModel();
+		loadModel()
 	}, [])
 
 	return (
-
 		<div>
+			<div className="container">
+				<PopUp />
+			</div>
 			<Webcam
 				ref={webcamRef}
 				style={{
