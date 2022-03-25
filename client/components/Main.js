@@ -24,9 +24,6 @@ export const Main = props => {
 	console.log('GUESS --->', guess)
 	const netRef = useRef(null)
 
-	// handleGuess(){
-
-	// }
 	useEffect(() => {
 		const loadModel = async () => {
 			const net = await handpose.load()
@@ -63,8 +60,6 @@ export const Main = props => {
 			window.requestAnimationFrame(loop)
 		}
 
-		//Loop and detect hands
-
 		async function detect(net) {
 			const video = webcamRef.current.video
 			// predict can take in an image, video or canvas html element
@@ -93,24 +88,6 @@ export const Main = props => {
 				setTranslation(null)
 				return
 			}
-			// else if (guess !== null){
-			// handleGuess();
-			//Do you want to submit this letter?
-			/*
-				const gestureEstimator = new fp.GestureEstimator([
-					yes,
-					no
-				])
-				const gesture = await gestureEstimator.estimate(hand[0].landmarks, 8)
-				console.log('THIS IS THE GESTURE:', gesture)
-				if (gesture.gestures && gesture.gestures.length > 0) {
-					const score = gesture.gestures.map(prediction => prediction.score)
-
-					const maxScore = score.indexOf(Math.max.apply(null, score))
-					const gestureName = gesture.gestures[maxScore].name
-					setTranslation(gestureName)
-				*/
-			// }
 		}
 		loadModel()
 	}, [])
@@ -119,28 +96,28 @@ export const Main = props => {
 		let t
 		clearTimeout(t)
 		if (translation !== null) {
-			//	const timeIntervalBetweenGuesses = setTimeout(() => { setGuess(translation) }, 3000)
-			console.log('tranlation in use effect is -----', translation)
-			// if (timer > 0) {
-			// 	setInterval(() => {
-			// 		timer > 0 ? setTimer(timer - 1) : setTimer('time is up')
-			// 	}, 1000)
-			// }
-			t = setTimeout(() => {
-				console.log('get in set time out')
-				//	setGuess(translation)
-
-				const copyGuessWord = guess.slice()
-				for (let i = 0; i < 6; i++) {
-					if (copyGuessWord[i] === '*') {
-						copyGuessWord[i] = translation
-						console.log('new copy guessed word------', copyGuessWord)
-						break
+			if (translation !== 'A') {
+				console.log('tranlation in use effect is -----', translation)
+				t = setTimeout(() => {
+					console.log('get in set time out')
+					const copyGuessWord = guess.slice()
+					for (let i = 0; i < 6; i++) {
+						if (copyGuessWord[i] === '*') {
+							copyGuessWord[i] = translation
+							console.log('new copy guessed word------', copyGuessWord)
+							break
+						}
 					}
-				}
-				setGuess(copyGuessWord)
-				console.log('GUESS AFTER TRANSLATION-------', guess)
-			}, 3000)
+					setGuess(copyGuessWord)
+					console.log('GUESS AFTER TRANSLATION-------', guess)
+				}, 3000)
+			} else {
+				t = setTimeout(() => {
+					const copyGuessWord = guess.pop()
+					setGuess(copyGuessWord)
+					console.log('GUESS AFTER TRANSLATION-------', guess)
+				}, 3000)
+			}
 		}
 	}, [translation])
 
