@@ -2,8 +2,9 @@
 
 const {
 	db,
-	models: { User, Alphabet }
+	models: { User, Alphabet, Answer }
 } = require('../server/db')
+const answerBank = require('./answerBank')
 
 /**
  * seed - this function clears the database, updates tables to
@@ -125,6 +126,19 @@ async function seed() {
 			textUrl: letterTextUrl[i]
 		})
 	}
+	
+	const answers = await Promise.all([
+		answerBank.map((answer) => {
+		  let chars = answer.split('');
+		  Answer.create({
+			word: answer,
+			firstLetter: chars[0],
+			secondLetter: chars[1],
+			thirdLetter: chars[2],
+			fourthLetter: chars[3],
+			fifthLetter: chars[4],
+		  })
+		})])
 
 	console.log(`seeded ${users.length} users`)
 	console.log(`seeded successfully`)
