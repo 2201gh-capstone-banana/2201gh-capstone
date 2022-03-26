@@ -50,7 +50,14 @@ function Navbar(props) {
 								Game
 							</Link>
 						</li>
-
+						<li>
+						<Link
+								to="/falling"
+								className="nav-links"
+								onClick={closeMobileMenu}>
+								Falling
+							</Link>
+						</li>
 						{/* Show the signout only if the user is not logged in */}
 						{!props.correctUser ? (
 							<li>
