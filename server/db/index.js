@@ -3,15 +3,17 @@
 const db = require('./db')
 
 const User = require('./models/User')
+const Alphabet = require('./models/Alphabet')
 
 const Answer = require('./models/Answer')
 
 //associations could go here!
 
 module.exports = {
-  db,
-  models: {
-    User,
+	db,
+	models: {
+		User,
+		Alphabet,
     Answer
-  },
+	}
 }

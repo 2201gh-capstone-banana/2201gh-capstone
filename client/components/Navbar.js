@@ -3,11 +3,17 @@ import { Link } from 'react-router-dom'
 import './Navbar.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUpAZ, faAlignJustify, faX } from '@fortawesome/free-solid-svg-icons'
+import { signout } from '../store/auth'
+import { connect } from 'react-redux'
 
-function Navbar() {
+function Navbar(props) {
 	const [click, setClick] = useState(false)
 	const handleClick = () => setClick(!click)
 	const closeMobileMenu = () => setClick(false)
+	const closeAndSignOut = () => {
+		setClick(false)
+		props.signout()
+	}
 	return (
 		<>
 			<nav className="navbar">
@@ -44,14 +50,30 @@ function Navbar() {
 								Game
 							</Link>
 						</li>
-						<li>
-							<Link
-								to="/signin"
-								className="nav-links"
-								onClick={closeMobileMenu}>
-								Sign In
-							</Link>
-						</li>
+
+						{/* Show the signout only if the user is not logged in */}
+						{!props.correctUser ? (
+							<li>
+								<Link
+									to="/signin"
+									className="nav-links"
+									onClick={closeMobileMenu}>
+									Sign In
+								</Link>
+							</li>
+						) : null}
+
+						{/* Show the signout only if user is logged in. */}
+						{props.correctUser ? (
+							<li>
+								<Link
+									to="/"
+									className="nav-links"
+									onClick={closeAndSignOut}>
+									Sign Out
+								</Link>
+							</li>
+						) : null}
 					</ul>
 				</div>
 			</nav>
@@ -59,4 +81,17 @@ function Navbar() {
 	)
 }
 
-export default Navbar
+const mapStateToProps = state => {
+	return {
+		/* This is to check if the user is signed in. */
+		correctUser: state.auth.correctUser
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		signout: () => dispatch(signout())
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar)

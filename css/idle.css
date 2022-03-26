@@ -1,0 +1,13 @@
+/* Inactivity dialog. */
+
+.idle {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background-color: var(--clr-four);
+	padding: 0.8rem;
+	border-radius: 5px;
+	font-family: var(--fnt-fmly);
+	color: #000;
+	border: 0;
+}

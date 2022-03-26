@@ -2,6 +2,8 @@
 @import url('unset.css');
 @import url('landingPage.css');
 @import url('auth.css');
+@import url('idle.css');
+@import url('cheatSheet.css');
 
 /* Global variables. */
 :root {

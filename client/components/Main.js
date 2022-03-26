@@ -1,71 +1,41 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react'
 import { connect } from 'react-redux'
-// import * as tf from '@tensorflow/tfjs'
-// import * as tmImage from '@teachablemachine/image'
-// import * as handPoseDetection from '@tensorflow-models/hand-pose-detection'
 import Webcam from 'react-webcam'
 import { drawHand } from '../utilities/hand'
-// import { drawFace } from '../utilities/face'
-// import { drawPose } from '../utilities/pose'
-// import { drawBothHands } from '../utilities/bothHands'
 import * as handpose from '@tensorflow-models/handpose'
-// import * as poseDetection from '@tensorflow-models/pose-detection'
 import '@tensorflow/tfjs-backend-webgl'
 import * as fp from 'fingerpose'
-// import * as blazeface from '@tensorflow-models/blazeface'
-// import { paperGesture } from './phrases/hello-thankyou'
-// import { loveYouGesture } from './phrases/iloveyou'
-// import { pleaseGesture } from './phrases/please'
-// import { youGesture } from './phrases/you'
-// import { niceGesture } from './phrases/nice'
+
 import { letters } from './letters'
+import PopUp from './PopUp'
 /**
  * COMPONENT
  */
-// const decideGesture = (gestureName, hand, face, pose) => {
-// 	const tipOfIndex = hand[0].landmarks[8]
-// 	const tipOfPinky = hand[0].landmarks[20]
-// 	// const rightEye = face[0].landmarks[0]
-// 	// const mouth = face[0].landmarks[3]
-// 	// const shoulder = pose[0].keypoints[5]
-// 	if (gestureName === 'hello-thankyou') {
-// 		if (
-// 			Math.abs(tipOfIndex[0] - mouth[0]) <= 50 &&
-// 			tipOfIndex[1] > mouth[1] &&
-// 			tipOfPinky[1] < shoulder.y
-// 		) {
-// 			return 'thank you'
-// 		} else if (tipOfIndex[1] < rightEye[1]) {
-// 			return 'hello'
-// 		} else if (tipOfPinky[1] >= shoulder.y) {
-// 			return 'please'
-// 		}
-// 	} else return gestureName
-// }
+
 export const Main = props => {
 	const webcamRef = useRef(null)
-	// const [turnOnWebcam, setTurnOnWebcam] = useState(false);
-	console.log("WEBCAM REF", webcamRef)
+	console.log('WEBCAM REF', webcamRef)
 	const canvasRef = useRef(null)
 	const [translation, setTranslation] = useState(null)
-	// const [isDetectRunning, setIsDetectRunning] = useState(false)
-	const netRef = useRef(null);
-	console.log("NET REF IS THIS:", netRef)
-	const handRef = useRef(null);
+	const [guess, setGuess] = useState(['*', '*', '*', '*', '*'])
+	const [timer, setTimer] = useState(3)
+	const [finalAns, setFinalAns] = useState([])
 
+	console.log('GUESS --->', guess)
+	const netRef = useRef(null)
+
+	// handleGuess(){
+
+	// }
 	useEffect(() => {
 		const loadModel = async () => {
-			console.log("PLEASE ONLY BE CALLED ONCE")
 			const net = await handpose.load()
-			netRef.current = net;
-			// setModel(net);
-			webcamInit();
-			// const requestanimationframe = window.requestAnimationFrame(loop)
-			// requestanimationframe(net);
+			netRef.current = net
+			setTimeout(() => webcamInit(), 10)
 		}
 
 		const webcamInit = () => {
-			console.log("webcamInit is running...")
+			console.log('webcamInit is running...')
 			if (
 				webcamRef.current !== 'undefined' &&
 				webcamRef.current !== null &&
@@ -83,75 +53,112 @@ export const Main = props => {
 				canvasRef.current.height = videoHeight
 
 				window.requestAnimationFrame(loop)
-
 			} else {
-				console.log("this is in the else part of webcam Init, it did not make it through if")
+				console.log('Web cam did not initialize')
 			}
 		}
 
 		async function loop() {
-			console.log('inside loop')
 			await detect(netRef.current)
 			window.requestAnimationFrame(loop)
-			// const requestanimationframe = window.requestAnimationFrame(loop)
-			// requestanimationframe(net)
 		}
 
 		//Loop and detect hands
 
 		async function detect(net) {
-			// setIsDetectRunning(true);
-			console.log("detect function is running...")
 			const video = webcamRef.current.video
 			// predict can take in an image, video or canvas html element
 			//make detections for hand
 			const estimationConfig = { flipHorizontal: false }
 
 			const hand = await net.estimateHands(video)
-
 			const ctx = canvasRef.current.getContext('2d')
-
-			drawHand(hand, ctx);
-			//make detections for face
-			// const returnTensors = false
+			drawHand(hand, ctx)
 
 			if (hand.length > 0) {
-				const gestureEstimator = new fp.GestureEstimator([
-					...letters.allLetters,
-					// paperGesture,
-					// loveYouGesture,
-					// pleaseGesture,
-					// youGesture
-				])
+				const gestureEstimator = new fp.GestureEstimator([...letters.allLetters])
 
 				// 8 is the confidence level
 				const gesture = await gestureEstimator.estimate(hand[0].landmarks, 8)
-				console.log("THIS IS THE GESTURE:", gesture)
+				console.log('THIS IS THE GESTURE:', gesture)
 				if (gesture.gestures && gesture.gestures.length > 0) {
 					const score = gesture.gestures.map(prediction => prediction.score)
 
 					const maxScore = score.indexOf(Math.max.apply(null, score))
 					const gestureName = gesture.gestures[maxScore].name
-					console.log('gestures name is -', gesture.gestures[maxScore].name)
-
 					setTranslation(gestureName)
+					// setTimeout(handleSubmit(), 3000)
 				}
-
 			} else if (hand.length === 0) {
 				setTranslation(null)
 				return
 			}
-			// setIsDetectRunning(false);
 		}
-		loadModel();
+		loadModel()
 	}, [])
 
-	return (
+	useEffect(() => {
+		/*
+		timer functionality:
 
+		let timeRemaining = 5;
+		let timerElement = document.getElementById('timer');
+		function countdown() {
+			timeRemaining = timeRemaining - 1;
+			if (timeRemaining <= 0) {
+				timerElement.innerText = 'Time is up!'
+				timeRemaining = 5;
+			} else {
+				timerElement.innerText = timeRemaining;
+			}
+		}
+		let timer = setInterval(countdown, 1000);
+		*/
+		let t
+		console.log('t is !!!---', t)
+		clearTimeout(t)
+		let copyGuessWord = guess.slice()
+		if (translation !== null && translation !== 'O') {
+			//	const timeIntervalBetweenGuesses = setTimeout(() => { setGuess(translation) }, 3000)
+			console.log('tranlation in use effect is -----', translation)
+			// if (timer > 0) {
+			// 	setInterval(() => {
+			// 		timer > 0 ? setTimer(timer - 1) : setTimer('time is up')
+			// 	}, 1000)
+			// }
+			t = setTimeout(() => {
+				for (let i = 0; i < 6; i++) {
+					if (copyGuessWord[i] === '*') {
+						copyGuessWord[i] = translation
+						break
+					}
+				}
+				// timer;
+			}, 3000)
+			setTimeout(setGuess(copyGuessWord), 0)
+		} else if (translation === 'O') {
+			clearTimeout(t)
+			t = setTimeout(() => {
+				for (let i = 0; i < 6; i++) {
+					if (copyGuessWord[i] !== '*' && copyGuessWord[i + 1] === '*') {
+						copyGuessWord.splice(i, 1, '*')
+
+						break
+					}
+				}
+			}, 3000)
+			setTimeout(setGuess(copyGuessWord), 0)
+		}
+	}, [translation])
+
+	console.log('new guess is', guess)
+	return (
 		<div>
+			<div className="container">
+				<PopUp />
+			</div>
 			<Webcam
 				ref={webcamRef}
-				// onLoad={() => webcamInit()}
 				style={{
 					marginRight: 'auto',
 					marginLeft: 'auto',
@@ -168,7 +175,6 @@ export const Main = props => {
 					marginLeft: 'auto',
 					marginRight: 'auto',
 					position: 'absolute',
-
 					textAlign: 'center',
 					zIndex: 9,
 					width: 540,
@@ -177,13 +183,25 @@ export const Main = props => {
 			/>
 			<div
 				style={{
-					backgroundColor: 'red',
+					backgroundColor: 'pink',
 					color: 'black',
 					fontSize: 30,
 
 					marginLeft: 600
 				}}>
+				Detecting:
 				{translation}
+			</div>
+			<div
+				style={{
+					backgroundColor: 'orange',
+					color: 'black',
+					fontSize: 30,
+
+					marginLeft: 600
+				}}>
+				Guessed word is: {guess}
+				<div id='timer'></div>
 			</div>
 		</div>
 	)
