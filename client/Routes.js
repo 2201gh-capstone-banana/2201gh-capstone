@@ -13,7 +13,7 @@ import Main from './components/Main'
 import Navbar from './components/Navbar'
 import Home from './components/Home'
 import Learning from './components/Learning'
-import WordleApp from './components/Wordle/WordleApp'
+import WordleApp from './components/WordleApp'
 import Idle from './components/Idle'
 
 class Routes extends React.Component {

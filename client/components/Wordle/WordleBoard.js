@@ -1,22 +1,29 @@
-import React, { useState } from 'react';
-import { boardDefault, rows } from './wordleUtilities/wordle';
+import React, { useState,useContext } from 'react';
+import { boardDefault, rows } from './wordleUtilities';
 import LetterCell from './LetterCell';
+import {WordleAppContext} from '../WordleApp'
 
 function WordleBoard() {
-    const [board, setBoard] = useState(rows);
+    // const [board, setBoard] = useState(rows);
     // const [attempts, setAttempts] = useState(0);
-
+    const {board} = useContext(WordleAppContext)
+    
     return (
         <div className="board">
-            {board.map((row) => (
-                <div className='row' key={row.id}>
-                    <LetterCell index={row.id} attemptNum={0} />
-                    <LetterCell index={row.id} attemptNum={1}/>
-                    <LetterCell index={row.id} attemptNum={2}/>
-                    <LetterCell index={row.id} attemptNum={3}/>
-                    <LetterCell index={row.id} attemptNum={4}/>
-                </div>
-            ))}
+            {board.map((row) => {
+                const rowId = row.id
+                const cells = row.cells;
+                const letterCell = cells.map((cell, index) => {
+                    // let idx = cell[index];
+                    return (
+                        // <LetterCell key={index} rowIdx={rowId} letter={cell} />
+                        <LetterCell key={index} letter={cell} />
+                    )
+                })
+               return (<div className='row' key={rowId}>
+                    {letterCell}
+                </div>)
+            })}
         </div>
     )
 }
