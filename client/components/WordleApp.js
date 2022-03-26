@@ -15,12 +15,13 @@ function WordleApp() {
             <h1>Wordle</h1>
             <WordleAppContext.Provider value={{ board, setBoard }}>
                 <div className='game'>
-                    <WordleBoard />
+                    <div id='webcam-parent'>
+                        <ASLDetection />
+                    </div>
+                    <div id='board-parent'>
+                        <WordleBoard />
+                    </div>
                 </div>
-                {/* <div className='guess'>
-                    <ASLDetection />
-                </div> */}
-                {/* <Webcam/> or <Translation/> component */}
             </WordleAppContext.Provider>
         </div>
     )

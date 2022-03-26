@@ -138,28 +138,28 @@ export const ASLDetection = () => {
 			</div> */}
 			<Webcam
 				ref={webcamRef}
-				style={{
-					marginRight: 'auto',
-					marginLeft: 'auto',
-					// position: 'absolute',
-					zIndex: 9,
-					width: 270,
-					height: 240,
-					backgroundColor: 'black'
-				}}
+				// style={{
+				// 	marginRight: 'auto',
+				// 	marginLeft: 'auto',
+				// 	position: 'absolute',
+				// 	zIndex: 9,
+				// 	width: 270,
+				// 	height: 240,
+				// 	backgroundColor: 'black'
+				// }}
                 className='webcam'
 			/>
 			<canvas
 				ref={canvasRef}
-				style={{
-					marginLeft: 'auto',
-					marginRight: 'auto',
-					// position: 'absolute',
-					textAlign: 'center',
-					zIndex: 9,
-					width: 270,
-					height: 240
-				}}
+				// style={{
+				// 	marginLeft: 'auto',
+				// 	marginRight: 'auto',
+				// 	position: 'absolute',
+				// 	textAlign: 'center',
+				// 	zIndex: 9,
+				// 	width: 270,
+				// 	height: 240
+				// }}
                 className='canvas'
 			/>
 			{/* <div
