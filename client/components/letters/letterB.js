@@ -3,10 +3,23 @@ import { Finger, FingerCurl, FingerDirection, GestureDescription } from 'fingerp
 const letterB = new GestureDescription('B')
 export default letterB
 
-letterB.addCurl(Finger.Thumb, FingerCurl.HalfCurl, 1)
-letterB.addDirection(Finger.Thumb, FingerDirection.VerticalUp, 1)
+//Thumb
+letterB.addCurl(Finger.Thumb, FingerCurl.HalfCurl, 1.0)
+letterB.addDirection(Finger.Index, FingerDirection.DiagonalUpLeft, 0.7)
+letterB.addDirection(Finger.Index, FingerDirection.DiagonalUpRight, 0.7)
 
-for (let finger of [Finger.Index, Finger.Middle, Finger.Ring, Finger.Pinky]) {
-	letterB.addCurl(finger, FingerCurl.NoCurl, 1.0)
-	letterB.addCurl(finger, FingerDirection.VerticalUp, 1.0)
-}
+//Index
+letterB.addCurl(Finger.Index, FingerCurl.NoCurl, 1)
+letterB.addDirection(Finger.Index, FingerDirection.VerticalUp, 0.7)
+
+//Middle
+letterB.addCurl(Finger.Middle, FingerCurl.NoCurl, 1)
+letterB.addDirection(Finger.Middle, FingerDirection.VerticalUp, 0.7)
+
+//Ring
+letterB.addCurl(Finger.Ring, FingerCurl.NoCurl, 1)
+letterB.addDirection(Finger.Ring, FingerDirection.VerticalUp, 0.7)
+
+//Pinky
+letterB.addCurl(Finger.Pinky, FingerCurl.NoCurl, 1)
+letterB.addDirection(Finger.Pinky, FingerDirection.VerticalUp, 0.7)
