@@ -1,4 +1,4 @@
-const data = {
+export const data = {
   words: [
     'aback',
     'abase',
@@ -12976,4 +12976,4 @@ const data = {
   ]
 };
 
-export default data;
+// export default data;

@@ -1,6 +1,6 @@
 import { data } from './data/index'
 
-const wordBank = data;
+const wordBank = data.words;
 console.log(wordBank);
 
 const getDailyWord = () => {
