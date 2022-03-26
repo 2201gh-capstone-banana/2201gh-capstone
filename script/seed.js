@@ -2,7 +2,7 @@
 
 const {
 	db,
-	models: { User, Alphabet }
+	models: { User, Alphabet, TargetWord, WordleGame, AcceptedGuess, AcceptedWord }
 } = require('../server/db')
 
 /**
@@ -126,7 +126,29 @@ async function seed() {
 		})
 	}
 
-	console.log(`seeded ${users.length} users`)
+	const targetWord1 = await TargetWord.create({ content: 'shiny' })
+	const [acceptedGuess1, acceptedGuess2] = await Promise.all([
+		AcceptedGuess.create({
+			content: 'table'
+		}),
+		AcceptedGuess.create({
+			content: 'clove'
+		})
+	])
+
+	const wordle1 = await WordleGame.create({})
+	await targetWord1.addWordleGame(wordle1)
+	await users[0].addWordleGame(wordle1)
+	//wordle1.setTargetWord(targetWord1)
+	//wordle1.setUser(users[0])
+
+	// const wordle1 = await targetWord1.addUser(users[0])
+	// const wordle2 = await targetWord1.addUser(users[1])
+
+	// //await acceptedGuess1.setWordleGame(wordle1)
+	// //await wordle1.setAcceptedGuess(acceptedGuess1)
+	// await acceptedGuess1.setWordleGame(wordle1)
+
 	console.log(`seeded successfully`)
 	return {
 		users: {
