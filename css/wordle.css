@@ -1,6 +1,7 @@
 #app{
   width: 100vw;
 	height: 100vh;
+  font-family: Helvetica, Arial, sans-serif;
 }
 
 .wordle-app {
@@ -173,5 +174,26 @@ nav h1 {
   width: 50vw;
   justify-content: flex-end;
   align-items: center;
+	/* height: 100vh; */
+}
+
+.detecting{
+  /* display: flex;
+	flex-direction: column;
+  width: 50vw;
+  justify-content: flex-end; */
+  display: flex;
+  text-align: center;
+  /* align-items: center; */
+	/* height: 100vh; */
+}
+.guess{
+  /* display: flex;
+	flex-direction: column;
+  width: 50vw;
+  justify-content: flex-end;
+  align-items: center; */
+  display: flex;
+  text-align: center;
 	/* height: 100vh; */
 }
