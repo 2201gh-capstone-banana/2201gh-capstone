@@ -13,6 +13,7 @@ import Main from './components/Main'
 import Navbar from './components/Navbar'
 import Home from './components/Home'
 import Learning from './components/Learning'
+import GameView from './components/GameView'
 import Idle from './components/Idle'
 
 class Routes extends React.Component {
@@ -83,6 +84,7 @@ class Routes extends React.Component {
 								<Route exact path="/main" component={Main} />
 								<Route exact path="/signin" component={AuthForm} />
 								<Route exact path="/learning" component={Learning} />
+								<Route exact path="/falling" component={GameView} />
 							</Switch>
 						</Router>
 					</IdleTimer>
@@ -96,6 +98,7 @@ class Routes extends React.Component {
 							<Route exact path="/main" component={Main} />
 							<Route exact path="/signin" component={AuthForm} />
 							<Route exact path="/learning" component={Learning} />
+							<Route exact path="/falling" component={GameView} />
 						</Switch>
 					</Router>
 				)}
