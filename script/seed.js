@@ -28,6 +28,13 @@ async function seed() {
 			lastName: 'Lin',
 			email: 'murphy@gmail.com',
 			password: '123'
+		}),
+		User.create({
+			username: 'lulu',
+			firstName: 'Lulu',
+			lastName: 'Lili',
+			email: 'lulu@gmail.com',
+			password: '123'
 		})
 	])
 
@@ -10854,7 +10861,8 @@ async function seed() {
 	return {
 		users: {
 			cody: users[0],
-			murphy: users[1]
+			murphy: users[1],
+			lulu: users[2]
 		}
 	}
 }
