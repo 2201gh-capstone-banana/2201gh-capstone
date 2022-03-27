@@ -60,7 +60,7 @@ class Routes extends React.Component {
 					{/*
 					For auto signin when token is in local storage.
 					Hide the signin page if token is valid.
-				
+
 					<Route path="/signin">
 						{this.props.correctUser ? <Redirect to="/main" /> : <AuthForm />}
 					</Route>

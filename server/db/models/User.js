@@ -71,9 +71,11 @@ User.prototype.decryptPassword = async function (password) {
 	{ username: 'dean, password: $2b$10$/KTUxlFho.y2S6 }
 	Else if password does not decrypt, return 'false'.
 */
-User.decryptToken = function (token) {
+User.decryptToken = async function (token) {
 	try {
-		return jwt.verify(token, PASSPHRASE)
+		//return jwt.verify(token, PASSPHRASE)
+		const { userId } = await jwt.verify(token, PASSPHRASE)
+		return { userId }
 	} catch (err) {
 		return false
 	}

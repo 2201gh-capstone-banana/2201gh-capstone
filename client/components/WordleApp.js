@@ -1,9 +1,10 @@
-import React, { Component, useState, createContext } from 'react'
+import React, { Component, useState, useEffect, createContext } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import WordleBoard from './Wordle/WordleBoard'
 import WordleDetection from './WordleDetection'
 import { boardDefault, rows } from './Wordle/wordleUtilities'
+import { fetchAcceptedGuesses } from '../store/wordle'
 import Sidebar from './SideBar'
-
 // class WordleApp extends Component {
 
 //     render() {
@@ -11,6 +12,16 @@ export const WordleAppContext = createContext()
 function WordleApp() {
 	const [board, setBoard] = useState(rows)
 	const [translation, setTranslation] = useState(null)
+	const dispatch = useDispatch()
+
+	//componentDidMount equivalent-----------------
+	useEffect(() => {
+		dispatch(fetchAcceptedGuesses(1))
+	}, [])
+
+	const allGuesses = useSelector(state => state.wordle)
+	console.log('all guesses are', allGuesses)
+	//----------------------------------------------
 
 	return (
 		<div className="wordle-app">

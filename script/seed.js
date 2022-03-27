@@ -28,6 +28,13 @@ async function seed() {
 			lastName: 'Lin',
 			email: 'murphy@gmail.com',
 			password: '123'
+		}),
+		User.create({
+			username: 'lulu',
+			firstName: 'Lulu',
+			lastName: 'Lili',
+			email: 'lulu@gmail.com',
+			password: '123'
 		})
 	])
 
@@ -10800,7 +10807,8 @@ async function seed() {
 		acceptedGuess4,
 		acceptedGuess5,
 		acceptedGuess6,
-		acceptedGuess7
+		acceptedGuess7,
+		acceptedGuess8
 	] = await Promise.all([
 		AcceptedGuess.create({
 			content: 'table'
@@ -10822,6 +10830,9 @@ async function seed() {
 		}),
 		AcceptedGuess.create({
 			content: 'solve'
+		}),
+		AcceptedGuess.create({
+			content: 'crave'
 		})
 	])
 
@@ -10844,13 +10855,14 @@ async function seed() {
 	])
 
 	await wordle2.addAcceptedGuess(acceptedGuess6)
-	await wordle3.addAcceptedGuess(acceptedGuess7)
+	await wordle3.addAcceptedGuess([acceptedGuess7, acceptedGuess8])
 
 	console.log(`seeded successfully`)
 	return {
 		users: {
 			cody: users[0],
-			murphy: users[1]
+			murphy: users[1],
+			lulu: users[2]
 		}
 	}
 }
