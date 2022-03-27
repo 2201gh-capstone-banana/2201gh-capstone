@@ -19,8 +19,8 @@ function Navbar(props) {
 			<nav className="navbar">
 				<div className="navbar-container">
 					<Link to="/" className="navbar-logo">
-						BE MY VOICE
-						<FontAwesomeIcon icon={faArrowUpAZ} />
+						<img src="logo.svg" alt="website logo" className="navbar__logo" />{' '}
+						&nbsp; BE MY VOICE
 					</Link>
 					<div className="menu-icon" onClick={handleClick}>
 						<FontAwesomeIcon icon={click ? faX : faAlignJustify} />
@@ -34,6 +34,7 @@ function Navbar(props) {
 								Home
 							</Link>
 						</li>
+
 						<li>
 							<Link
 								to="/learning"
@@ -42,6 +43,16 @@ function Navbar(props) {
 								Learning
 							</Link>
 						</li>
+
+						<li>
+							<Link
+								to="/about"
+								className="nav-links"
+								onClick={closeMobileMenu}>
+								About
+							</Link>
+						</li>
+
 						<li>
 							<Link
 								to="/main"
@@ -95,3 +106,4 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar)
+
