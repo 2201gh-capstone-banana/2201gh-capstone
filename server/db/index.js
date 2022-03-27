@@ -9,7 +9,6 @@ const AcceptedGuess = require('./models/AcceptedGuess')
 const WordleGame = require('./models/WordleGame')
 const AcceptedWord = require('./models/AcceptedWord')
 
-const Answer = require('./models/Answer')
 
 //associations could go here!
 //user has many wordleGame, wordleGame belongs to 1 user
