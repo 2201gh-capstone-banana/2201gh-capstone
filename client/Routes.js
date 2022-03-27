@@ -14,6 +14,7 @@ import Navbar from './components/Navbar'
 import Home from './components/Home'
 import Learning from './components/Learning'
 import Idle from './components/Idle'
+import About from './components/About'
 
 class Routes extends React.Component {
 	constructor() {
@@ -80,6 +81,7 @@ class Routes extends React.Component {
 							<Switch>
 								<Route exact path="/" component={LandingPage} />
 								<Route exact path="/home" component={Home} />
+								<Route exact path="/about" component={About} />
 								<Route exact path="/main" component={Main} />
 								<Route exact path="/signin" component={AuthForm} />
 								<Route exact path="/learning" component={Learning} />
@@ -93,6 +95,7 @@ class Routes extends React.Component {
 						<Switch>
 							<Route exact path="/" component={LandingPage} />
 							<Route exact path="/home" component={Home} />
+							<Route exact path="/about" component={About} />
 							<Route exact path="/main" component={Main} />
 							<Route exact path="/signin" component={AuthForm} />
 							<Route exact path="/learning" component={Learning} />

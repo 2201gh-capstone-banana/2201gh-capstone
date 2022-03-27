@@ -35,13 +35,13 @@
 }
 
 .nav-menu {
-	display: grid;
 	grid-template-columns: repeat(4, auto);
 	grid-gap: 10px;
 	list-style: none;
 	text-align: center;
 	width: 60vw;
 	justify-content: end;
+	display: flex;
 	margin-right: 2rem;
 }
 
