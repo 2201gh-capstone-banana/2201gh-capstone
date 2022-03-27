@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const { requireToken } = require('./securityMiddleware')
 const {
 	models: { User, WordleGame, AcceptedGuess }
 } = require('../db')
