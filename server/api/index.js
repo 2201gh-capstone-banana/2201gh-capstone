@@ -2,6 +2,7 @@ const router = require('express').Router()
 module.exports = router
 
 router.use('/users', require('./users'))
+// router.use('/wordle', require('./words'))
 router.use('/letters', require('./letters'))
 
 router.use((req, res, next) => {
