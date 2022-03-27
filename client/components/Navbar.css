@@ -1,7 +1,6 @@
 .navbar {
-	/* background: linear-gradient(90deg, #d39e63 0%, #faab77 100%); */
-	background-color: rgb(36, 30, 19);
-	height: 80px;
+	background-color: #4d4d4d;
+	height: 60px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -36,7 +35,6 @@
 }
 
 .nav-menu {
-	display: grid;
 	grid-template-columns: repeat(4, auto);
 	grid-gap: 10px;
 	list-style: none;
@@ -75,6 +73,11 @@
 
 .menu-icon {
 	display: none;
+}
+
+.navbar__logo {
+	height: 30px;
+	width: 30px;
 }
 
 @media screen and (max-width: 960px) {
