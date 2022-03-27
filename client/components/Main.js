@@ -33,7 +33,7 @@ export const Main = props => {
 	const userId = useSelector(state => state.auth.userId)
 	console.log('USER ID IS ----', userId)
 	useEffect(() => {
-		dispatch(fetchAcceptedGuesses(1))
+		dispatch(fetchAcceptedGuesses(userId))
 	}, [])
 
 	console.log(

@@ -30,7 +30,7 @@ router.post('/manualsignin', async (req, res, next) => {
 					Sends a encrypted object as response.
 					Stored in local storage for auto signin.
 				*/
-				const token = await User.encryptToken({ username, password })
+				const token = await User.encryptToken({ userId: user.id })
 				return res.send({ token: token, userId: user.id })
 			}
 
@@ -79,8 +79,9 @@ router.post('/signup', async (req, res, next) => {
 			Stored in local storage for auto signin.
 		*/
 		const token = await User.encryptToken({
-			username: user.username,
-			password: user.password
+			// username: user.username,
+			// password: user.password
+			userId: user.id
 		})
 
 		return res.send({ token: token })
@@ -102,7 +103,7 @@ router.post('/autosignin', async (req, res, next) => {
 
 			/* If the decrypted 'token' matches a user in the database. */
 			if (match) {
-				return res.send(true)
+				return res.send(match)
 			}
 		}
 

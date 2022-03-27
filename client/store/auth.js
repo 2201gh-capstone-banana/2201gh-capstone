@@ -101,7 +101,7 @@ export const autoSignin = () => {
 				})
 
 				let action
-
+				console.log('data or MATCH-----', data)
 				if (data) {
 					action = _autoSignin(token)
 				} else {

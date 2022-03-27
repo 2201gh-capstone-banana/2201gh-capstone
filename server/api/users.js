@@ -42,9 +42,9 @@ router.get('/:id/latestguesses', async (req, res, next) => {
 			where: { userId: req.params.id },
 			include: AcceptedGuess
 		})
-		latestWordle = latestWordle[latestWordle.length - 1]
-		if (latestWordle.acceptedGuesses.length === 5) {
-			latestGuesses === null
+		latestWordle ? (latestWordle = latestWordle[latestWordle.length - 1]) : null
+		if (!latestWordle || latestWordle.acceptedGuesses.length === 5) {
+			latestGuesses === []
 		} else {
 			latestGuesses = latestWordle.acceptedGuesses
 		}
