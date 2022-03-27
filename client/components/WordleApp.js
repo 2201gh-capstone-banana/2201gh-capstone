@@ -20,6 +20,7 @@ function WordleApp() {
 	}, [])
 
 	const allGuesses = useSelector(state => state.wordle)
+	//do want to put this into 
 	console.log('all guesses are', allGuesses)
 	//----------------------------------------------
 
