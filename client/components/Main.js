@@ -19,7 +19,10 @@ export const Main = props => {
 	const [translation, setTranslation] = useState(null)
 	const [guess, setGuess] = useState(['*', '*', '*', '*', '*'])
 	const [timer, setTimer] = useState(3)
-	const [finalAns, setFinalAns] = useState([])
+	const [acceptedGuess, setAcceptedGuess] = useState('')
+	const [isValid, setIsValid] = useState(true)
+
+	const acceptedWordList = ['LLLLL', 'KKKKK']
 
 	console.log('GUESS --->', guess)
 	const netRef = useRef(null)
@@ -98,6 +101,7 @@ export const Main = props => {
 	}, [])
 
 	useEffect(() => {
+		console.log('in use effect when translation changes')
 		/*
 		timer functionality:
 
@@ -119,6 +123,7 @@ export const Main = props => {
 		clearTimeout(t)
 		let copyGuessWord = guess.slice()
 		if (translation !== null && translation !== 'O') {
+			console.log('in translation not O')
 			//	const timeIntervalBetweenGuesses = setTimeout(() => { setGuess(translation) }, 3000)
 			console.log('tranlation in use effect is -----', translation)
 			// if (timer > 0) {
@@ -127,7 +132,7 @@ export const Main = props => {
 			// 	}, 1000)
 			// }
 			t = setTimeout(() => {
-				for (let i = 0; i < 6; i++) {
+				for (let i = 0; i < 5; i++) {
 					if (copyGuessWord[i] === '*') {
 						copyGuessWord[i] = translation
 						break
@@ -137,10 +142,14 @@ export const Main = props => {
 			}, 3000)
 			setTimeout(setGuess(copyGuessWord), 0)
 		} else if (translation === 'O') {
+			console.log('in translation is O')
 			clearTimeout(t)
 			t = setTimeout(() => {
-				for (let i = 0; i < 6; i++) {
-					if (copyGuessWord[i] !== '*' && copyGuessWord[i + 1] === '*') {
+				for (let i = 0; i < 5; i++) {
+					if (
+						(copyGuessWord[i] !== '*' && copyGuessWord[i + 1] === '*') ||
+						i === 4
+					) {
 						copyGuessWord.splice(i, 1, '*')
 
 						break
@@ -148,10 +157,22 @@ export const Main = props => {
 				}
 			}, 3000)
 			setTimeout(setGuess(copyGuessWord), 0)
+		} else if (translation === 'Q' && !guess.includes('*')) {
+			console.log('GET IN Q 1')
+			if (acceptedWordList.includes(copyGuessWord.join(''))) {
+				console.log('GET IN Q 2')
+				setAcceptedGuess(copyGuessWord.join(''))
+				setGuess(['*', '*', '*', '*', '*'])
+			} else {
+				setIsValid(false)
+			}
 		}
 	}, [translation])
 
 	console.log('new guess is', guess)
+	console.log('is valid-----------------', isValid)
+	console.log('accepted guess word is', acceptedGuess)
+
 	return (
 		<div>
 			<div className="container">
@@ -201,7 +222,9 @@ export const Main = props => {
 					marginLeft: 600
 				}}>
 				Guessed word is: {guess}
-				<div id='timer'></div>
+				<div id="timer"></div>
+				{!isValid ? <div>Not a valid guess</div> : null}
+				<div>Accepted guessed word: {acceptedGuess}</div>
 			</div>
 		</div>
 	)
