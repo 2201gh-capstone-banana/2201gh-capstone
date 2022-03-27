@@ -5,6 +5,8 @@ import { drawHand } from '../utilities/hand'
 import * as handpose from '@tensorflow-models/handpose'
 import '@tensorflow/tfjs-backend-webgl'
 import * as fp from 'fingerpose'
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchAcceptedGuesses } from '../store/wordle'
 
 import { letters } from './letters'
 import PopUp from './PopUp'
@@ -27,6 +29,17 @@ export const Main = props => {
 	console.log('GUESS --->', guess)
 	const netRef = useRef(null)
 
+	const dispatch = useDispatch()
+	const userId = useSelector(state => state.auth.userId)
+	console.log('USER ID IS ----', userId)
+	useEffect(() => {
+		dispatch(fetchAcceptedGuesses(1))
+	}, [])
+
+	console.log(
+		'all guesses are ---',
+		useSelector(state => state.wordle)
+	)
 	// handleGuess(){
 
 	// }
