@@ -19,9 +19,6 @@ function WordleApp() {
 		dispatch(fetchAcceptedGuesses(1))
 	}, [])
 
-	const allGuesses = useSelector(state => state.wordle)
-	//do want to put this into 
-	console.log('all guesses are', allGuesses)
 	//----------------------------------------------
 
 	return (
