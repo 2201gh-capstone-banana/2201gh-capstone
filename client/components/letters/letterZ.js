@@ -33,7 +33,7 @@ letterZ.addDirection(Finger.Index, FingerDirection.VerticalUp, 1.0)
 
 for (let finger of [Finger.Ring, Finger.Pinky, Finger.Middle]) {
 	letterZ.addCurl(finger, FingerCurl.FullCurl, 1.0)
-	letterZ.addCurl(finger, FingerCurl.HalfCurl, 0.9)
+	letterZ.addCurl(finger, FingerCurl.HalfCurl, 1.0)
 	letterZ.addDirection(finger, FingerDirection.DiagonalUpRight, 1.0)
 	letterZ.addDirection(finger, FingerDirection.DiagonalUpLeft, 1.0)
 	letterZ.addDirection(finger, FingerDirection.VerticalUp, 1.0)
