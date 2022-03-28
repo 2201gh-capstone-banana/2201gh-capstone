@@ -68,7 +68,7 @@ User.prototype.decryptPassword = async function (password) {
 
 /*
 	CLASS METHOD: Decrypts the JWT into an object, return example:
-	{ username: 'dean, password: $2b$10$/KTUxlFho.y2S6 }
+	{ id: 1, username: 'dean, password: $2b$10$/KTUxlFho.y2S6 }
 	Else if password does not decrypt, return 'false'.
 */
 User.decryptToken = function (token) {
