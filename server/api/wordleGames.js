@@ -68,7 +68,7 @@ router.post(
 )
 
 
-router.post('/:id/addGuess', async (req, res, next) => {
+router.post('/:id/:wordleId/addGuess', async (req, res, next) => {
 	try {
 		/*
 		since the game has already been fetched in this instance  
@@ -83,6 +83,7 @@ router.post('/:id/addGuess', async (req, res, next) => {
 		/* 
 		alternative option to above if we want to just use the userId!
 		*/
+		
 		const currentGame = await WordleGame.findOne({
 			where: { userId: req.params.id }
 		})
