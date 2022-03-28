@@ -66,17 +66,18 @@ class AuthForm extends React.Component {
 				<header className="brand__wrapper">
 					<Brand />
 				</header>
-
 				<form onSubmit={this.handleSubmit} className="authForm">
 					<AuthInput
 						for="username"
 						onChange={this.handleChange}
 						value={this.state.username}
+						type="text"
 					/>
 					<AuthInput
 						for="password"
 						onChange={this.handleChange}
 						value={this.state.password}
+						type="password"
 					/>
 					{!this.state.signin ? (
 						<>
@@ -84,18 +85,21 @@ class AuthForm extends React.Component {
 								for="firstName"
 								onChange={this.handleChange}
 								value={this.state.firstName}
+								type="text"
 							/>
 
 							<AuthInput
 								for="lastName"
 								onChange={this.handleChange}
 								value={this.state.lastName}
+								type="text"
 							/>
 
 							<AuthInput
 								for="email"
 								onChange={this.handleChange}
 								value={this.state.email}
+								type="text"
 							/>
 						</>
 					) : null}
