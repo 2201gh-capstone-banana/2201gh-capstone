@@ -15,4 +15,4 @@ function WordRow({ rowIdx, row }) {
   )
 }
 
-export default WordRow
+export default WordRow;

@@ -10,7 +10,6 @@ function WordleBoard() {
     const { board, setBoard } = useContext(WordleAppContext)
 
     const allAcceptedGuesses = useSelector(state => state.wordle)
-    console.log("ALL ACCEPTED GUESSES:", allAcceptedGuesses)
     useEffect(() => {
         console.log('THE TOP OF THE USEEFFECT TO SETBOARD')
         const generateNewBoard = arr => {
