@@ -5,6 +5,8 @@ import { drawHand } from '../utilities/hand'
 import * as handpose from '@tensorflow-models/handpose'
 import '@tensorflow/tfjs-backend-webgl'
 import * as fp from 'fingerpose'
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchAcceptedGuesses } from '../store/wordle'
 
 import { letters } from './letters'
 import PopUp from './PopUp'
@@ -27,6 +29,17 @@ export const Main = props => {
 	console.log('GUESS --->', guess)
 	const netRef = useRef(null)
 
+	const dispatch = useDispatch()
+	const userId = useSelector(state => state.auth.userId)
+	console.log('USER ID IS ----', userId)
+	useEffect(() => {
+		dispatch(fetchAcceptedGuesses(userId))
+	}, [])
+
+	console.log(
+		'all guesses are ---',
+		useSelector(state => state.wordle)
+	)
 	// handleGuess(){
 
 	// }
@@ -104,7 +117,6 @@ export const Main = props => {
 		console.log('in use effect when translation changes')
 		/*
 		timer functionality:
-
 		let timeRemaining = 5;
 		let timerElement = document.getElementById('timer');
 		function countdown() {
@@ -123,29 +135,39 @@ export const Main = props => {
 		clearTimeout(t)
 		let copyGuessWord = guess.slice()
 		if (translation !== null && translation !== 'O') {
-			console.log('in translation not O')
-			//	const timeIntervalBetweenGuesses = setTimeout(() => { setGuess(translation) }, 3000)
-			console.log('tranlation in use effect is -----', translation)
-			// if (timer > 0) {
-			// 	setInterval(() => {
-			// 		timer > 0 ? setTimer(timer - 1) : setTimer('time is up')
-			// 	}, 1000)
-			// }
-			t = setTimeout(() => {
-				for (let i = 0; i < 5; i++) {
-					if (copyGuessWord[i] === '*') {
-						copyGuessWord[i] = translation
-						break
-					}
+			if (translation === 'Q' && !copyGuessWord.includes('*')) {
+				console.log('GET IN Q 1')
+				if (acceptedWordList.includes(copyGuessWord.join(''))) {
+					console.log('GET IN Q 2')
+					setTimeout(setAcceptedGuess(copyGuessWord.join('')), 2000)
+					setTimeout(setGuess(['*', '*', '*', '*', '*']), 0)
+				} else {
+					setIsValid(false)
 				}
-				// timer;
-			}, 3000)
-			setTimeout(setGuess(copyGuessWord), 0)
+			} else {
+				console.log('in translation not O')
+				//	const timeIntervalBetweenGuesses = setTimeout(() => { setGuess(translation) }, 3000)
+				console.log('tranlation in use effect is -----', translation)
+				// if (timer > 0) {
+				// 	setInterval(() => {
+				// 		timer > 0 ? setTimer(timer - 1) : setTimer('time is up')
+				// 	}, 1000)
+				// }
+				t = setTimeout(() => {
+					for (let i = 0; i < 6; i++) {
+						if (copyGuessWord[i] === '*') {
+							copyGuessWord[i] = translation
+							break
+						}
+					}
+				}, 2000)
+				setTimeout(setGuess(copyGuessWord), 0)
+			}
 		} else if (translation === 'O') {
 			console.log('in translation is O')
 			clearTimeout(t)
 			t = setTimeout(() => {
-				for (let i = 0; i < 5; i++) {
+				for (let i = 0; i < 6; i++) {
 					if (
 						(copyGuessWord[i] !== '*' && copyGuessWord[i + 1] === '*') ||
 						i === 4
@@ -155,17 +177,8 @@ export const Main = props => {
 						break
 					}
 				}
-			}, 3000)
+			}, 2000)
 			setTimeout(setGuess(copyGuessWord), 0)
-		} else if (translation === 'Q' && !guess.includes('*')) {
-			console.log('GET IN Q 1')
-			if (acceptedWordList.includes(copyGuessWord.join(''))) {
-				console.log('GET IN Q 2')
-				setAcceptedGuess(copyGuessWord.join(''))
-				setGuess(['*', '*', '*', '*', '*'])
-			} else {
-				setIsValid(false)
-			}
 		}
 	}, [translation])
 

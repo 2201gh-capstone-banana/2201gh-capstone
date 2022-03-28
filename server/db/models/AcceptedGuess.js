@@ -8,7 +8,14 @@ const AcceptedGuess = db.define('acceptedGuess', {
 		validate: {
 			notEmpty: true
 		}
-	}
+	},
+	// rowNum: {
+	// 	type: Sequelize.INTEGER,
+	// 	allowNull:false,
+	// 	validate: {
+	// 		notEmpty:true
+	// 	}
+	// }
 })
 
 module.exports = AcceptedGuess
