@@ -5,7 +5,6 @@ import WordRow from './WordRow';
 import { WordleAppContext } from '../WordleApp'
 
 function WordleBoard() {
-    const [currentRow, setCurrentRow] = useState(0)
     // const [attempts, setAttempts] = useState(0);
     const { board, setBoard } = useContext(WordleAppContext)
 
@@ -20,9 +19,9 @@ function WordleBoard() {
         }
         console.log('GENERATE NEWBOARD-----', generateNewBoard(allAcceptedGuesses))
         setBoard(generateNewBoard(allAcceptedGuesses))
-        // 	allAcceptedGuesses.length === 1
-        // 		? setCurrentRow(0)
-        // 		: setCurrentRow(allAcceptedGuesses.length + 1)
+        	// allAcceptedGuesses.length === 1
+        	// 	? setCurrentRow(0)
+        	// 	: setCurrentRow(allAcceptedGuesses.length)
     }, [allAcceptedGuesses])
     // console.log('CURRENT ROW', currentRow)
     return (
