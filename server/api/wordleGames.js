@@ -5,31 +5,14 @@ const {
 } = require('../db')
 module.exports = router
 
-// router.get('/:id', async (req, res, next) => {
-// 	try {
-// 		let latestWordle = await WordleGame.findAll({
-// 			where: { userId: req.params.id },
-// 			include: AcceptedGuess
-// 		})
-// 		latestWordle = latestWordle[latestWordle.length - 1]
-// 		if (latestWordle.acceptedGuesses.length === 5) {
-// 			latestWordle === null
-// 		}
-// 		res.json(latestWordle)
-// 	} catch (error) {
-// 		next(error)
-// 	}
-// })
 
 router.get('/:id', async (req, res, next) => {
 	try {
-		let latestWordle = await WordleGame.findOne({
+		const latestWordle = await WordleGame.findOne({
 			where: { userId: req.params.id },
-			include:[{ model: AcceptedGuess}, {model: TargetWord}],
-			order: [ [ 'createdAt' ]],
+			include: [{ model: AcceptedGuess }, { model: TargetWord }],
+			order: [['createdAt']],
 		})
-
-		// latestWordle = latestWordle[latestWordle.length - 1]
 		if (!latestWordle || latestWordle.acceptedGuesses.length === 6) {
 			latestWordle === null
 			latestWordle.acceptedGuesses = [];
@@ -40,38 +23,19 @@ router.get('/:id', async (req, res, next) => {
 	}
 })
 
-//we already get accepted latestguesses when we call our previous get route!
-// router.get('/:id/latestguesses', async (req, res, next) => {
-// 	try {
-// 		let latestGuesses
-// 		let latestWordle = await WordleGame.findAll({
-// 			where: { userId: req.params.id },
-// 			include: AcceptedGuess
-// 		})
-// 		latestWordle ? (latestWordle = latestWordle[latestWordle.length - 1]) : null
-// 		if (!latestWordle || latestWordle.acceptedGuesses.length === 6) {
-// 			latestGuesses === []
-// 		} else {
-// 			latestGuesses = latestWordle.acceptedGuesses
-// 		}
-// 		res.json(latestGuesses)
-// 	} catch (error) {
-// 		next(error)
-// 	}
-// })
-
-const getRandomInt = max => {
+const getRandomIdx = max => {
 	return Math.floor(Math.random() * max)
 }
 
 const completedPrevGameOrStartNewGame = async (req, res, next) => {
 	try {
-		let latestWordle = await WordleGame.findAll({
+		const latestWordle = await WordleGame.findOne({
 			where: { userId: req.params.id },
-			include: [{ model: AcceptedGuess}, {model: TargetWord}]
+			include: [{ model: AcceptedGuess }, { model: TargetWord }],
+			order: [['createdAt']],
 		})
-		latestWordle ? (latestWordle = latestWordle[latestWordle.length - 1]) : null
-		if (!latestWordle || latestWordle.acceptedGuesses.length === 5) {
+		currentGame ? (latestWordle) : null
+		if (!currentGame || currentGame.acceptedGuesses.length === 6) {
 			next()
 		} else {
 			console.log('not finished game yet')
@@ -81,36 +45,71 @@ const completedPrevGameOrStartNewGame = async (req, res, next) => {
 	}
 }
 
-//create a new target word and asign that to a new game - send back the new target word to client
-router.get(
-	'/:id/newTargetWord',
-
+router.post(
+	'/:id/newGame',
 	completedPrevGameOrStartNewGame,
 	async (req, res, next) => {
 		try {
-			const randomWord = await AcceptedWord.findByPk(getRandomInt(10656))
-			const targetWord = await TargetWord.create({ content: randomWord.content })
+			const targetWordList = await TargetWord.findAll({
+				attributes: ['content']
+			});
+			const targetWord = await TargetWord.findByPk(getRandomIdx(targetWordList.length))
+			// const targetWord = await TargetWord.create({ content: randomWord.content })
 			const newWordleGame = await WordleGame.create({
 				targetWordId: targetWord.id,
 				userId: req.params.id
 			})
-			res.json({ targetWord })
+			res.json(newWordleGame)
 		} catch (error) {
+			console.log("Error in your post new game route")
 			next(error)
 		}
 	}
 )
 
+
+router.post('/:id/addGuess', async (req, res, next) => {
+	try {
+		/*
+		since the game has already been fetched in this instance  
+		we could maybe pass gameId as a req.params or as req.body.
+		
+		const currentGame = await WordleGame.findByPk(req.params.id, {
+			// not really necessary since we just need the id
+			// include: [{ model: AcceptedGuess }, { model: TargetWord }],
+		});
+		*/
+		
+		/* 
+		alternative option to above if we want to just use the userId!
+		*/
+		const currentGame = await WordleGame.findOne({
+			where: { userId: req.params.id }
+		})
+		
+		const newAcceptedGuess = await AcceptedGuess.create({
+			wordleGameId: currentGame.id,
+			content: req.body.content
+		})
+		res.json(newAcceptedGuess)
+	} catch (error) {
+		console.log("Error in your post new guess route")
+		next(error)
+	}
+})
+
 //adding player's guesses to a wordle game in database as long as they have not finish the game
+/* 
 router.post('/:id/latestguesses', async (req, res, next) => {
 	try {
 		let latestGuesses
-		let latestWordle = await WordleGame.findAll({
+		const latestWordle = await WordleGame.findOne({
 			where: { userId: req.params.id },
-			include: AcceptedGuess
+			include: [{ model: AcceptedGuess }, { model: TargetWord }],
+			order: [['createdAt']],
 		})
-		latestWordle ? (latestWordle = latestWordle[latestWordle.length - 1]) : null
-		if (!latestWordle || latestWordle.acceptedGuesses.length === 5) {
+		currentGame ? latestWordle : null
+		if (!currentGame || currentGame.acceptedGuesses.length === 5) {
 			console.log('need logic written for front end')
 			//have front end create a new game by fetching new target word
 		} else {
@@ -124,3 +123,4 @@ router.post('/:id/latestguesses', async (req, res, next) => {
 		next(error)
 	}
 })
+*/
