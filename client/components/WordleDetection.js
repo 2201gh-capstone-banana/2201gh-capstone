@@ -31,7 +31,8 @@ export const WordleDetection = () => {
 		}
 	}
 	const currentRow = currentRowToGuess(allAcceptedGuesses)
-	const [guess, setGuess] = useState(allAcceptedGuesses[currentRow].cells)
+	const [guess, setGuess] = useState(['*', '*', '*', '*', '*'])
+	//const [guess, setGuess] = useState(allAcceptedGuesses[currentRow].cells)
 	const [timer, setTimer] = useState(3)
 	const [finalAns, setFinalAns] = useState([])
 	console.log('CURRENT ROW IS', currentRow)

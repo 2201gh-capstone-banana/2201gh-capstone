@@ -5,16 +5,26 @@ import LetterCell from './LetterCell'
 import { WordleAppContext } from '../WordleApp'
 
 function WordleBoard() {
-	// const [board, setBoard] = useState(rows);
+	const [currentRow, setCurrentRow] = useState(0)
 	// const [attempts, setAttempts] = useState(0);
 	const { board, setBoard } = useContext(WordleAppContext)
 
 	const allAcceptedGuesses = useSelector(state => state.wordle)
-
+	console.log('ALL ACCEPTED GUESSES', allAcceptedGuesses)
 	useEffect(() => {
-		setBoard(allAcceptedGuesses)
+		const generateNewBoard = arr => {
+			for (let i = 0; i < arr.length; i++) {
+				rows[i] = arr[i]
+			}
+			return rows
+		}
+		console.log('GENERATE NEWBOARD-----', generateNewBoard(allAcceptedGuesses))
+		setBoard(generateNewBoard(allAcceptedGuesses))
+		// 	allAcceptedGuesses.length === 1
+		// 		? setCurrentRow(0)
+		// 		: setCurrentRow(allAcceptedGuesses.length + 1)
 	}, [allAcceptedGuesses])
-
+	// console.log('CURRENT ROW', currentRow)
 	return (
 		<div className="board">
 			{board.map(row => {

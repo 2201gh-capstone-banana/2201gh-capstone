@@ -58,12 +58,12 @@ export const addAcceptedGuess = (userId, wordleGameId, guess) => {
 }
 
 const initialState = [
-	{ id: 0, cells: ['', '', '', '', ''] },
-	{ id: 1, cells: ['', '', '', '', ''] },
-	{ id: 2, cells: ['', '', '', '', ''] },
-	{ id: 3, cells: ['', '', '', '', ''] },
-	{ id: 4, cells: ['', '', '', '', ''] },
-	{ id: 5, cells: ['', '', '', '', ''] }
+	// { id: 0, cells: ['', '', '', '', ''] },
+	// { id: 1, cells: ['', '', '', '', ''] },
+	// { id: 2, cells: ['', '', '', '', ''] },
+	// { id: 3, cells: ['', '', '', '', ''] },
+	// { id: 4, cells: ['', '', '', '', ''] },
+	// { id: 5, cells: ['', '', '', '', ''] }
 ]
 
 export default (state = initialState, action) => {
@@ -72,7 +72,11 @@ export default (state = initialState, action) => {
 			const allAcceptedGuessesObj = action.acceptedGuesses.map((ele, idx) => {
 				return { id: idx, cells: ele.content.toUpperCase().split('') }
 			})
-			return [...allAcceptedGuessesObj, { id: 5, cells: ['', '', '', '', ''] }]
+			let result
+			allAcceptedGuessesObj.length === 0
+				? (result = [{ id: 0, cells: ['', '', '', '', ''] }])
+				: (result = [...allAcceptedGuessesObj])
+			return result
 		case ADD_ACCEPTED_GUESSES:
 			return [...state, action.acceptedGuesses]
 		default:
