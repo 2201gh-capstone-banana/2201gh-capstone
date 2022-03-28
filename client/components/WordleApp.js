@@ -4,7 +4,7 @@ import WordleBoard from './Wordle/WordleBoard'
 import WordleDetection from './WordleDetection'
 import { boardDefault, rows } from './Wordle/wordleUtilities'
 import { fetchAcceptedGuesses } from '../store/wordle'
-// import { fetch}
+import {fetchTargetWord } from '../store/targetWord'
 import Sidebar from './SideBar'
 // class WordleApp extends Component {
 
@@ -36,10 +36,44 @@ function WordleApp() {
 	//componentDidMount equivalent-----------------
 	useEffect(() => {
 		dispatch(fetchAcceptedGuesses(1))
-		// dispatch(fetchAcceptedGuesses(1))
+		dispatch(fetchTargetWord(1))
 	}, [])
 
 	//----------------------------------------------
+
+
+	// useEffect(() => {
+	// 	let t
+	// 	console.log('t is !!!---', t)
+	// 	clearTimeout(t)
+	// 	let copyGuessWord = guess.slice()
+	// 	if (translation !== null && translation !== 'O') {
+	// 		//	const timeIntervalBetweenGuesses = setTimeout(() => { setGuess(translation) }, 3000)
+	// 		console.log('tranlation in use effect is -----', translation)
+	// 		t = setTimeout(() => {
+	// 			for (let i = 0; i < 6; i++) {
+	// 				if (copyGuessWord[i] === '') {
+	// 					copyGuessWord[i] = translation
+	// 					break
+	// 				}
+	// 			}
+	// 			// timer;
+	// 		}, 3000)
+	// 		setTimeout(setGuess(copyGuessWord), 0)
+	// 	} else if (translation === 'O') {
+	// 		clearTimeout(t)
+	// 		t = setTimeout(() => {
+	// 			for (let i = 0; i < 6; i++) {
+	// 				if (copyGuessWord[i] !== '' && copyGuessWord[i + 1] === '') {
+	// 					copyGuessWord.splice(i, 1, '')
+
+	// 					break
+	// 				}
+	// 			}
+	// 		}, 3000)
+	// 		setTimeout(setGuess(copyGuessWord), 0)
+	// 	}
+	// }, [translation])
 
 	return (
 		<div className="wordle-app">

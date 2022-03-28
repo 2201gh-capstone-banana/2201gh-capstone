@@ -8,7 +8,7 @@ function WordRow({ rowIdx, row }) {
     <div className='row' key={rowIdx}>
       {row.map((letter, index) => {
         return (
-          <LetterCell key={index} letter={letter} index={index} />
+          <LetterCell key={index} letter={letter} index={index} rowIdx={rowIdx}/>
         )
       })}
     </div>
