@@ -10,7 +10,7 @@ const getRandomIdx = max => {
 }
 
 //find or create
-router.get('/:id/game', requireToken, async (req, res, next) => {
+router.get('/:id/game', async (req, res, next) => {
 	try {
 		const latestWordle = await WordleGame.findOne({
 			where: { userId: req.params.id },
@@ -39,31 +39,8 @@ router.get('/:id/game', requireToken, async (req, res, next) => {
 	}
 })
 
-<<<<<<< HEAD
-router.post('/:id/:wordleId/addGuess', async (req, res, next) => {
-	try {
-		/*
-		since the game has already been fetched in this instance  
-		we could maybe pass gameId as a req.params or as req.body.
-		
-		const currentGame = await WordleGame.findByPk(req.params.id, {
-			// not really necessary since we just need the id
-			// include: [{ model: AcceptedGuess }, { model: TargetWord }],
-		});
-		*/
-		
-		/* 
-		alternative option to above if we want to just use the userId!
-		*/
-		
-		const currentGame = await WordleGame.findOne({
-			where: { userId: req.params.id }
-		})
-		
-=======
 router.post('/:id/:wordleGameId/addGuess', requireToken, async (req, res, next) => {
 	try {
->>>>>>> 1d2a6761d9072625fbac2323a650edfd3d988baf
 		const newAcceptedGuess = await AcceptedGuess.create({
 			wordleGameId: req.params.wordleGameId,
 			content: req.body.content
