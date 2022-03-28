@@ -10,28 +10,42 @@ function WordleBoard() {
     const { board, setBoard } = useContext(WordleAppContext)
 
     const allAcceptedGuesses = useSelector(state => state.wordle)
-    console.log('ALL ACCEPTED GUESSES', allAcceptedGuesses)
+    console.log("ALL ACCEPTED GUESSES:", allAcceptedGuesses)
     useEffect(() => {
+        console.log('THE TOP OF THE USEEFFECT TO SETBOARD')
         const generateNewBoard = arr => {
-            for (let i = 0; i < arr.length; i++) {
-                rows[i] = arr[i]
+            // let newBoardArr = Array(6).fill('');
+            console.log("GENERATE BOARD IS CALLED")
+            if (arr.length !== 0) {
+                for (let i = 0; i < arr.length; i++) {
+                    // boardDefault[i] = arr[i]
+                    // let boardCurrent = boardDefault[i];
+                    let currentWord = arr[i].split('');
+                    for (let j = 0; j < currentWord.length; j++) {
+                        boardDefault[i][j] = currentWord[j];
+                    }
+                }
             }
-            return rows
+            return boardDefault
+            // let newBoardArr = Array(6).fill('');
+            // newBoardArr.push(allAcceptedGuesses);
+            // console.log('GENERATE NEWBOARD-----', generateNewBoard(allAcceptedGuesses))
         }
-        console.log('GENERATE NEWBOARD-----', generateNewBoard(allAcceptedGuesses))
         setBoard(generateNewBoard(allAcceptedGuesses))
+        console.log(board);
         // 	allAcceptedGuesses.length === 1
         // 		? setCurrentRow(0)
         // 		: setCurrentRow(allAcceptedGuesses.length + 1)
+        // setBoard(allAcceptedGuesses);
     }, [allAcceptedGuesses])
-    // console.log('CURRENT ROW', currentRow)
+
     return (
         <div className="board">
-            {board.map((row) => {
-                const rowId = row.id
-                const cells = row.cells;
+            {board.map((row, index) => {
+                // const rowId = row
+                // const cells = row.cells;
                 return (
-                    <WordRow rowId={rowId} cells={cells} />
+                    <WordRow rowIdx={index} row={row} />
                 )
             })}
         </div>
