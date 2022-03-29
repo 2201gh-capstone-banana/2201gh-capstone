@@ -19,23 +19,23 @@ export const WordleDetection = () => {
 	console.log('WEBCAM REF', webcamRef)
 	const canvasRef = useRef(null)
 	// const [translation, setTranslation] = useState(null)
-	const allAcceptedGuesses = useSelector(state => state.wordle)
+	// const allAcceptedGuesses = useSelector(state => state.wordle)
 
 	//find the first row index that include ""
-	const currentRowToGuess = arr => {
-		for (let i = 0; i < arr.length; i++) {
-			if (arr[i].cells.includes('')) {
-				console.log(i)
-				return i
-			}
-		}
-	}
-	const currentRow = currentRowToGuess(allAcceptedGuesses)
-	const [guess, setGuess] = useState(['*', '*', '*', '*', '*'])
+	// const currentRowToGuess = arr => {
+	// 	for (let i = 0; i < arr.length; i++) {
+	// 		if (arr[i].cells.includes('')) {
+	// 			console.log(i)
+	// 			return i
+	// 		}
+	// 	}
+	// }
+	// const currentRow = currentRowToGuess(allAcceptedGuesses)
+	// const [guess, setGuess] = useState(['*', '*', '*', '*', '*'])
 	//const [guess, setGuess] = useState(allAcceptedGuesses[currentRow].cells)
 	const [timer, setTimer] = useState(3)
 	const [finalAns, setFinalAns] = useState([])
-	console.log('CURRENT ROW IS', currentRow)
+	// console.log('CURRENT ROW IS', currentRow)
 
 	// useEffect(() => {
 	// 	console.log('GET TO USE EFFECT')
@@ -44,7 +44,7 @@ export const WordleDetection = () => {
 	// 	console.log('NEW BOARD---', newBoard)
 	// }, [guess])
 
-	console.log('GUESS --->', guess)
+	
 	const netRef = useRef(null)
 
 	// handleGuess(){
@@ -87,7 +87,7 @@ export const WordleDetection = () => {
 		}
 
 		//Loop and detect hands
-		console.log('BOARD IS----', board)
+
 		async function detect(net) {
 			const video = webcamRef.current.video
 			// predict can take in an image, video or canvas html element
@@ -120,42 +120,9 @@ export const WordleDetection = () => {
 		loadModel()
 	}, [])
 
-	console.log('TRANSLATION IS ---', translation)
+	// console.log('TRANSLATION IS ---', translation)
 
-	useEffect(() => {
-		let t
-		console.log('t is !!!---', t)
-		clearTimeout(t)
-		let copyGuessWord = guess.slice()
-		if (translation !== null && translation !== 'O') {
-			//	const timeIntervalBetweenGuesses = setTimeout(() => { setGuess(translation) }, 3000)
-			console.log('tranlation in use effect is -----', translation)
-			t = setTimeout(() => {
-				for (let i = 0; i < 6; i++) {
-					if (copyGuessWord[i] === '') {
-						copyGuessWord[i] = translation
-						break
-					}
-				}
-				// timer;
-			}, 3000)
-			setTimeout(setGuess(copyGuessWord), 0)
-		} else if (translation === 'O') {
-			clearTimeout(t)
-			t = setTimeout(() => {
-				for (let i = 0; i < 6; i++) {
-					if (copyGuessWord[i] !== '' && copyGuessWord[i + 1] === '') {
-						copyGuessWord.splice(i, 1, '')
-
-						break
-					}
-				}
-			}, 3000)
-			setTimeout(setGuess(copyGuessWord), 0)
-		}
-	}, [translation])
-
-	console.log('new guess is', guess)
+	// console.log('new guess is', guess)
 	return (
 		<div className="webcam-detection">
 			<Webcam ref={webcamRef} className="webcam" />

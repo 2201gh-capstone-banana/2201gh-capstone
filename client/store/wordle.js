@@ -69,14 +69,17 @@ const initialState = [
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case GET_ACCEPTED_GUESSES:
-			const allAcceptedGuessesObj = action.acceptedGuesses.map((ele, idx) => {
-				return { id: idx, cells: ele.content.toUpperCase().split('') }
+			const allAcceptedGuesses = action.acceptedGuesses.map((ele, idx) => {
+				return ele.content;
+			// 	return { id: idx, cells: ele.content.toUpperCase().split('') }
 			})
-			let result
-			allAcceptedGuessesObj.length === 0
-				? (result = [{ id: 0, cells: ['', '', '', '', ''] }])
-				: (result = [...allAcceptedGuessesObj])
-			return result
+			// let result
+			// allAcceptedGuessesObj.length === 0
+			// 	? (result = [{ id: 0, cells: ['', '', '', '', ''] }])
+			// 	: (result = [...allAcceptedGuessesObj])
+			// return result
+			// console.log("THIS IS THE STATE", initialState)
+			return allAcceptedGuesses;
 		case ADD_ACCEPTED_GUESSES:
 			return [...state, action.acceptedGuesses]
 		default:
