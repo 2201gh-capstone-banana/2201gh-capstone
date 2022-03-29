@@ -1,17 +1,23 @@
-import React, {useContext}  from 'react';
-import {WordleAppContext} from '../WordleApp'
+import React, { useContext } from 'react'
+import { WordleAppContext } from '../WordleApp'
 
+function LetterCell({ rowIdx, index }) {
+	//maybe use react hooks in here somehow?
+	const { board, setBoard } = useContext(WordleAppContext);
+	// const cell = letter;
+	// useEffect(() => {
+	// 	console.log("forcing LetterCell to rerender")
+	// }, [board])
+	// console.log(board);
 
-function LetterCell({letter}) {
-    //maybe use react hooks in here somehow?
-    // const {board} = useContext(WordleAppContext);
-    // const cell = letter;
-    // console.log(letter);
-  return (
-    <div className='letter-cell'>
-      {letter}
-    </div>
-  )
+	// console.log(letter);
+	const letter = board[rowIdx][index]
+
+	return (
+		<div className='letter-cell'>
+			{letter}
+		</div>
+	)
 }
 
-export default LetterCell;
+export default LetterCell

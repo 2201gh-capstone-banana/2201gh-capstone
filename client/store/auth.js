@@ -11,7 +11,7 @@ const AUTO_SIGNIN = 'AUTO_SIGNIN'
 const SIGNOUT = 'SIGNOUT'
 
 /* Action creators. */
-const _manualSignin = token => ({ type: MANUAL_SIGNIN, token })
+const _manualSignin = (token, userId) => ({ type: MANUAL_SIGNIN, token, userId })
 const _manualSigninError = alert => ({ type: MANUAL_SIGNIN_ERROR, alert })
 export const _clearAlert = () => ({ type: CLEAR_ALERT })
 const _signUp = token => ({ type: SIGN_UP, token })
@@ -24,7 +24,7 @@ export const manualSignin = userData => {
 	return async dispatch => {
 		try {
 			const {
-				data: { token, alert }
+				data: { token, alert, userId }
 			} = await axios.post('/auth/manualsignin', userData)
 
 			/*
@@ -35,7 +35,7 @@ export const manualSignin = userData => {
 			let action
 
 			if (token) {
-				action = _manualSignin(token)
+				action = _manualSignin(token, userId)
 				localStorage.setItem('token', token)
 				history.push('/main') /* Redirects to main content. */
 			} else {
@@ -101,7 +101,7 @@ export const autoSignin = () => {
 				})
 
 				let action
-
+				console.log('data or MATCH-----', data)
 				if (data) {
 					action = _autoSignin(token)
 				} else {
@@ -131,13 +131,26 @@ export const signout = () => {
     Initial state.
     'alert' will store a message to be displayed if somthing went wrong with signin or signup.
 */
-const init = { alert: '', token: '', correctUser: false }
+const init = { alert: '', token: '', correctUser: false, userId: null }
 
 const authReducer = (state = init, action) => {
 	switch (action.type) {
 		case MANUAL_SIGNIN:
 			/* If manual signin worked. Reset/remove alert message by setting it to an empty string. */
-			return { ...state, alert: '', token: action.token, correctUser: true }
+			console.log('ACTION.USERID', {
+				...state,
+				alert: '',
+				token: action.token,
+				correctUser: true,
+				userId: action.userId
+			})
+			return {
+				...state,
+				alert: '',
+				token: action.token,
+				correctUser: true,
+				userId: action.userId
+			}
 		case MANUAL_SIGNIN_ERROR:
 			return { ...state, token: '', alert: action.alert, correctUser: false }
 		case CLEAR_ALERT:

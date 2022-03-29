@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const { requireToken } = require('./securityMiddleware')
 const {
-	models: { User, WordleGame, AcceptedGuess }
+	models: { User }
 } = require('../db')
 module.exports = router
 
@@ -16,40 +16,5 @@ router.get('/', async (req, res, next) => {
 		res.json(users)
 	} catch (err) {
 		next(err)
-	}
-})
-
-router.get('/:id/wordle', async (req, res, next) => {
-	try {
-		let latestWordle = await WordleGame.findAll({
-			where: { userId: req.params.id },
-			include: AcceptedGuess
-		})
-		latestWordle = latestWordle[latestWordle.length - 1]
-		if (latestWordle.acceptedGuesses.length === 5) {
-			latestWordle === null
-		}
-		res.json(latestWordle)
-	} catch (error) {
-		next(error)
-	}
-})
-
-router.get('/:id/latestguesses', async (req, res, next) => {
-	try {
-		let latestGuesses
-		let latestWordle = await WordleGame.findAll({
-			where: { userId: req.params.id },
-			include: AcceptedGuess
-		})
-		latestWordle = latestWordle[latestWordle.length - 1]
-		if (latestWordle.acceptedGuesses.length === 5) {
-			latestGuesses === null
-		} else {
-			latestGuesses = latestWordle.acceptedGuesses
-		}
-		res.json(latestGuesses)
-	} catch (error) {
-		next(error)
 	}
 })

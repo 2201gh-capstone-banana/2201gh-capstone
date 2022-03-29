@@ -1,28 +1,28 @@
 import { data } from './data/index'
 
-const wordBank = data.words;
+const wordBank = data.words
 
 export const getRandomWord = () => {
-    const randomIndex = Math.floor(Math.random() * wordBank.length)
-    return wordBank[randomIndex]
+	const randomIndex = Math.floor(Math.random() * wordBank.length)
+	return wordBank[randomIndex]
 }
 
 export const rows = [
-    { id: 0, cells: ['', '', '', '', ''] },
-    { id: 1, cells: ['', '', '', '', ''] },
-    { id: 2, cells: ['', '', 'F', '', ''] },
-    { id: 3, cells: ['', 'I', '', '', ''] },
-    { id: 4, cells: ['', '', '', '', ''] },
-    { id: 5, cells: ['', '', '', '', ''] }
-];
+	{ id: 0, cells: ['', '', '', '', ''] },
+	{ id: 1, cells: ['', '', '', '', ''] },
+	{ id: 2, cells: ['', '', '', '', ''] },
+	{ id: 3, cells: ['', '', '', '', ''] },
+	{ id: 4, cells: ['', '', '', '', ''] },
+	{ id: 5, cells: ['', '', '', '', ''] }
+]
 
 export const boardDefault = [
-    ['', '', '', '', ''],
-    ['', '', '', '', ''],
-    ['', '', '', '', ''],
-    ['', '', '', '', ''],
-    ['', '', '', '', ''],
-    ['', '', '', '', '']
+	['', '', '', '', ''],
+	['', '', '', '', ''],
+	['', '', '', '', ''],
+	['', '', '', '', ''],
+	['', '', '', '', ''],
+	['', '', '', '', '']
 ];
 
 /*

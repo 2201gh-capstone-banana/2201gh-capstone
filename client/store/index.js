@@ -4,8 +4,11 @@ import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import auth from './auth'
 import lettersReducer from './letters'
+import wordle from './wordle'
+import isValidGuess from './checkValidGuess'
+import targetWord from './targetWord'
 
-const reducer = combineReducers({ auth, lettersReducer })
+const reducer = combineReducers({ auth, lettersReducer, wordle, isValidGuess, targetWord })
 
 const middleware = composeWithDevTools(
 	applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))

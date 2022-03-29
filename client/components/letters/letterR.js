@@ -1,46 +1,47 @@
-import {Finger, FingerCurl, FingerDirection, GestureDescription} from 'fingerpose';
+import { Finger, FingerCurl, FingerDirection, GestureDescription } from 'fingerpose'
 
-const letterR = new GestureDescription('R');
+const letterR = new GestureDescription('R')
 
 //Thumb
-letterR.addCurl(Finger.Thumb, FingerCurl.HalfCurl, 1.0);
-letterR.addDirection(Finger.Index, FingerDirection.DiagonalUpLeft, 0.70);
+letterR.addCurl(Finger.Thumb, FingerCurl.HalfCurl, 1.0)
+letterR.addDirection(Finger.Thumb, FingerDirection.VerticalUp, 1.0)
+letterR.addDirection(Finger.Index, FingerDirection.DiagonalUpLeft, 0.9)
 
 //Index
-letterR.addCurl(Finger.Index, FingerCurl.NoCurl, 1);
-letterR.addDirection(Finger.Index, FingerDirection.VerticalUp, 0.70);
+letterR.addCurl(Finger.Index, FingerCurl.NoCurl, 1)
+letterR.addDirection(Finger.Index, FingerDirection.VerticalUp, 1.0)
 
 //Middle
-letterR.addCurl(Finger.Middle, FingerCurl.NoCurl, 1);
-letterR.addDirection(Finger.Middle, FingerDirection.VerticalUp, 0.70);
+letterR.addCurl(Finger.Middle, FingerCurl.NoCurl, 1)
+letterR.addDirection(Finger.Middle, FingerDirection.VerticalUp, 1.0)
+letterR.addDirection(Finger.Middle, FingerDirection.DiagonalUpLeft, 1.0)
+letterR.addDirection(Finger.Middle, FingerDirection.DiagonalUpRight, 1.0)
 
-//Ring
-letterR.addCurl(Finger.Ring, FingerCurl.FullCurl, 1);
-letterR.addDirection(Finger.Ring, FingerDirection.VerticalUp, 0.70);
-
-//Pinky
-letterR.addCurl(Finger.Pinky, FingerCurl.FullCurl, 1);
-letterR.addDirection(Finger.Pinky, FingerDirection.VerticalUp, 0.70);
+for (let finger of [Finger.Ring, Finger.Pinky]) {
+	letterR.addCurl(finger, FingerCurl.FullCurl, 1.0)
+	letterR.addCurl(finger, FingerCurl.HalfCurl, 0.9)
+	letterR.addDirection(finger, FingerDirection.VerticalUp, 1.0)
+}
 
 /*
-letterR.addCurl(fp.Finger.Thumb, fp.FingerCurl.NoCurl, 1.0);
-letterR.addDirection(fp.Finger.Thumb, fp.FingerDirection.VerticalUp, 1.0);
+letterR.addCurl(Finger.Thumb, FingerCurl.NoCurl, 1.0);
+letterR.addDirection(Finger.Thumb, FingerDirection.VerticalUp, 1.0);
 
-letterR.addCurl(fp.Finger.Index, fp.FingerCurl.NoCurl, 1.0);
-letterR.addDirection(fp.Finger.Index, fp.FingerDirection.VerticalUp, 1.0);
+letterR.addCurl(Finger.Index, FingerCurl.NoCurl, 1.0);
+letterR.addDirection(Finger.Index, FingerDirection.VerticalUp, 1.0);
 
-letterR.addCurl(fp.Finger.Middle, fp.FingerCurl.NoCurl, 1.0);
-letterR.addCurl(fp.Finger.Middle, fp.FingerCurl.HalfCurl, 0.9);
-letterR.addDirection(fp.Finger.Middle, fp.FingerDirection.VerticalUp, 1.0);
-letterR.addDirection(fp.Finger.Middle, fp.FingerDirection.DiagonalUpLeft, 1.0);
-letterR.addDirection(fp.Finger.Middle, fp.FingerDirection.DiagonalUpRight, 1.0);
+letterR.addCurl(Finger.Middle, FingerCurl.NoCurl, 1.0);
+letterR.addCurl(Finger.Middle, FingerCurl.HalfCurl, 0.9);
+letterR.addDirection(Finger.Middle, FingerDirection.VerticalUp, 1.0);
+letterR.addDirection(Finger.Middle, FingerDirection.DiagonalUpLeft, 1.0);
+letterR.addDirection(Finger.Middle, FingerDirection.DiagonalUpRight, 1.0);
 
-for (let finger of [fp.Finger.Ring, fp.Finger.Pinky]) {
-  letterR.addCurl(finger, fp.FingerCurl.FullCurl, 1.0);
-  letterR.addCurl(finger, fp.FingerCurl.HalfCurl, 0.9);
-  letterR.addDirection(finger, fp.FingerDirection.VerticalUp, 1.0);
+for (let finger of [Finger.Ring, Finger.Pinky]) {
+  letterR.addCurl(finger, FingerCurl.FullCurl, 1.0);
+  letterR.addCurl(finger, FingerCurl.HalfCurl, 0.9);
+  letterR.addDirection(finger, FingerDirection.VerticalUp, 1.0);
 }
 
 */
 
-export default letterR;
+export default letterR

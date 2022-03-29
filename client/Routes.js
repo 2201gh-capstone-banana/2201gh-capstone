@@ -60,7 +60,7 @@ class Routes extends React.Component {
 					{/*
 					For auto signin when token is in local storage.
 					Hide the signin page if token is valid.
-				
+
 					<Route path="/signin">
 						{this.props.correctUser ? <Redirect to="/main" /> : <AuthForm />}
 					</Route>
@@ -78,6 +78,7 @@ class Routes extends React.Component {
 
 						<Router>
 							<Navbar />
+							
 
 							<Switch>
 								<Route exact path="/" component={LandingPage} />
@@ -101,6 +102,7 @@ class Routes extends React.Component {
 							<Route exact path="/main" component={Main} />
 							<Route exact path="/signin" component={AuthForm} />
 							<Route exact path="/learning" component={Learning} />
+							<Route exact path="/wordle" component={WordleApp} />
 						</Switch>
 					</Router>
 				)}
