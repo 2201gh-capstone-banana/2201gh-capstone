@@ -5,7 +5,7 @@ import WordleDetection from './WordleDetection'
 import { boardDefault, rows, colorBoardDefault } from './Wordle/wordleUtilities'
 import { fetchAcceptedGuesses } from '../store/wordle'
 import { fetchTargetWord } from '../store/targetWord'
-import Sidebar from './SideBar'
+import Sidebar from './Sidebar'
 // class WordleApp extends Component {
 
 //     render() {
