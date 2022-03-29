@@ -18,7 +18,7 @@ function WordleApp() {
 	const [timer, setTimer] = useState(5);
 	const [guess, setGuess] = useState(Array(5).fill(''));
 	const [answer, setAnswer] = useState('');
-	const [color, setColor] =useState(colorBoardDefault);
+	// const [color, setColor] =useState(colorBoardDefault);
 	const dispatch = useDispatch()
 	// console.log("TRANSLATION", translation);
 
@@ -82,9 +82,7 @@ function WordleApp() {
 					currentRow,
 					setCurrentRow,
 					answer, 
-					setAnswer,
-					color, 
-					setColor
+					setAnswer
 				}}>
 				<div className="game">
 					<div id="webcam-parent">

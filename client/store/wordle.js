@@ -70,7 +70,7 @@ export default (state = initialState, action) => {
 	switch (action.type) {
 		case GET_ACCEPTED_GUESSES:
 			const allAcceptedGuesses = action.acceptedGuesses.map((ele, idx) => {
-				return ele.content;
+				return ele.content.toUpperCase();
 			// 	return { id: idx, cells: ele.content.toUpperCase().split('') }
 			})
 			// let result
