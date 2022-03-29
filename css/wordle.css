@@ -73,16 +73,20 @@ nav h1 {
 	font-family: Arial, Helvetica, sans-serif;
 }
 
-#correct {
+.white{
+	background-color: white;
+}
+
+.green {
 	background-color: #528d4e;
 }
 
-#almost {
+.yellow {
 	background-color: #b49f39;
 }
 
-#error {
-	background-color: #3a393c;
+.grey {
+	background-color: rgb(181, 181, 181);
 }
 
 .keyboard {

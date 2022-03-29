@@ -25,6 +25,15 @@ export const boardDefault = [
 	['', '', '', '', '']
 ];
 
+export const colorBoardDefault = [
+	['white', 'white', 'white', 'white', 'white'],
+	['white', 'white', 'white', 'white', 'white'],
+	['white', 'white', 'white', 'white', 'white'],
+	['white', 'white', 'white', 'white', 'white'],
+	['white', 'white', 'white', 'white', 'white'],
+	['white', 'white', 'white', 'white', 'white']
+];
+
 /*
     currentWord: '',
     rows: [
