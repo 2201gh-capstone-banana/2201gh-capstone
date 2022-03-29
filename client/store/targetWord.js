@@ -32,7 +32,7 @@ const initialState = '';
 export default (state = initialState, action) => {
     switch (action.type) {
         case GET_TARGET_WORD:
-            return action.targetWord.content;
+            return action.targetWord.content.toUpperCase();
         default:
             return state
     }

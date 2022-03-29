@@ -7,14 +7,16 @@ import { WordleAppContext } from '../WordleApp'
 function WordleBoard() {
     // const [currentRow, setCurrentRow] = useState(0)
     // const [attempts, setAttempts] = useState(0);
-    const { board, setBoard, currentRow, setCurrentRow } = useContext(WordleAppContext)
+    const { board, setBoard, currentRow, setCurrentRow, answer, setAnswer } = useContext(WordleAppContext)
 
     const allAcceptedGuesses = useSelector(state => state.wordle)
+    const targetWord = useSelector(state => state.targetWord)
+
     useEffect(() => {
         console.log('THE TOP OF THE USEEFFECT TO SETBOARD')
         const generateNewBoard = arr => {
             // let newBoardArr = Array(6).fill('');
-            console.log("GENERATE BOARD IS CALLED")
+            // console.log("GENERATE BOARD IS CALLED")
             if (arr.length !== 0) {
                 for (let i = 0; i < arr.length; i++) {
                     // boardDefault[i] = arr[i]
@@ -33,6 +35,10 @@ function WordleBoard() {
         setBoard(generateNewBoard(allAcceptedGuesses))
         setCurrentRow(allAcceptedGuesses.length);
     }, [allAcceptedGuesses])
+
+    useEffect(() => {
+        setAnswer(targetWord);
+    }, [targetWord])
 
     return (
         <div className="board">
