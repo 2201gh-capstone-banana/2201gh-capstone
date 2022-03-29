@@ -1,5 +1,4 @@
 import React from 'react'
-
 const AuthInput = props => {
 	return (
 		<div className={`auth__input-wrapper + ${props.for}__wrapper`}>
@@ -8,7 +7,7 @@ const AuthInput = props => {
 			</label>
 			<input
 				className={`auth__input ${props.for}__input`}
-				type="text"
+				type={props.type}
 				onChange={props.onChange}
 				value={props.value}
 				name={props.for}

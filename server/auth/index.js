@@ -30,8 +30,8 @@ router.post('/manualsignin', async (req, res, next) => {
 					Sends a encrypted object as response.
 					Stored in local storage for auto signin.
 				*/
-				const token = await User.encryptToken({ userId: user.id })
-				return res.send({ token: token, userId: user.id })
+				const token = await User.encryptToken({ username, password, id: user.id })
+				return res.send({ token: token })
 			}
 
 			return res.send({ alert: 'Password Or Email Does Not Match' })
