@@ -28,8 +28,8 @@ video {
 }
 
 .hero-container > p {
-	margin-top: 8px;
-	color: #fff;
+	margin-top: 400px;
+	color: black;
 	font-size: 32px;
 	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans',
 		Arial, sans-serif;
@@ -75,19 +75,38 @@ video {
 }
 
 .btn {
-	padding: 0.8rem 2rem;
-	border-radius: 2rem;
-	border: 1px solid #000;
+	margin-top: 1.7rem;
+	padding: 1.2rem 1.3rem;
+	background-color: var(--clr-one);
+	border: 3px solid black;
+	border-radius: 50px;
+	color: black;
+	text-transform: uppercase;
+	letter-spacing: 0.07rem;
+	font: var(--fnt-weg-800) 1rem/1rem var(--fnt-fmly);
 }
 .btn:hover {
+	color: white;
+	background: #ffbf0f;
 	box-shadow: 0 1rem 1rem rgb(243, 202, 165);
-}
-
-.btn-primary {
-	background: #f5b974;
 	border: none;
 }
-.btn-primary:hover {
+
+.header__link {
+	margin-top: 1.7rem;
+	padding: 1.2rem 1.3rem;
+	background-color: var(--clr-one);
+	border: 3px solid black;
+	border-radius: 50px;
+	color: black;
+	text-transform: uppercase;
+	letter-spacing: 0.07rem;
+	font: var(--fnt-weg-800) 1.3rem/1.3rem var(--fnt-fmly);
+}
+
+.header__link:hover {
 	color: white;
-	background: rgb(241, 156, 43);
+	background: #ffbf0f;
+	box-shadow: 0 1rem 1rem rgb(243, 202, 165);
+	border: none;
 }

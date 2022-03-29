@@ -32,36 +32,32 @@ function Home() {
 	}
 	const videoId = 'tkMg8g8vVUo'
 	return (
-		<header className="header">
+		<section className="header__section">
 			<Brand />
+			<YouTube
+				videoId={videoId}
+				opts={opts}
+				onReady={videoOnReady}
+				onPlay={videoOnPlay}
+				onStateChange={videoStateChange}
+			/>
+			<p className="header__about-main">
+				Be My Voice is a translation web app that uses machine learning models to
+				translate American sign language.
+			</p>
 
-			<section className="header__section">
-				<YouTube
-					videoId={videoId}
-					opts={opts}
-					onReady={videoOnReady}
-					onPlay={videoOnPlay}
-					onStateChange={videoStateChange}
-				/>
-				<p className="header__about-main">
-					Be My Voice is a translation web app that uses machine learning models
-					to translate American sign language.
-				</p>
-
-				<p className="header__about-notice">
-					This app needs permission to access your webcam
-				</p>
-				<div className="hero-btns">
-					<button className="btn btn-primary" onClick={redirectToLearning}>
-						Learning Center
-					</button>
-					<button className="btn btn-primary" onClick={redirectToGame}>
-						Wordle Game
-					</button>
-				</div>
-				
-			</section>
-		</header>
+			<p className="header__about-notice">
+				This app needs permission to access your webcam
+			</p>
+			<div className="hero-btns">
+				<button className="btn btn-primary" onClick={redirectToLearning}>
+					Learning Center
+				</button>
+				<button className="btn btn-primary" onClick={redirectToGame}>
+					Wordle Game
+				</button>
+			</div>
+		</section>
 	)
 }
 
