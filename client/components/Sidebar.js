@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { SidebarData } from './SidebarData'
 import { IconContext } from 'react-icons'
 import LeaderBoard from './LeaderBoard'
+import ContactForm from './ContactForm'
 
 function Sidebar() {
 	const [sidebar, setSidebar] = useState(false)
@@ -18,8 +19,11 @@ function Sidebar() {
 					<Link to="#" className="menu-bars">
 						<FaIcons.FaBars onClick={showSidebar} color="black" />
 					</Link>
-
-					<LeaderBoard />
+					<h1>Wordle</h1>
+					<div>
+						<LeaderBoard />
+						<ContactForm />
+					</div>
 				</div>
 				<nav className={sidebar ? 'sidebar-menu active' : 'sidebar-menu'}>
 					<ul className="sidebar-menu-items" onClick={showSidebar}>

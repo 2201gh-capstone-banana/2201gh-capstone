@@ -60,14 +60,7 @@ function Navbar(props) {
 								Game
 							</Link>
 						</li>
-						<li>
-							<Link
-								to="/contact"
-								className="nav-links"
-								onClick={closeMobileMenu}>
-								Contact Us
-							</Link>
-						</li>
+						
 
 						{/* Show the signout only if the user is not logged in */}
 						{!props.correctUser ? (
