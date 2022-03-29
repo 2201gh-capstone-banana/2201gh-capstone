@@ -16,7 +16,7 @@ function WordleBoard() {
         console.log('THE TOP OF THE USEEFFECT TO SETBOARD')
         const generateNewBoard = arr => {
             // let newBoardArr = Array(6).fill('');
-            console.log("GENERATE BOARD IS CALLED")
+            // console.log("GENERATE BOARD IS CALLED")
             if (arr.length !== 0) {
                 for (let i = 0; i < arr.length; i++) {
                     // boardDefault[i] = arr[i]

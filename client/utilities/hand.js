@@ -9,7 +9,7 @@ const fingerJoints = {
 
 //drawing function
 export const drawHand = (prediction, ctx) => {
-  console.log("get in draw hand");
+  // console.log("get in draw hand");
   ctx.clearRect(0, 0, 2000, 2000);
   if (prediction.length > 0) {
     prediction.forEach((prediction) => {

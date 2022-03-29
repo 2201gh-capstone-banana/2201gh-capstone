@@ -23,7 +23,7 @@ export const fetchAcceptedGuesses = userId => {
 	return async dispatch => {
 		try {
 			const token = window.localStorage.getItem(TOKEN)
-			console.log('token is---', token)
+			// console.log('token is---', token)
 			const { data } = await axios.get(`/api/wordle/${userId}/game`, {
 				headers: {
 					authorization: token

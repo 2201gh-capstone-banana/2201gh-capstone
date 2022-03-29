@@ -1,9 +1,12 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { WordleAppContext } from '../WordleApp'
 
 function LetterCell({ rowIdx, index }) {
 	//maybe use react hooks in here somehow?
 	const { board, setBoard, answer, setAnswer } = useContext(WordleAppContext);
+	const colorRef = useRef('white')
+	// console.log(answer);
+	// console.log(colorRef)
 	// const cell = letter;
 	// useEffect(() => {
 	// 	console.log("forcing LetterCell to rerender")
@@ -12,15 +15,31 @@ function LetterCell({ rowIdx, index }) {
 
 	// console.log(letter);
 	const letter = board[rowIdx][index]
-	const answerArr = answer.toUpperCase().split('');
-	const correct = answerArr[index] === letter;
-	const almost =
-		!correct && letter !== "" && answerArr.includes(letter);
-	const letterState = (correct ? "green" : almost ? "yellow" : "grey");
+	useEffect(() => {
+		if (letter !== "") {
+			const answerArr = answer.toUpperCase().split('');
+			console.log(letter)
+			console.log(index)
+			console.log(answerArr)
+			const correct = answerArr[index] === letter;
+			const almost =
+				!correct && letter !== "" && answerArr.includes(letter);
+			const letterState = (correct ? "green" : almost ? "yellow" : "grey");
+			colorRef.current = letterState
+		}
+	}, [answer])
+	// if (letter !== "") {
+	// 	const answerArr = answer.toUpperCase().split('');
+	// 	const correct = answerArr[index] === letter;
+	// 	const almost =
+	// 		!correct && letter !== "" && answerArr.includes(letter);
+	// 	const letterState = (correct ? "green" : almost ? "yellow" : "grey");
+	// 	colorRef.current = letterState
+	// }
 
 	return (
-		<div className={`letter-cell ${letterState}`}>
-				{letter}
+		<div className={`letter-cell ${colorRef.current}`}>
+			{letter}
 		</div>
 	)
 }

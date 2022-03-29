@@ -20,7 +20,7 @@ function WordleApp() {
 	const [answer, setAnswer] = useState('');
 	const [color, setColor] =useState(colorBoardDefault);
 	const dispatch = useDispatch()
-	console.log("TRANSLATION", translation);
+	// console.log("TRANSLATION", translation);
 
 	//componentDidMount equivalent-----------------
 	useEffect(() => {
