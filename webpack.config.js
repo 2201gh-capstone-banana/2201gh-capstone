@@ -1,3 +1,5 @@
+const LiveReloadPlugin = require('webpack-livereload-plugin')
+
 module.exports = {
 	entry: ['./client/index.js'],
 	output: {
@@ -20,5 +22,6 @@ module.exports = {
 				use: [{ loader: 'style-loader' }, { loader: 'css-loader' }]
 			}
 		]
-	}
+	},
+	plugins: [new LiveReloadPlugin()]
 }
