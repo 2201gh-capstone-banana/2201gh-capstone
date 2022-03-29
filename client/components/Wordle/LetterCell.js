@@ -17,13 +17,13 @@ function LetterCell({ rowIdx, index }) {
 	const letter = board[rowIdx][index]
 	useEffect(() => {
 		if (letter !== "") {
+			const upperCaseLetter = letter.toUpperCase();
 			const answerArr = answer.toUpperCase().split('');
-			console.log(letter)
-			console.log(index)
 			console.log(answerArr)
-			const correct = answerArr[index] === letter;
+			console.log("does answerArr include the letter?", answerArr.includes(upperCaseLetter))
+			const correct = answerArr[index] === upperCaseLetter;
 			const almost =
-				!correct && letter !== "" && answerArr.includes(letter);
+				!correct && letter !== "" && answerArr.includes(upperCaseLetter);
 			const letterState = (correct ? "green" : almost ? "yellow" : "grey");
 			colorRef.current = letterState
 		}
