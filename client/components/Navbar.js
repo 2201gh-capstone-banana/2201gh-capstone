@@ -55,7 +55,7 @@ function Navbar(props) {
 
 						<li>
 							<Link
-								to="/main"
+								to="/wordle"
 								className="nav-links"
 								onClick={closeMobileMenu}>
 								Game
@@ -106,4 +106,3 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar)
-
