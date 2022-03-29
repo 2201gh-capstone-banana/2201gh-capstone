@@ -12,12 +12,12 @@ import Sidebar from './Sidebar'
 
 export const WordleAppContext = createContext()
 function WordleApp() {
-	const [board, setBoard] = useState(boardDefault);
+	const [board, setBoard] = useState(boardDefault)
 	const [translation, setTranslation] = useState(null)
-	const [currentRow, setCurrentRow] = useState(0);
-	const [timer, setTimer] = useState(5);
-	const [guess, setGuess] = useState(Array(5).fill(''));
-	const [answer, setAnswer] = useState('');
+	const [currentRow, setCurrentRow] = useState(0)
+	const [timer, setTimer] = useState(5)
+	const [guess, setGuess] = useState(Array(5).fill(''))
+	const [answer, setAnswer] = useState('')
 	// const [color, setColor] =useState(colorBoardDefault);
 	const dispatch = useDispatch()
 	// console.log("TRANSLATION", translation);
@@ -31,9 +31,9 @@ function WordleApp() {
 	//----------------------------------------------
 
 	useEffect(() => {
+
 		let callDetectLetters
 		clearInterval(callDetectLetters);
-		
 		/*
 		we are going to submit the letter when timer =0
 		everytime translation changes, timer is reset
@@ -44,19 +44,20 @@ function WordleApp() {
 		function detectLetters() {
 			let boardCopy = board;
 			if (translation && countdown > 0) {
-				countdown--;
-				setTimer(countdown);
+				countdown--
+				setTimer(countdown)
 			} else if (translation && countdown === 0) {
 				for (let i = 0; i < 6; i++) {
 					if (boardCopy[currentRow][i] === '') {
 						boardCopy[currentRow][i] = translation
-						setTimer(5);
-						break;
+						setTimer(5)
+						break
 					}
 				}
 				setBoard(boardCopy)
 			}
 		}
+
 		callDetectLetters = setInterval(detectLetters, 1000);
 	}, [translation])
 
@@ -72,7 +73,7 @@ function WordleApp() {
 					setTranslation,
 					currentRow,
 					setCurrentRow,
-					answer, 
+					answer,
 					setAnswer
 				}}>
 				<div className="game">

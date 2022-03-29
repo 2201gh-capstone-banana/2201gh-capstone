@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import { connect } from 'react-redux'
 import IdleTimer from 'react-idle-timer'
 
-/* Thunk. */
+// Thunk
 import { autoSignin, signout } from './store/auth'
 
-/* Components. */
+// Components
 import LandingPage from './components/LandingPage'
 import AuthForm from './components/AuthForm'
 import Main from './components/Main'
@@ -21,7 +21,7 @@ class Routes extends React.Component {
 	constructor() {
 		super()
 		this.state = {
-			warningTimer: 780000 /* 13 minutes...i hope */,
+			warningTimer: 780000, // 13 minutes...i hope
 			isTimedOut: false
 		}
 
@@ -35,17 +35,16 @@ class Routes extends React.Component {
 	}
 
 	onIdle() {
-		/* Changing state to display a warning. */
+		// Changing state to display a warning
 		this.setState({ isTimedOut: true })
 
-		/* Wait two mintues after warning. */
+		// Wait two mintues after warning.
 		setTimeout(() => {
-			/* If the user hasn't interacted after warning. */
+			// If the user hasn't interacted after warning
 			if (this.state.isTimedOut) {
 				this.props.signout()
-				// window.location.href = '/'
 			}
-		}, 120000) /* 2 minutes. */
+		}, 120000) // 2 minutes
 	}
 
 	onActive = () => {
@@ -55,57 +54,33 @@ class Routes extends React.Component {
 	render() {
 		return (
 			<>
-				{/* <Switch>
-					<Route exact path="/" component={LandingPage} />
-					{/*
-					For auto signin when token is in local storage.
-					Hide the signin page if token is valid.
+				<IdleTimer
+					ref={this.idelTimerRef}
+					timeout={this.state.warningTimer}
+					crossTab={true}
+					onIdle={this.onIdle}
+					onActive={this.onActive}>
+					{!this.state.isTimedOut ? null : <Idle />}
 
-					<Route path="/signin">
-						{this.props.correctUser ? <Redirect to="/main" /> : <AuthForm />}
-					</Route>
-					<Route path="/main" component={Main} />
-				</Switch> */}
-
-				{this.props.correctUser ? (
-					<IdleTimer
-						ref={this.idelTimerRef}
-						timeout={this.state.warningTimer}
-						crossTab={true}
-						onIdle={this.onIdle}
-						onActive={this.onActive}>
-						{!this.state.isTimedOut ? null : <Idle />}
-
-						<Router>
-							<Navbar />
-							
-
-							<Switch>
-								<Route exact path="/" component={LandingPage} />
-								<Route exact path="/home" component={Home} />
-								<Route exact path="/about" component={About} />
-								<Route exact path="/main" component={Main} />
-								<Route exact path="/signin" component={AuthForm} />
-								<Route exact path="/learning" component={Learning} />
-								<Route exact path="/wordle" component={WordleApp} />
-							</Switch>
-						</Router>
-					</IdleTimer>
-				) : (
 					<Router>
 						<Navbar />
 
 						<Switch>
-							<Route exact path="/" component={LandingPage} />
-							<Route exact path="/home" component={Home} />
+							<Route exact path="/" component={Home} />
 							<Route exact path="/about" component={About} />
 							<Route exact path="/main" component={Main} />
-							<Route exact path="/signin" component={AuthForm} />
+							<Route path="/signin">
+								{this.props.correctUser ? (
+									<Redirect to="/main" />
+								) : (
+									<AuthForm />
+								)}
+							</Route>
 							<Route exact path="/learning" component={Learning} />
 							<Route exact path="/wordle" component={WordleApp} />
 						</Switch>
 					</Router>
-				)}
+				</IdleTimer>
 			</>
 		)
 	}
