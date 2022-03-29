@@ -27,10 +27,7 @@ function Navbar(props) {
 					</div>
 					<ul className={click ? 'nav-menu active' : 'nav-menu'}>
 						<li>
-							<Link
-								to="/home"
-								className="nav-links"
-								onClick={closeMobileMenu}>
+							<Link to="/" className="nav-links" onClick={closeMobileMenu}>
 								Home
 							</Link>
 						</li>
@@ -106,4 +103,3 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar)
-
