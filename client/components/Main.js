@@ -10,6 +10,7 @@ import { fetchAcceptedGuesses } from '../store/wordle'
 
 import { letters } from './letters'
 import PopUp from './PopUp'
+import Wordle2 from './Wordle2/Wordle2'
 /**
  * COMPONENT
  */
@@ -198,8 +199,8 @@ export const Main = props => {
 					marginLeft: 'auto',
 					position: 'absolute',
 					zIndex: 9,
-					width: 540,
-					height: 480,
+					width: 300,
+					height: 300,
 					backgroundColor: 'black'
 				}}
 			/>
@@ -211,8 +212,8 @@ export const Main = props => {
 					position: 'absolute',
 					textAlign: 'center',
 					zIndex: 9,
-					width: 540,
-					height: 480
+					width: 300,
+					height: 300
 				}}
 			/>
 			<div
@@ -221,7 +222,7 @@ export const Main = props => {
 					color: 'black',
 					fontSize: 30,
 
-					marginLeft: 600
+					marginLeft: 300
 				}}>
 				Detecting:
 				{translation}
@@ -232,12 +233,13 @@ export const Main = props => {
 					color: 'black',
 					fontSize: 30,
 
-					marginLeft: 600
+					marginLeft: 300
 				}}>
 				Guessed word is: {guess}
 				<div id="timer"></div>
 				{!isValid ? <div>Not a valid guess</div> : null}
 				<div>Accepted guessed word: {acceptedGuess}</div>
+				<Wordle2 translation={translation} />
 			</div>
 		</div>
 	)
