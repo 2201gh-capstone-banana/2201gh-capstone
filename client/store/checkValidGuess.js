@@ -9,12 +9,12 @@ const _checkValidGuess = bool => {
 	}
 }
 
-export const checkValidGuess = possibleAcceptedGuess => {
+export const checkValidGuess = possibleGuess => {
 	return async dispatch => {
 		try {
 			const data = await axios.get(
 				'/api/wordle/acceptedWord',
-				possibleAcceptedGuess
+				possibleGuess
 			)
 			dispatch(_checkValidGuess(data))
 		} catch (error) {

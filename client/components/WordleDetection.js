@@ -8,6 +8,7 @@ import '@tensorflow/tfjs-backend-webgl'
 import * as fp from 'fingerpose'
 import { WordleAppContext } from './WordleApp'
 import { letters } from './letters'
+import deleteGesture from './phrases/delete'
 import PopUp from './PopUp'
 /*
  * COMPONENT
@@ -44,7 +45,7 @@ export const WordleDetection = () => {
 	// 	console.log('NEW BOARD---', newBoard)
 	// }, [guess])
 
-	
+
 	const netRef = useRef(null)
 
 	// handleGuess(){
@@ -99,11 +100,11 @@ export const WordleDetection = () => {
 			drawHand(hand, ctx)
 
 			if (hand.length > 0) {
-				const gestureEstimator = new fp.GestureEstimator([...letters.allLetters])
+				const gestureEstimator = new fp.GestureEstimator([...letters.allLetters, deleteGesture])
 
 				// 8 is the confidence level
 				const gesture = await gestureEstimator.estimate(hand[0].landmarks, 8)
-				// console.log('THIS IS THE GESTURE:', gesture)
+				console.log('THIS IS THE GESTURE:', gesture)
 				if (gesture.gestures && gesture.gestures.length > 0) {
 					const score = gesture.gestures.map(prediction => prediction.score)
 

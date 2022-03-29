@@ -17,7 +17,11 @@ router.get('/:id/game', async (req, res, next) => {
 			include: [{ model: AcceptedGuess }, { model: TargetWord }],
 			order: [['createdAt']]
 		})
-		if (!latestWordle || latestWordle.acceptedGuesses.length === 6) {
+		let previousGuessesArr = latestWordle.acceptedGuesses.map((guess) => {
+			return guess.content.toUpperCase();
+		})
+		let targetWord = latestWordle.targetWord.content.toUpperCase();
+		if (!latestWordle || latestWordle.acceptedGuesses.length === 6 || previousGuessesArr.includes(targetWord)) {
 			const targetWordList = await TargetWord.findAll({
 				attributes: ['content']
 			})
@@ -29,7 +33,12 @@ router.get('/:id/game', async (req, res, next) => {
 				targetWordId: targetWord.id,
 				userId: req.params.id
 			})
-			res.json(newWordleGame)
+			const returnNewWordleGame = await WordleGame.findOne({
+				where: { id: newWordleGame.id },
+				include: [{ model: AcceptedGuess }, { model: TargetWord }],
+				order: [['createdAt']]
+			})
+			res.json(returnNewWordleGame)
 		} else {
 			res.json(latestWordle)
 		}
@@ -39,10 +48,14 @@ router.get('/:id/game', async (req, res, next) => {
 	}
 })
 
-router.post('/:id/:wordleGameId/addGuess', requireToken, async (req, res, next) => {
+router.post('/:id/addGuess', async (req, res, next) => {
 	try {
+		const latestWordle = await WordleGame.findOne({
+			where: { userId: req.params.id },
+			order: [['createdAt']]
+		})
 		const newAcceptedGuess = await AcceptedGuess.create({
-			wordleGameId: req.params.wordleGameId,
+			wordleGameId: latestWordle.id,
 			content: req.body.content
 		})
 		res.json(newAcceptedGuess)
@@ -52,12 +65,12 @@ router.post('/:id/:wordleGameId/addGuess', requireToken, async (req, res, next) 
 	}
 })
 
-router.get('/acceptedGuess', async (req, res, next) => {
+router.get('/acceptedWord', async (req, res, next) => {
 	try {
-		const acceptedGuess = await AcceptedGuess.findOne({
+		const isValidWord = await AcceptedWord.findOne({
 			where: { content: req.body.content }
 		})
-		acceptedGuess ? res.send(true) : res.send(false)
+		isValidWord ? res.send(true) : res.send(false)
 	} catch (error) {
 		console.log('Err')
 		next(error)

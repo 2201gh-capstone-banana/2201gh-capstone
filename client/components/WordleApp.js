@@ -3,9 +3,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import WordleBoard from './Wordle/WordleBoard'
 import WordleDetection from './WordleDetection'
 import { boardDefault, rows, colorBoardDefault } from './Wordle/wordleUtilities'
-import { fetchAcceptedGuesses } from '../store/wordle'
+import { fetchAcceptedGuesses, addAcceptedGuess } from '../store/wordle'
 import { fetchTargetWord } from '../store/targetWord'
+import { checkValidGuess } from '../store/checkValidGuess'
 import Sidebar from './Sidebar'
+
 // class WordleApp extends Component {
 
 //     render() {
@@ -20,6 +22,8 @@ function WordleApp() {
 	const [answer, setAnswer] = useState('');
 	// const [color, setColor] =useState(colorBoardDefault);
 	const dispatch = useDispatch()
+	const isValidGuess = useSelector(state => state.isValidGuess)
+	
 	// console.log("TRANSLATION", translation);
 
 	//componentDidMount equivalent-----------------
@@ -28,37 +32,41 @@ function WordleApp() {
 		dispatch(fetchTargetWord(1))
 	}, [])
 
-	//----------------------------------------------
-
-	useEffect(() => {
-		let callDetectLetters
-		clearInterval(callDetectLetters);
-		
-		/*
-		we are going to submit the letter when timer =0
-		everytime translation changes, timer is reset
-		*/
-		let countdown = 5;
-		// let countdown = 5;
-		// let countdown = timer;
-		function detectLetters() {
-			let boardCopy = board;
-			if (translation && countdown > 0) {
-				countdown--;
-				setTimer(countdown);
-			} else if (translation && countdown === 0) {
-				for (let i = 0; i < 6; i++) {
-					if (boardCopy[currentRow][i] === '') {
-						boardCopy[currentRow][i] = translation
-						setTimer(5);
-						break;
-					}
-				}
-				setBoard(boardCopy)
+	function handleOnClick() {
+		let boardCopy = board;
+		for (let i = 0; i < 6; i++) {
+			if (boardCopy[currentRow][i] === '') {
+				boardCopy[currentRow][i] = translation
+				break;
 			}
 		}
-		callDetectLetters = setInterval(detectLetters, 1000);
-	}, [translation])
+		setBoard(boardCopy);
+	}
+
+	function handleDelete() {
+		let boardCopy = board;
+		for (let i = 0; i < 6; i++) {
+			if (
+				(boardCopy[currentRow][i] !== '' &&
+					boardCopy[currentRow][i + 1] === '') ||
+				i === 4) {
+				boardCopy[currentRow][i] = '';
+				break
+			}
+		}
+		setBoard(boardCopy);
+	}
+
+	function handleSubmit(){
+		let newGuess = board[currentRow].join('').toLowerCase();
+		dispatch(checkValidGuess(newGuess));
+		if (isValidGuess){
+			dispatch(addAcceptedGuess(1, newGuess));
+		} 
+		else {
+			console.log("is this a valid guess?" ,isValidGuess)
+		}
+	}
 
 	return (
 		<div className="wordle-app">
@@ -72,17 +80,21 @@ function WordleApp() {
 					setTranslation,
 					currentRow,
 					setCurrentRow,
-					answer, 
+					answer,
 					setAnswer
 				}}>
 				<div className="game">
 					<div id="webcam-parent">
 						<h2>
-							{translation ||
+							{translation === 'delete' && 'Deleting...' || translation ||
 								'Hold up a letter in ASL to begin the detection!'}
 						</h2>
-						<h3>Hold for: {timer} seconds</h3>
+						<h3>{translation === 'delete' && 'Click the button to delete your last submission' || `Click the button to submit letter ${translation}`}</h3>
 						{/* <h2>Detecting: {translation}</h2> */}
+						{/* <button id='wordle-capture' onClick={handleOnClick}>{translation === 'O' && 'Delete' || `Click to capture letter`} </button> */}
+						{translation !== 'delete' && <button id='wordle-capture' onClick={handleOnClick}>Click to capture letter</button> ||
+						translation === 'delete' && <button id='delete-capture' onClick={handleDelete}>Click to Delete</button>}
+						{!board[currentRow].includes('') && <button id='delete-capture' onClick={handleSubmit}>Submit</button>}
 						<WordleDetection />
 					</div>
 					<div id="board-parent">
