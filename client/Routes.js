@@ -16,6 +16,7 @@ import Learning from './components/Learning'
 import WordleApp from './components/WordleApp'
 import Idle from './components/Idle'
 import About from './components/About'
+import Contact from './components/Contact'
 
 class Routes extends React.Component {
 	constructor() {
@@ -78,7 +79,6 @@ class Routes extends React.Component {
 
 						<Router>
 							<Navbar />
-							
 
 							<Switch>
 								<Route exact path="/" component={LandingPage} />
@@ -88,6 +88,7 @@ class Routes extends React.Component {
 								<Route exact path="/signin" component={AuthForm} />
 								<Route exact path="/learning" component={Learning} />
 								<Route exact path="/wordle" component={WordleApp} />
+								<Route exact path="/contact" component={Contact} />
 							</Switch>
 						</Router>
 					</IdleTimer>
@@ -103,6 +104,7 @@ class Routes extends React.Component {
 							<Route exact path="/signin" component={AuthForm} />
 							<Route exact path="/learning" component={Learning} />
 							<Route exact path="/wordle" component={WordleApp} />
+							<Route exact path="/contact" component={Contact} />
 						</Switch>
 					</Router>
 				)}
