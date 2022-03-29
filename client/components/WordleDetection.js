@@ -31,7 +31,7 @@ export const WordleDetection = () => {
 	// 	}
 	// }
 	// const currentRow = currentRowToGuess(allAcceptedGuesses)
-	const [guess, setGuess] = useState(['*', '*', '*', '*', '*'])
+	// const [guess, setGuess] = useState(['*', '*', '*', '*', '*'])
 	//const [guess, setGuess] = useState(allAcceptedGuesses[currentRow].cells)
 	const [timer, setTimer] = useState(3)
 	const [finalAns, setFinalAns] = useState([])
@@ -44,7 +44,7 @@ export const WordleDetection = () => {
 	// 	console.log('NEW BOARD---', newBoard)
 	// }, [guess])
 
-	console.log('GUESS --->', guess)
+	
 	const netRef = useRef(null)
 
 	// handleGuess(){
@@ -120,9 +120,9 @@ export const WordleDetection = () => {
 		loadModel()
 	}, [])
 
-	console.log('TRANSLATION IS ---', translation)
+	// console.log('TRANSLATION IS ---', translation)
 
-	console.log('new guess is', guess)
+	// console.log('new guess is', guess)
 	return (
 		<div className="webcam-detection">
 			<Webcam ref={webcamRef} className="webcam" />
