@@ -1,28 +1,27 @@
 import React from 'react'
-import './Home.css'
-import Main from './Main'
+import { Link } from 'react-router-dom'
 
-function Home() {
-	const redirectToGame = () => {
-		window.location.pathname = '/main'
-	}
-	const redirectToLearning = () => {
-		window.location.pathname = '/learning'
-	}
+import Brand from './Brand'
+
+const Home = () => {
 	return (
-		<div className="hero-container">
-			<video src="Bee.mp4" autoPlay loop muted />
-			<h1>BE MY VOICE</h1>
-			<p>What are you waiting for?</p>
-			<div className="hero-btns">
-				<button className="btn btn-primary" onClick={redirectToLearning}>
-					Learning Center
-				</button>
-				<button className="btn btn-primary" onClick={redirectToGame}>
-					Wordle Game
-				</button>
-			</div>
-		</div>
+		<header className="header">
+			<Brand />
+
+			<section className="header__section">
+				<p className="header__about-main">
+					Be My Voice is a translation web app that uses machine learning models
+					to translate American sign language.
+				</p>
+
+				<p className="header__about-notice">
+					This app needs permission to access your webcam
+				</p>
+				<Link className="header__link" to="/signin">
+					Get started
+				</Link>
+			</section>
+		</header>
 	)
 }
 
