@@ -37,12 +37,14 @@
 }
 
 .header__logo {
-	width: 5rem;
+	/* width: 5rem; */
+	width: 3rem;
 }
 
 .header__title {
 	text-transform: uppercase;
-	font: var(--fnt-weg-800) 2.6rem/2.6rem var(--fnt-fmly);
+	/* font: var(--fnt-weg-800) 2.6rem/2.6rem var(--fnt-fmly); */
+	font: var(--fnt-weg-800) 1rem/1rem var(--fnt-fmly);
 }
 
 .header__about-main {
