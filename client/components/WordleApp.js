@@ -31,27 +31,18 @@ function WordleApp() {
 	//----------------------------------------------
 
 	useEffect(() => {
-
+		let callDetectLetters
+		clearInterval(callDetectLetters);
+		
 		/*
 		we are going to submit the letter when timer =0
 		everytime translation changes, timer is reset
 		*/
+		let countdown = 5;
 		// let countdown = 5;
-		let countdown = timer;
+		// let countdown = timer;
 		function detectLetters() {
 			let boardCopy = board;
-			// if (translation) {
-			// 	for (let i = 0; i < 6; i++) {
-			// 		if (boardCopy[currentRow][i] === '') {
-			// 			boardCopy[currentRow][i] = translation
-			// 			break
-			// 		}
-			// 	}
-			// 	return boardCopy;
-			// }
-			// if (!translation){
-			// 	setTimer(5);
-			// }
 			if (translation && countdown > 0) {
 				countdown--;
 				setTimer(countdown);
@@ -66,7 +57,7 @@ function WordleApp() {
 				setBoard(boardCopy)
 			}
 		}
-		setInterval(detectLetters, 1000);
+		callDetectLetters = setInterval(detectLetters, 1000);
 	}, [translation])
 
 	return (
