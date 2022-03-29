@@ -1,13 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;800&family=Roboto&display=swap');
 @import url('unset.css');
-@import url('landingPage.css');
+@import url('home.css');
 @import url('auth.css');
 @import url('idle.css');
 @import url('cheatSheet.css');
 @import url('wordle.css');
 @import url('about.css');
-
-
+@import url('landingPage.css');
+@import url('modal.css');
+@import url('navbar.css');
+@import url('sidebar.css');
 /* Global variables. */
 :root {
 	--fnt-siz: 17px;

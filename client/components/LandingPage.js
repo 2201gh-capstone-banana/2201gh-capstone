@@ -1,6 +1,5 @@
 import React from 'react'
-import './Home.css'
-import Main from './Main'
+import { Link } from 'react-router-dom'
 
 function LandingPage() {
 	const redirectToGame = () => {
@@ -14,14 +13,9 @@ function LandingPage() {
 			<video src="Bee.mp4" autoPlay loop muted />
 			<h1>BE MY VOICE</h1>
 			<p>What are you waiting for?</p>
-			<div className="hero-btns">
-				<button className="btn btn-primary" onClick={redirectToLearning}>
-					Learning Center
-				</button>
-				<button className="btn btn-primary" onClick={redirectToGame}>
-					Wordle Game
-				</button>
-			</div>
+			<Link className="header__link" to="/home">
+				Get started
+			</Link>
 		</div>
 	)
 }

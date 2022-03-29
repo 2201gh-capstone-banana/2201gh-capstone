@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import './Navbar.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUpAZ, faAlignJustify, faX } from '@fortawesome/free-solid-svg-icons'
 import { signout } from '../store/auth'
