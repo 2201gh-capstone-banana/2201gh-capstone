@@ -16,7 +16,6 @@ import PopUp from './PopUp'
 
 export const Main = props => {
 	const webcamRef = useRef(null)
-	console.log('WEBCAM REF', webcamRef)
 	const canvasRef = useRef(null)
 	const [translation, setTranslation] = useState(null)
 	const [guess, setGuess] = useState(['*', '*', '*', '*', '*'])
@@ -26,20 +25,13 @@ export const Main = props => {
 
 	const acceptedWordList = ['LLLLL', 'KKKKK']
 
-	console.log('GUESS --->', guess)
 	const netRef = useRef(null)
 
 	const dispatch = useDispatch()
 	const userId = useSelector(state => state.auth.userId)
-	console.log('USER ID IS ----', userId)
 	useEffect(() => {
 		dispatch(fetchAcceptedGuesses(userId))
 	}, [])
-
-	console.log(
-		'all guesses are ---',
-		useSelector(state => state.wordle)
-	)
 	// handleGuess(){
 
 	// }
@@ -96,7 +88,6 @@ export const Main = props => {
 
 				// 8 is the confidence level
 				const gesture = await gestureEstimator.estimate(hand[0].landmarks, 8)
-				console.log('THIS IS THE GESTURE:', gesture)
 				if (gesture.gestures && gesture.gestures.length > 0) {
 					const score = gesture.gestures.map(prediction => prediction.score)
 
@@ -114,22 +105,7 @@ export const Main = props => {
 	}, [])
 
 	useEffect(() => {
-		console.log('in use effect when translation changes')
-		/*
-		timer functionality:
-		let timeRemaining = 5;
-		let timerElement = document.getElementById('timer');
-		function countdown() {
-			timeRemaining = timeRemaining - 1;
-			if (timeRemaining <= 0) {
-				timerElement.innerText = 'Time is up!'
-				timeRemaining = 5;
-			} else {
-				timerElement.innerText = timeRemaining;
-			}
-		}
-		let timer = setInterval(countdown, 1000);
-		*/
+
 		let t
 		console.log('t is !!!---', t)
 		clearTimeout(t)
