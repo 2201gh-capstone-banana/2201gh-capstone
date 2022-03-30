@@ -90,7 +90,7 @@ function WordleApp() {
 	const [currentLetter, setCurrentLetter] = useState(null)
 	return (
 		<div className="wordle-app">
-			<div className="container">
+			{/* <div className="container">
 				<button
 					id="btn-cheatsheet"
 					className="header__link"
@@ -105,9 +105,12 @@ function WordleApp() {
 						currentLetter={[currentLetter, setCurrentLetter]}
 					/>
 				) : null}
-			</div>
+			</div> */}
 
-			<Sidebar />
+			<Sidebar
+				cheatsheetOpen={[cheatsheetOpen, setCheatsheetOpen]}
+				currentLetter={[currentLetter, setCurrentLetter]}
+			/>
 			<WordleAppContext.Provider
 				value={{
 					board,

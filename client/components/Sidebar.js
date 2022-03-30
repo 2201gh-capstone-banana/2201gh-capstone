@@ -6,10 +6,13 @@ import { SidebarData } from './SidebarData'
 import { IconContext } from 'react-icons'
 import LeaderBoard from './LeaderBoard'
 import ContactForm from './ContactForm'
+import Sheet from './Sheet'
+import CheatSheet from './CheatSheet'
 
 function Sidebar() {
 	const [sidebar, setSidebar] = useState(false)
-
+	const [cheatsheetOpen, setCheatsheetOpen] = useState(false)
+	const [currentLetter, setCurrentLetter] = useState(null)
 	const showSidebar = () => setSidebar(!sidebar)
 
 	return (
@@ -20,9 +23,25 @@ function Sidebar() {
 						<FaIcons.FaBars onClick={showSidebar} color="black" />
 					</Link>
 					<h1>Wordle</h1>
-					<div>
+					<div className="left__bar">
 						<LeaderBoard />
 						<ContactForm />
+						<div>
+							<AiIcons.AiOutlineCalendar
+								className="openModalBtn"
+								color="black"
+								onClick={() => {
+									setCheatsheetOpen(!cheatsheetOpen)
+								}}
+							/>
+
+							{cheatsheetOpen ? (
+								<CheatSheet
+									cheatsheetOpen={[cheatsheetOpen, setCheatsheetOpen]}
+									currentLetter={[currentLetter, setCurrentLetter]}
+								/>
+							) : null}
+						</div>
 					</div>
 				</div>
 				<nav className={sidebar ? 'sidebar-menu active' : 'sidebar-menu'}>

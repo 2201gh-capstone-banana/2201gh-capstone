@@ -4,6 +4,11 @@
 	justify-content: space-between;
 	align-items: center;
 }
+.left__bar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
 
 .menu-bars {
 	margin-left: 2rem;

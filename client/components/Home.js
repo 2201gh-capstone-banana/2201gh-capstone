@@ -16,7 +16,7 @@ function Home() {
 		console.log(player.getCurrentTime())
 	}
 	const redirectToGame = () => {
-		window.location.pathname = '/main'
+		window.location.pathname = '/wordle'
 	}
 	const redirectToLearning = () => {
 		window.location.pathname = '/learning'
@@ -51,15 +51,15 @@ function Home() {
 					This app needs permission to access your webcam
 				</p>
 				<div className="hero-btns">
-					{/* <button className="btn btn-primary" onClick={redirectToLearning}>
+					<button className="btn btn-primary" onClick={redirectToLearning}>
 						Learning Center
 					</button>
 					<button className="btn btn-primary" onClick={redirectToGame}>
 						Wordle Game
-					</button> */}
-					<Link className="header__link" to="/signin">
+					</button>
+					{/* <Link className="header__link" to="/signin">
 						Get started
-					</Link>
+					</Link> */}
 				</div>
 			</section>
 		</header>
