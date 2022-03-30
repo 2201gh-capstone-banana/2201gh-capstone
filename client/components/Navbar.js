@@ -27,7 +27,7 @@ function Navbar(props) {
 					<ul className={click ? 'nav-menu active' : 'nav-menu'}>
 						<li>
 							<Link
-								to="/home"
+								to="/"
 								className="nav-links"
 								onClick={closeMobileMenu}>
 								Home

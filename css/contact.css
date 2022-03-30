@@ -49,13 +49,13 @@
 	font-size: 0.8rem;
 }
 
-form {
+.footer {
 	display: flex;
 	flex-direction: column;
 	gap: 1.2rem;
 }
 
-input,
+/* input,
 textarea {
 	width: 100%;
 	padding: 1rem;
@@ -64,5 +64,5 @@ textarea {
 	border: 2px solid var(--color-primary-variant);
 	resize: none;
 	color: var(--color-white);
-}
+} */
 

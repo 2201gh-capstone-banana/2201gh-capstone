@@ -89,7 +89,6 @@ function WordleApp() {
 	const [currentLetter, setCurrentLetter] = useState(null)
 	return (
 		<div className="wordle-app">
-			<h1>Wordle</h1>
 			<div className="container">
 				<button
 					id="btn-cheatsheet"
