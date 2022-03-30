@@ -8,14 +8,14 @@
 .cheat-sheet {
 	padding: 2rem;
 	/* height: 68vh; */
-	width: 30vw;
+	width: 50vw;
 	background: white;
 	border-radius: 10px;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 	z-index: 10;
 	text-align: center;
 	position: absolute;
-	top: 50%;
+	top: 58%;
 	transform: translateX(-50%) translateY(-50%);
 	left: 50%;
 }
@@ -25,14 +25,22 @@
 	height: 50px;
 	width: 30px;
 }
-#btn-cheatsheet {
+.btn-cheatsheet {
 	margin-top: 3%;
 	position: absolute;
 	padding: 0.5rem;
 }
-#btn-cheatsheet:hover {
+.header__link:hover {
 	background-color: black;
 	color: white;
+}
+
+#btn-wordle{
+	padding: 0.5rem;
+}
+#btn-wordle:hover {
+	background-color: yellow;
+	color: black;
 }
 
 .card {

@@ -15,13 +15,17 @@ router.get('/:id/game', async (req, res, next) => {
 		const latestWordle = await WordleGame.findOne({
 			where: { userId: req.params.id },
 			include: [{ model: AcceptedGuess }, { model: TargetWord }],
-			order: [['createdAt']]
+			order: [['createdAt', 'DESC']]
 		})
-		let previousGuessesArr = latestWordle.acceptedGuesses.map((guess) => {
-			return guess.content.toUpperCase();
+		let previousGuessesArr = latestWordle.acceptedGuesses.map(guess => {
+			return guess.content.toUpperCase()
 		})
-		let targetWord = latestWordle.targetWord.content.toUpperCase();
-		if (!latestWordle || latestWordle.acceptedGuesses.length === 6 || previousGuessesArr.includes(targetWord)) {
+		let targetWord = latestWordle.targetWord.content.toUpperCase()
+		if (
+			!latestWordle ||
+			latestWordle.acceptedGuesses.length === 6 ||
+			previousGuessesArr.includes(targetWord)
+		) {
 			const targetWordList = await TargetWord.findAll({
 				attributes: ['content']
 			})
@@ -36,7 +40,7 @@ router.get('/:id/game', async (req, res, next) => {
 			const returnNewWordleGame = await WordleGame.findOne({
 				where: { id: newWordleGame.id },
 				include: [{ model: AcceptedGuess }, { model: TargetWord }],
-				order: [['createdAt']]
+				order: [['createdAt', 'DESC']]
 			})
 			res.json(returnNewWordleGame)
 		} else {
@@ -52,7 +56,7 @@ router.post('/:id/addGuess', async (req, res, next) => {
 	try {
 		const latestWordle = await WordleGame.findOne({
 			where: { userId: req.params.id },
-			order: [['createdAt']]
+			order: [['createdAt', 'DESC']]
 		})
 		const newAcceptedGuess = await AcceptedGuess.create({
 			wordleGameId: latestWordle.id,
@@ -74,5 +78,17 @@ router.post('/acceptedWord', async (req, res, next) => {
 	} catch (error) {
 		console.log('Err')
 		next(error)
+	}
+})
+
+router.get('/:id/latestWordle', async (req, res, next) => {
+	try {
+		const latestWordle = await WordleGame.findOne({
+			where: { userId: req.params.id },
+			order: [['createdAt', 'DESC']]
+		})
+		res.json(latestWordle)
+	} catch (err) {
+		next(err)
 	}
 })
