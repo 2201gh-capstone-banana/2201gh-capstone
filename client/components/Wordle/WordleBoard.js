@@ -7,8 +7,15 @@ import { WordleAppContext } from '../WordleApp'
 function WordleBoard() {
 	// const [currentRow, setCurrentRow] = useState(0)
 	// const [attempts, setAttempts] = useState(0);
-	const { board, setBoard, currentRow, setCurrentRow, answer, setAnswer } =
-		useContext(WordleAppContext)
+	const {
+		board,
+		setBoard,
+		currentRow,
+		setCurrentRow,
+		answer,
+		setAnswer,
+		winningState,
+		setWinningState } = useContext(WordleAppContext)
 
 	const allAcceptedGuesses = useSelector(state => state.wordle)
 	const targetWord = useSelector(state => state.targetWord)
@@ -29,6 +36,10 @@ function WordleBoard() {
 						boardDefault[i][j] = currentWord[j]
 					}
 				}
+			} else if (arr.includes(targetWord)) {
+				setWinningState(true);
+			} else if (arr.length === 6){
+				setWinningState(false);
 			}
 			return boardDefault
 			// let newBoardArr = Array(6).fill('');

@@ -55,7 +55,8 @@ export const WordleDetection = () => {
 		const loadModel = async () => {
 			const net = await handpose.load()
 			netRef.current = net
-			setTimeout(() => webcamInit(), 10)
+			setTimeout(() => webcamInit(), 100)
+			// webcamInit()
 		}
 
 		const webcamInit = () => {
@@ -119,6 +120,7 @@ export const WordleDetection = () => {
 			}
 		}
 		loadModel()
+		// window.location.reload();
 	}, [])
 
 	// console.log('TRANSLATION IS ---', translation)

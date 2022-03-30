@@ -22,10 +22,14 @@ function WordleApp() {
 	const [guess, setGuess] = useState('')
 	const [answer, setAnswer] = useState('')
 	const [message, setMessage] = useState('')
+	const [winningState, setWinningState] = useState(null);
+	// const [completedState, setCompletedState] = useState(nul);
 
 	// const [color, setColor] =useState(colorBoardDefault);
 	const dispatch = useDispatch()
 	const isValidGuess = useSelector(state => state.isValidGuess)
+	// const addAcceptedGuess = useSelector(state => state.isValidGuess)
+
 	console.log('IS VALID GUESS-------', isValidGuess)
 	console.log('board on state', board)
 
@@ -78,13 +82,26 @@ function WordleApp() {
 		if (isValidGuess) {
 			console.log('IS VALID GET CONDITION')
 			console.log('get in use Effect-----', guess)
-			dispatch(addAcceptedGuess(1, guess))
+			dispatch(addAcceptedGuess(guess))
+			window.location.reload();
 		} else if (isValidGuess === false) {
 			console.log('IS INVALID GET CONDITION')
 			setMessage('NOT A VALID WORD')
 			//	setTimeout(setMessage(''), 1000)
 		}
 	}, [isValidGuess])
+
+	function handleNewGame(){
+		// dispatch(fetchAcceptedGuesses());
+	}
+	useEffect(() => {
+		if (winningState){
+
+		} else if (winningState === false){
+
+		}
+	}, [winningState])
+
 	console.log('what is MESSAGE THEN??', message)
 	const [cheatsheetOpen, setCheatsheetOpen] = useState(false)
 	const [currentLetter, setCurrentLetter] = useState(null)
@@ -118,7 +135,9 @@ function WordleApp() {
 					currentRow,
 					setCurrentRow,
 					answer,
-					setAnswer
+					setAnswer,
+					winningState, 
+					setWinningState
 				}}>
 				<div className="game">
 					<div id="webcam-parent">

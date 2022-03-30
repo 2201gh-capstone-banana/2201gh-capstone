@@ -37,7 +37,7 @@ export const fetchAcceptedGuesses = () => {
 	}
 }
 
-export const addAcceptedGuess = (userId, guess) => {
+export const addAcceptedGuess = (guess) => {
 	return async dispatch => {
 		try {
 			const token = window.localStorage.getItem(TOKEN)
