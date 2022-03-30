@@ -51,12 +51,15 @@ function Home() {
 					This app needs permission to access your webcam
 				</p>
 				<div className="hero-btns">
-					<button className="btn btn-primary" onClick={redirectToLearning}>
+					{/* <button className="btn btn-primary" onClick={redirectToLearning}>
 						Learning Center
 					</button>
 					<button className="btn btn-primary" onClick={redirectToGame}>
 						Wordle Game
-					</button>
+					</button> */}
+					<Link className="header__link" to="/signin">
+						Get started
+					</Link>
 				</div>
 			</section>
 		</header>
