@@ -8,6 +8,8 @@ import { fetchTargetWord } from '../store/targetWord'
 import { checkValidGuess } from '../store/checkValidGuess'
 import Sidebar from './Sidebar'
 import CheatSheet from './CheatSheet'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 // class WordleApp extends Component {
 
@@ -88,21 +90,31 @@ function WordleApp() {
 	const [cheatsheetOpen, setCheatsheetOpen] = useState(false)
 	const [currentLetter, setCurrentLetter] = useState(null)
 	return (
-		<div className="wordle-app">
-			<div className="container">
-				<button
-					id="btn-cheatsheet"
-					className="header__link"
-					onClick={() => {
-						setCheatsheetOpen(!cheatsheetOpen)
-					}}>
-					Cheat Sheet
-				</button>
-				{cheatsheetOpen ? (
-					<CheatSheet
+		<>
+			{props.correctUser ? (
+				<div className="wordle-app">
+					{/* <div className="container">
+			<button
+				id="btn-cheatsheet"
+				className="header__link"
+				onClick={() => {
+					setCheatsheetOpen(!cheatsheetOpen)
+				}}>
+				Cheat Sheet
+			</button>
+			{cheatsheetOpen ? (
+				<CheatSheet
+					cheatsheetOpen={[cheatsheetOpen, setCheatsheetOpen]}
+					currentLetter={[currentLetter, setCurrentLetter]}
+				/>
+			) : null}
+		</div> */}
+
+					<Sidebar
 						cheatsheetOpen={[cheatsheetOpen, setCheatsheetOpen]}
 						currentLetter={[currentLetter, setCurrentLetter]}
 					/>
+
 				) : null}
 			</div>
 			<WordleAppContext.Provider
@@ -161,10 +173,23 @@ function WordleApp() {
 						<WordleBoard />
 					</div>
 				</div>
-			</WordleAppContext.Provider>
-		</div>
+			)}
+		</>
 	)
 	//     }
 }
 
-export default WordleApp
+const mapStateToProps = state => {
+	return {
+		/* This is to check if the user is signed in. */
+		correctUser: state.auth.correctUser
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		signout: () => dispatch(signout())
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WordleApp)

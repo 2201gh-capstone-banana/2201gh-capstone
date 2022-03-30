@@ -37,7 +37,7 @@ export const manualSignin = userData => {
 			if (token) {
 				action = _manualSignin(token, userId)
 				localStorage.setItem('token', token)
-				history.push('/main') /* Redirects to main content. */
+				history.push('/wordle') /* Redirects to main content. */
 			} else {
 				action = _manualSigninError(alert)
 				localStorage.clear('token')
@@ -68,7 +68,7 @@ export const signup = userData => {
 			if (token) {
 				action = _signUp(token)
 				localStorage.setItem('token', token)
-				history.push('/main') /* Redirects to main page. */
+				history.push('/wordle') /* Redirects to main page. */
 			} else {
 				localStorage.clear('token')
 				action = _signUpError(alert)
