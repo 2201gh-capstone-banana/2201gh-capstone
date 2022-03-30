@@ -79,9 +79,9 @@ router.post('/signup', async (req, res, next) => {
 			Stored in local storage for auto signin.
 		*/
 		const token = await User.encryptToken({
-			// username: user.username,
-			// password: user.password
-			userId: user.id
+			username, 
+			password, 
+			id: user.id
 		})
 
 		return res.send({ token: token })
@@ -100,6 +100,7 @@ router.post('/autosignin', async (req, res, next) => {
 		if (token) {
 			/* Decrypts the 'token' using a class method. */
 			const match = await User.decryptToken(token)
+			
 
 			/* If the decrypted 'token' matches a user in the database. */
 			if (match) {

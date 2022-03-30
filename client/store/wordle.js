@@ -19,12 +19,12 @@ const addAcceptedGuesses = acceptedGuesses => {
 	}
 }
 
-export const fetchAcceptedGuesses = userId => {
+export const fetchAcceptedGuesses = () => {
 	return async dispatch => {
 		try {
 			const token = window.localStorage.getItem(TOKEN)
 			// console.log('token is---', token)
-			const { data } = await axios.get(`/api/wordle/${userId}/game`, {
+			const { data } = await axios.get(`/api/wordle/game`, {
 				headers: {
 					authorization: token
 				}
@@ -37,12 +37,12 @@ export const fetchAcceptedGuesses = userId => {
 	}
 }
 
-export const addAcceptedGuess = (userId, wordleGameId, guess) => {
+export const addAcceptedGuess = (userId, guess) => {
 	return async dispatch => {
 		try {
 			const token = window.localStorage.getItem(TOKEN)
 			const { data } = await axios.post(
-				`/api/wordle/${userId}/${wordleGameId}`,
+				`/api/wordle/addGuess`,
 				{ content: guess },
 				{
 					headers: {
@@ -70,8 +70,8 @@ export default (state = initialState, action) => {
 	switch (action.type) {
 		case GET_ACCEPTED_GUESSES:
 			const allAcceptedGuesses = action.acceptedGuesses.map((ele, idx) => {
-				return ele.content.toUpperCase();
-			// 	return { id: idx, cells: ele.content.toUpperCase().split('') }
+				return ele.content.toUpperCase()
+				// 	return { id: idx, cells: ele.content.toUpperCase().split('') }
 			})
 			// let result
 			// allAcceptedGuessesObj.length === 0
@@ -79,9 +79,13 @@ export default (state = initialState, action) => {
 			// 	: (result = [...allAcceptedGuessesObj])
 			// return result
 			// console.log("THIS IS THE STATE", initialState)
-			return allAcceptedGuesses;
+			return allAcceptedGuesses
 		case ADD_ACCEPTED_GUESSES:
-			return [...state, action.acceptedGuesses]
+			console.log('WHAT I AM ABOUT TO RETURN', [
+				...state,
+				action.acceptedGuesses.toUpperCase()
+			])
+			return [...state, action.acceptedGuesses.toUpperCase()]
 		default:
 			return state
 	}

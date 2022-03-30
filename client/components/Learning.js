@@ -152,7 +152,7 @@ function Learning() {
 						position: 'absolute',
 						marginLeft: 'auto',
 						marginRight: 'auto',
-						marginTop: '8%',
+						marginTop: '2%',
 
 						left: 0,
 						right: 0,
