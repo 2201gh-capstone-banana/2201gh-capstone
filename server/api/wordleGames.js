@@ -65,7 +65,7 @@ router.post('/:id/addGuess', async (req, res, next) => {
 	}
 })
 
-router.get('/acceptedWord', async (req, res, next) => {
+router.post('/acceptedWord', async (req, res, next) => {
 	try {
 		const isValidWord = await AcceptedWord.findOne({
 			where: { content: req.body.content }

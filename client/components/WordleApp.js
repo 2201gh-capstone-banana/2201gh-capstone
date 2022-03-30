@@ -18,12 +18,14 @@ function WordleApp() {
 	const [translation, setTranslation] = useState(null)
 	const [currentRow, setCurrentRow] = useState(0);
 	const [timer, setTimer] = useState(5);
-	const [guess, setGuess] = useState(Array(5).fill(''));
+	const [guess, setGuess] = useState('');
 	const [answer, setAnswer] = useState('');
 	// const [color, setColor] =useState(colorBoardDefault);
 	const dispatch = useDispatch()
-	const isValidGuess = useSelector(state => state.isValidGuess)
-	
+	const isValidGuess = useSelector(state => state.isValidGuess);
+	console.log("board on state", board)
+
+
 	// console.log("TRANSLATION", translation);
 
 	//componentDidMount equivalent-----------------
@@ -57,16 +59,28 @@ function WordleApp() {
 		setBoard(boardCopy);
 	}
 
-	function handleSubmit(){
+	function handleSubmit() {
 		let newGuess = board[currentRow].join('').toLowerCase();
-		dispatch(checkValidGuess(newGuess));
-		if (isValidGuess){
+		console.log("THIS IS NEW GUESS", newGuess)
+		setGuess(newGuess)
+		dispatch(checkValidGuess(guess));
+		if (isValidGuess) {
 			dispatch(addAcceptedGuess(1, newGuess));
-		} 
+		}
 		else {
-			console.log("is this a valid guess?" ,isValidGuess)
+			console.log("is this a valid guess?", isValidGuess)
 		}
 	}
+
+	// useEffect(() => {
+
+	// 	// if (isValidGuess){
+	// 	// 	dispatch(addAcceptedGuess(1, newGuess));
+	// 	// } 
+	// 	// else {
+	// 	// 	console.log("is this a valid guess?" ,isValidGuess)
+	// 	// }
+	// }, [guess])
 
 	return (
 		<div className="wordle-app">
@@ -93,7 +107,7 @@ function WordleApp() {
 						{/* <h2>Detecting: {translation}</h2> */}
 						{/* <button id='wordle-capture' onClick={handleOnClick}>{translation === 'O' && 'Delete' || `Click to capture letter`} </button> */}
 						{translation !== 'delete' && <button id='wordle-capture' onClick={handleOnClick}>Click to capture letter</button> ||
-						translation === 'delete' && <button id='delete-capture' onClick={handleDelete}>Click to Delete</button>}
+							translation === 'delete' && <button id='delete-capture' onClick={handleDelete}>Click to Delete</button>}
 						{!board[currentRow].includes('') && <button id='delete-capture' onClick={handleSubmit}>Submit</button>}
 						<WordleDetection />
 					</div>
