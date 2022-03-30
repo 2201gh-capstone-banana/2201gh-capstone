@@ -79,3 +79,7 @@ span {
 	margin-right: 2rem;
 	font-size: 2rem;
 }
+
+.sidebar__header {
+	margin-left: 130px;
+}

@@ -22,7 +22,7 @@ function Sidebar() {
 					<Link to="#" className="menu-bars">
 						<FaIcons.FaBars onClick={showSidebar} color="black" />
 					</Link>
-					<h1>Wordle</h1>
+					<h1 className='sidebar__header'>Wordle</h1>
 					<div className="left__bar">
 						<LeaderBoard />
 						<ContactForm />
