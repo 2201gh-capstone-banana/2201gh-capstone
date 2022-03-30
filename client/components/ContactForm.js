@@ -13,13 +13,6 @@ const ContactForm = () => {
 					setModalOpen(true)
 				}}
 			/>
-			{/* <button
-				className="openModalBtn"
-				onClick={() => {
-					setModalOpen(true)
-				}}>
-				LeaderBoard
-			</button> */}
 			{modalOpen && <ContactFormModal setOpenModal={setModalOpen} />}
 		</>
 	)
