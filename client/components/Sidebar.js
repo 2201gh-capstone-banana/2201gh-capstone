@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import * as FaIcons from 'react-icons/fa'
 import * as AiIcons from 'react-icons/ai'
 import { Link } from 'react-router-dom'
 import { SidebarData } from './SidebarData'
 import { IconContext } from 'react-icons'
+import { WordleAppContext } from './WordleApp'
 import LeaderBoard from './LeaderBoard'
 import ContactForm from './ContactForm'
 
@@ -11,7 +12,8 @@ function Sidebar() {
 	const [sidebar, setSidebar] = useState(false)
 
 	const showSidebar = () => setSidebar(!sidebar)
-
+	// const { winningState, setWinningState } = useContext(WordleAppContext)
+	
 	return (
 		<>
 			<IconContext.Provider value={{ color: '#fff' }}>

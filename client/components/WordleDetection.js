@@ -17,45 +17,20 @@ import PopUp from './PopUp'
 export const WordleDetection = () => {
 	const { board, setBoard, translation, setTranslation } = useContext(WordleAppContext)
 	const webcamRef = useRef(null)
-	console.log('WEBCAM REF', webcamRef)
 	const canvasRef = useRef(null)
-	// const [translation, setTranslation] = useState(null)
-	// const allAcceptedGuesses = useSelector(state => state.wordle)
-
-	//find the first row index that include ""
-	// const currentRowToGuess = arr => {
-	// 	for (let i = 0; i < arr.length; i++) {
-	// 		if (arr[i].cells.includes('')) {
-	// 			console.log(i)
-	// 			return i
-	// 		}
-	// 	}
-	// }
-	// const currentRow = currentRowToGuess(allAcceptedGuesses)
-	// const [guess, setGuess] = useState(['*', '*', '*', '*', '*'])
-	//const [guess, setGuess] = useState(allAcceptedGuesses[currentRow].cells)
 	const [timer, setTimer] = useState(3)
 	const [finalAns, setFinalAns] = useState([])
-	// console.log('CURRENT ROW IS', currentRow)
 
-	// useEffect(() => {
-	// 	console.log('GET TO USE EFFECT')
-	// 	const newBoard = board.map(ele => (ele.id === currentRow ? guess : ele))
-	// 	setBoard(newBoard)
-	// 	console.log('NEW BOARD---', newBoard)
-	// }, [guess])
 
 
 	const netRef = useRef(null)
 
-	// handleGuess(){
-
-	// }
 	useEffect(() => {
 		const loadModel = async () => {
 			const net = await handpose.load()
 			netRef.current = net
-			setTimeout(() => webcamInit(), 10)
+			setTimeout(() => webcamInit(), 100)
+			// webcamInit()
 		}
 
 		const webcamInit = () => {
@@ -104,7 +79,6 @@ export const WordleDetection = () => {
 
 				// 8 is the confidence level
 				const gesture = await gestureEstimator.estimate(hand[0].landmarks, 8)
-				console.log('THIS IS THE GESTURE:', gesture)
 				if (gesture.gestures && gesture.gestures.length > 0) {
 					const score = gesture.gestures.map(prediction => prediction.score)
 
@@ -119,11 +93,10 @@ export const WordleDetection = () => {
 			}
 		}
 		loadModel()
+		// window.location.reload();
 	}, [])
 
-	// console.log('TRANSLATION IS ---', translation)
 
-	// console.log('new guess is', guess)
 	return (
 		<div className="webcam-detection">
 			<Webcam ref={webcamRef} className="webcam" />

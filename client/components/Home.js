@@ -13,7 +13,6 @@ function Home() {
 	}
 	function videoStateChange(event) {
 		const player = event.target
-		console.log(player.getCurrentTime())
 	}
 	const redirectToGame = () => {
 		window.location.pathname = '/main'

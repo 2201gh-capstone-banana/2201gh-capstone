@@ -11,8 +11,6 @@ const App = () => {
 		dispatch(fetchAllLetters())
 	}, [])
 
-	// const allLetterInfo = useSelector(state => state.lettersReducer)
-	// console.log('all letter info', allLetterInfo)
 	return (
 		<div>
 			<Routes />
