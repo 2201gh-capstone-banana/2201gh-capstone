@@ -80,8 +80,8 @@ class Routes extends React.Component {
 							<Navbar />
 
 							<Switch>
-								<Route exact path="/" component={LandingPage} />
-								<Route exact path="/home" component={Home} />
+								?
+								<Route exact path="/" component={Home} />
 								<Route exact path="/about" component={About} />
 								<Route exact path="/main" component={Main} />
 								<Route exact path="/signin" component={AuthForm} />
@@ -95,8 +95,8 @@ class Routes extends React.Component {
 						<Navbar />
 
 						<Switch>
-							<Route exact path="/" component={LandingPage} />
-							<Route exact path="/home" component={Home} />
+							?
+							<Route exact path="/" component={Home} />
 							<Route exact path="/about" component={About} />
 							<Route exact path="/main" component={Main} />
 							<Route exact path="/signin" component={AuthForm} />

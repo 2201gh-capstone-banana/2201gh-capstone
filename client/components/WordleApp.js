@@ -70,7 +70,7 @@ function WordleApp() {
 		dispatch(checkValidGuess(newGuess))
 		console.log('AFTER DISPATCH IS THIS VALID', isValidGuess)
 	}
-  
+
 	console.log('GUESS HAS BEEN SET', guess)
 	useEffect(() => {
 		console.log('GET IN USEEFFECT AT ALL????????------')
@@ -90,7 +90,6 @@ function WordleApp() {
 	const [currentLetter, setCurrentLetter] = useState(null)
 	return (
 		<div className="wordle-app">
-			<h1>Wordle</h1>
 			<div className="container">
 				<button
 					id="btn-cheatsheet"
