@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useCallback } from 'react'
 import { useSpring, animated } from 'react-spring'
-import './Modal.css'
+
 
 const Modal = ({ setOpenModal }) => {
 	const modalRef = useRef()

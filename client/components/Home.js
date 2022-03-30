@@ -1,19 +1,54 @@
-import React from 'react'
-import './Home.css'
-import Main from './Main'
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import YouTube from 'react-youtube'
 
+import Brand from './Brand'
+//https://youtu.be/tkMg8g8vVUo
 function Home() {
+	function videoOnReady(event) {
+		event.target.playVideoAt(50)
+	}
+	function videoOnPlay(event) {
+		const player = event.target
+	}
+	function videoStateChange(event) {
+		const player = event.target
+		console.log(player.getCurrentTime())
+	}
 	const redirectToGame = () => {
 		window.location.pathname = '/main'
 	}
 	const redirectToLearning = () => {
 		window.location.pathname = '/learning'
 	}
+
+	const opts = {
+		height: '350',
+		width: '600',
+		playerVars: {
+			// https://developers.google.com/youtube/player_parameters
+			autoplay: 1
+		}
+	}
+	const videoId = 'tkMg8g8vVUo'
 	return (
-		<div className="hero-container">
-			<video src="Bee.mp4" autoPlay loop muted />
-			<h1>BE MY VOICE</h1>
-			<p>What are you waiting for?</p>
+		<section className="header__section">
+			<Brand />
+			<YouTube
+				videoId={videoId}
+				opts={opts}
+				onReady={videoOnReady}
+				onPlay={videoOnPlay}
+				onStateChange={videoStateChange}
+			/>
+			<p className="header__about-main">
+				Be My Voice is a translation web app that uses machine learning models to
+				translate American sign language.
+			</p>
+
+			<p className="header__about-notice">
+				This app needs permission to access your webcam
+			</p>
 			<div className="hero-btns">
 				<button className="btn btn-primary" onClick={redirectToLearning}>
 					Learning Center
@@ -22,7 +57,7 @@ function Home() {
 					Wordle Game
 				</button>
 			</div>
-		</div>
+		</section>
 	)
 }
 
