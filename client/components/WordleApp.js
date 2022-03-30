@@ -32,8 +32,8 @@ function WordleApp() {
 
 	//componentDidMount equivalent-----------------
 	useEffect(() => {
-		dispatch(fetchAcceptedGuesses(1))
-		dispatch(fetchTargetWord(1))
+		dispatch(fetchAcceptedGuesses())
+		dispatch(fetchTargetWord())
 	}, [])
 
 	function handleOnClick() {

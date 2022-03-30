@@ -10,11 +10,11 @@ const getTargetWord = targetWord => {
     }
 }
 
-export const fetchTargetWord = userId => {
+export const fetchTargetWord =() => {
     return async dispatch => {
         try {
             const token = window.localStorage.getItem(TOKEN)
-            const { data } = await axios.get(`/api/wordle/${userId}/game`, {
+            const { data } = await axios.get(`/api/wordle/game`, {
                 headers: {
                     authorization: token
                 }

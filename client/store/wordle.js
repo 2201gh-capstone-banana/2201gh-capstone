@@ -19,12 +19,12 @@ const addAcceptedGuesses = acceptedGuesses => {
 	}
 }
 
-export const fetchAcceptedGuesses = userId => {
+export const fetchAcceptedGuesses = () => {
 	return async dispatch => {
 		try {
 			const token = window.localStorage.getItem(TOKEN)
 			// console.log('token is---', token)
-			const { data } = await axios.get(`/api/wordle/${userId}/game`, {
+			const { data } = await axios.get(`/api/wordle/game`, {
 				headers: {
 					authorization: token
 				}
@@ -42,7 +42,7 @@ export const addAcceptedGuess = (userId, guess) => {
 		try {
 			const token = window.localStorage.getItem(TOKEN)
 			const { data } = await axios.post(
-				`/api/wordle/${userId}/addGuess`,
+				`/api/wordle/addGuess`,
 				{ content: guess },
 				{
 					headers: {

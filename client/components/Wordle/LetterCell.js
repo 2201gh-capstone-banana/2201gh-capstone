@@ -27,7 +27,7 @@ function LetterCell({ rowIdx, index }) {
 			const letterState = (correct ? "green" : almost ? "yellow" : "grey");
 			colorRef.current = letterState
 		}
-	}, [answer])
+	}, [board, answer])
 	// if (letter !== "") {
 	// 	const answerArr = answer.toUpperCase().split('');
 	// 	const correct = answerArr[index] === letter;

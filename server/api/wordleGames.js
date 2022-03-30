@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { requireToken } = require('./securityMiddleware')
+const { requireToken, isAdmin } = require('./securityMiddleware')
 const {
 	models: { WordleGame, AcceptedGuess, AcceptedWord, TargetWord }
 } = require('../db')
@@ -10,10 +10,13 @@ const getRandomIdx = max => {
 }
 
 //find or create
-router.get('/:id/game', async (req, res, next) => {
+router.get('/game', requireToken, async (req, res, next) => {
 	try {
+		if (!req.user) {
+			throw new Error('Unauthorized');
+		  }
 		const latestWordle = await WordleGame.findOne({
-			where: { userId: req.params.id },
+			where: { userId: req.user.id },
 			include: [{ model: AcceptedGuess }, { model: TargetWord }],
 			order: [['createdAt', 'DESC']]
 		})
@@ -52,10 +55,13 @@ router.get('/:id/game', async (req, res, next) => {
 	}
 })
 
-router.post('/:id/addGuess', async (req, res, next) => {
+router.post('/addGuess', requireToken, async (req, res, next) => {
 	try {
+		if (!req.user) {
+			throw new Error('Unauthorized');
+		  }
 		const latestWordle = await WordleGame.findOne({
-			where: { userId: req.params.id },
+			where: { userId: req.user.id },
 			order: [['createdAt', 'DESC']]
 		})
 		const newAcceptedGuess = await AcceptedGuess.create({
@@ -81,14 +87,14 @@ router.post('/acceptedWord', async (req, res, next) => {
 	}
 })
 
-router.get('/:id/latestWordle', async (req, res, next) => {
-	try {
-		const latestWordle = await WordleGame.findOne({
-			where: { userId: req.params.id },
-			order: [['createdAt', 'DESC']]
-		})
-		res.json(latestWordle)
-	} catch (err) {
-		next(err)
-	}
-})
+// router.get('/:id/latestWordle', async (req, res, next) => {
+// 	try {
+// 		const latestWordle = await WordleGame.findOne({
+// 			where: { userId: req.params.id },
+// 			order: [['createdAt', 'DESC']]
+// 		})
+// 		res.json(latestWordle)
+// 	} catch (err) {
+// 		next(err)
+// 	}
+// })
