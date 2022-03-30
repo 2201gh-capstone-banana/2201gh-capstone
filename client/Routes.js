@@ -78,7 +78,6 @@ class Routes extends React.Component {
 
 						<Router>
 							<Navbar />
-							
 
 							<Switch>
 								<Route exact path="/" component={LandingPage} />

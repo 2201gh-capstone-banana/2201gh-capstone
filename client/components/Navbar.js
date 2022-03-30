@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import './Navbar.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUpAZ, faAlignJustify, faX } from '@fortawesome/free-solid-svg-icons'
 import { signout } from '../store/auth'
@@ -55,12 +54,13 @@ function Navbar(props) {
 
 						<li>
 							<Link
-								to="/main"
+								to="/wordle"
 								className="nav-links"
 								onClick={closeMobileMenu}>
 								Game
 							</Link>
 						</li>
+						
 
 						{/* Show the signout only if the user is not logged in */}
 						{!props.correctUser ? (
@@ -106,4 +106,3 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar)
-

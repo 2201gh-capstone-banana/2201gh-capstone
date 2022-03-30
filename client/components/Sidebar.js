@@ -4,8 +4,8 @@ import * as AiIcons from 'react-icons/ai'
 import { Link } from 'react-router-dom'
 import { SidebarData } from './SidebarData'
 import { IconContext } from 'react-icons'
-import './Sidebar.css'
 import LeaderBoard from './LeaderBoard'
+import ContactForm from './ContactForm'
 
 function Sidebar() {
 	const [sidebar, setSidebar] = useState(false)
@@ -17,10 +17,13 @@ function Sidebar() {
 			<IconContext.Provider value={{ color: '#fff' }}>
 				<div className="sidebar">
 					<Link to="#" className="menu-bars">
-						<FaIcons.FaBars onClick={showSidebar} />
+						<FaIcons.FaBars onClick={showSidebar} color="black" />
 					</Link>
-        
-					<LeaderBoard />
+					<h1>Wordle</h1>
+					<div>
+						<LeaderBoard />
+						<ContactForm />
+					</div>
 				</div>
 				<nav className={sidebar ? 'sidebar-menu active' : 'sidebar-menu'}>
 					<ul className="sidebar-menu-items" onClick={showSidebar}>

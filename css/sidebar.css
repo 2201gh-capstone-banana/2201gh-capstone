@@ -1,5 +1,4 @@
 .sidebar {
-	background-color: tomato;
 	height: 80px;
 	display: flex;
 	justify-content: space-between;
@@ -71,7 +70,7 @@ span {
 	margin-left: 16px;
 }
 
-.openModalBtn{
-    margin-right: 2rem;
-    font-size: 2rem;
+.openModalBtn {
+	margin-right: 2rem;
+	font-size: 2rem;
 }
