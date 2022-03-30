@@ -15,7 +15,7 @@ import CheatSheet from './CheatSheet'
 
 export const WordleAppContext = createContext()
 function WordleApp() {
-	const [board, setBoard] = useState(boardDefault)
+	const [board, setBoard] = useState([...boardDefault])
 	const [translation, setTranslation] = useState(null)
 	const [currentRow, setCurrentRow] = useState(0)
 	const [timer, setTimer] = useState(5)
@@ -30,8 +30,7 @@ function WordleApp() {
 	const isValidGuess = useSelector(state => state.isValidGuess)
 	// const addAcceptedGuess = useSelector(state => state.isValidGuess)
 
-	console.log('IS VALID GUESS-------', isValidGuess)
-	console.log('board on state', board)
+console.log("WINNINGSTATE", winningState)
 
 	// console.log("TRANSLATION", translation);
 
@@ -69,40 +68,27 @@ function WordleApp() {
 
 	function handleSubmit() {
 		let newGuess = board[currentRow].join('').toLowerCase()
-		console.log('THIS IS NEW GUESS', newGuess)
 		setGuess(newGuess)
 		dispatch(checkValidGuess(newGuess))
-		console.log('AFTER DISPATCH IS THIS VALID', isValidGuess)
 	}
-  
-	console.log('GUESS HAS BEEN SET', guess)
+
 	useEffect(() => {
-		console.log('GET IN USEEFFECT AT ALL????????------')
 
 		if (isValidGuess) {
-			console.log('IS VALID GET CONDITION')
-			console.log('get in use Effect-----', guess)
 			dispatch(addAcceptedGuess(guess))
-			window.location.reload();
 		} else if (isValidGuess === false) {
-			console.log('IS INVALID GET CONDITION')
 			setMessage('NOT A VALID WORD')
 			//	setTimeout(setMessage(''), 1000)
 		}
 	}, [isValidGuess])
 
-	function handleNewGame(){
-		// dispatch(fetchAcceptedGuesses());
-	}
-	useEffect(() => {
-		if (winningState){
+	// useEffect(() => {
+	// 	if (winningState) {
 
-		} else if (winningState === false){
+	// 	} else if (winningState === false) {
 
-		}
-	}, [winningState])
-
-	console.log('what is MESSAGE THEN??', message)
+	// 	}
+	// }, [winningState])
 	const [cheatsheetOpen, setCheatsheetOpen] = useState(false)
 	const [currentLetter, setCurrentLetter] = useState(null)
 	return (
@@ -124,8 +110,6 @@ function WordleApp() {
 					/>
 				) : null}
 			</div>
-
-			<Sidebar />
 			<WordleAppContext.Provider
 				value={{
 					board,
@@ -136,9 +120,10 @@ function WordleApp() {
 					setCurrentRow,
 					answer,
 					setAnswer,
-					winningState, 
+					winningState,
 					setWinningState
 				}}>
+				<Sidebar />
 				<div className="game">
 					<div id="webcam-parent">
 						<h2>{message}</h2>

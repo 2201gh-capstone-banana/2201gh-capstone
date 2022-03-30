@@ -19,29 +19,44 @@ function WordleBoard() {
 
 	const allAcceptedGuesses = useSelector(state => state.wordle)
 	const targetWord = useSelector(state => state.targetWord)
-	console.log('ALL ACCEPTED GUESS GOT CHANGED', allAcceptedGuesses)
-	console.log('BOARD IS NOW', board)
+	console.log('ALL ACCEPTED GUESS GOT CHANGED', allAcceptedGuesses.length)
+	console.log('BOARD DEFAULT', boardDefault)
 
 	useEffect(() => {
 		console.log('THE TOP OF THE USEEFFECT TO SETBOARD')
 		const generateNewBoard = arr => {
 			// let newBoardArr = Array(6).fill('');
 			// console.log("GENERATE BOARD IS CALLED")
+			const boardCopy = [
+				['', '', '', '', ''],
+				['', '', '', '', ''],
+				['', '', '', '', ''],
+				['', '', '', '', ''],
+				['', '', '', '', ''],
+				['', '', '', '', '']
+			];
 			if (arr.length !== 0) {
 				for (let i = 0; i < arr.length; i++) {
 					// boardDefault[i] = arr[i]
 					// let boardCurrent = boardDefault[i];
 					let currentWord = arr[i].split('')
 					for (let j = 0; j < currentWord.length; j++) {
-						boardDefault[i][j] = currentWord[j]
+						boardCopy[i][j] = currentWord[j]
 					}
 				}
-			} else if (arr.includes(targetWord)) {
-				setWinningState(true);
-			} else if (arr.length === 6){
-				setWinningState(false);
+				return boardCopy
+			} else if (arr.length === 0) {
+				return boardDefault;
 			}
-			return boardDefault
+			else if (arr.includes(targetWord)) {
+				console.log("ALL ACCEPTED GUESSES IN", allAcceptedGuesses)
+				setWinningState(true);
+				window.location.reload();
+			} else if (arr.length === 6) {
+				console.log("ALL ACCEPTED GUESSES IN", allAcceptedGuesses)
+				setWinningState(false);
+				window.location.reload();
+			}
 			// let newBoardArr = Array(6).fill('');
 			// newBoardArr.push(allAcceptedGuesses);
 			// console.log('GENERATE NEWBOARD-----', generateNewBoard(allAcceptedGuesses))
