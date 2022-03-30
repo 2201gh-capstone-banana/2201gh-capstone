@@ -30,9 +30,6 @@ function WordleApp() {
 	const isValidGuess = useSelector(state => state.isValidGuess)
 	// const addAcceptedGuess = useSelector(state => state.isValidGuess)
 
-console.log("WINNINGSTATE", winningState)
-
-	// console.log("TRANSLATION", translation);
 
 	//componentDidMount equivalent-----------------
 	useEffect(() => {
@@ -73,7 +70,6 @@ console.log("WINNINGSTATE", winningState)
 	}
 
 	useEffect(() => {
-
 		if (isValidGuess) {
 			dispatch(addAcceptedGuess(guess))
 		} else if (isValidGuess === false) {

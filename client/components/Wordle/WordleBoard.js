@@ -19,11 +19,8 @@ function WordleBoard() {
 
 	const allAcceptedGuesses = useSelector(state => state.wordle)
 	const targetWord = useSelector(state => state.targetWord)
-	console.log('ALL ACCEPTED GUESS GOT CHANGED', allAcceptedGuesses.length)
-	console.log('BOARD DEFAULT', boardDefault)
 
 	useEffect(() => {
-		console.log('THE TOP OF THE USEEFFECT TO SETBOARD')
 		const generateNewBoard = arr => {
 			// let newBoardArr = Array(6).fill('');
 			// console.log("GENERATE BOARD IS CALLED")
@@ -35,7 +32,7 @@ function WordleBoard() {
 				['', '', '', '', ''],
 				['', '', '', '', '']
 			];
-			if (arr.length !== 0) {
+			if (arr.length !== 0 && arr.length < 6 && arr.includes(targetWord) === false) {
 				for (let i = 0; i < arr.length; i++) {
 					// boardDefault[i] = arr[i]
 					// let boardCurrent = boardDefault[i];
@@ -49,13 +46,12 @@ function WordleBoard() {
 				return boardDefault;
 			}
 			else if (arr.includes(targetWord)) {
-				console.log("ALL ACCEPTED GUESSES IN", allAcceptedGuesses)
-				setWinningState(true);
-				window.location.reload();
+				// setWinningState(true);
+				// window.re
+				window.location.href = '/wordle/winning-page';
 			} else if (arr.length === 6) {
-				console.log("ALL ACCEPTED GUESSES IN", allAcceptedGuesses)
-				setWinningState(false);
-				window.location.reload();
+				window.location.href = '/wordle/losing-page';
+				// setWinningState(false);
 			}
 			// let newBoardArr = Array(6).fill('');
 			// newBoardArr.push(allAcceptedGuesses);

@@ -16,6 +16,8 @@ import Learning from './components/Learning'
 import WordleApp from './components/WordleApp'
 import Idle from './components/Idle'
 import About from './components/About'
+import WinningPage from './components/Wordle/EndGame'
+import LosingPage from './components/Wordle/LosingPage'
 
 class Routes extends React.Component {
 	constructor() {
@@ -55,17 +57,6 @@ class Routes extends React.Component {
 	render() {
 		return (
 			<>
-				{/* <Switch>
-					<Route exact path="/" component={LandingPage} />
-					{/*
-					For auto signin when token is in local storage.
-					Hide the signin page if token is valid.
-
-					<Route path="/signin">
-						{this.props.correctUser ? <Redirect to="/main" /> : <AuthForm />}
-					</Route>
-					<Route path="/main" component={Main} />
-				</Switch> */}
 
 				{this.props.correctUser ? (
 					<IdleTimer
@@ -87,6 +78,8 @@ class Routes extends React.Component {
 								<Route exact path="/signin" component={AuthForm} />
 								<Route exact path="/learning" component={Learning} />
 								<Route exact path="/wordle" component={WordleApp} />
+								<Route exact path="/wordle/winning-page" component={WinningPage} />
+								<Route exact path="/wordle/losing-page" component={LosingPage} />
 							</Switch>
 						</Router>
 					</IdleTimer>
@@ -102,6 +95,8 @@ class Routes extends React.Component {
 							<Route exact path="/signin" component={AuthForm} />
 							<Route exact path="/learning" component={Learning} />
 							<Route exact path="/wordle" component={WordleApp} />
+							<Route exact path="/wordle/winning-page" component={WinningPage} />
+							<Route exact path="/wordle/losing-page" component={LosingPage} />
 						</Switch>
 					</Router>
 				)}

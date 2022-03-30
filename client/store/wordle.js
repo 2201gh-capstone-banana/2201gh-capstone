@@ -81,10 +81,6 @@ export default (state = initialState, action) => {
 			// console.log("THIS IS THE STATE", initialState)
 			return allAcceptedGuesses
 		case ADD_ACCEPTED_GUESSES:
-			console.log('WHAT I AM ABOUT TO RETURN', [
-				...state,
-				action.acceptedGuesses.toUpperCase()
-			])
 			return [...state, action.acceptedGuesses.toUpperCase()]
 		default:
 			return state
