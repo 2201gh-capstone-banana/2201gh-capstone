@@ -9,8 +9,8 @@ function CheatSheetWordle(props) {
 	// let [currentRow, setCurrentRow] = props.currentRow
 	const { board, setBoard, currentRow, setCurrentRow } = useContext(WordleAppContext)
 
-	console.log('BOARD IN CHEATSHEET', board)
-	console.log('CURRENT ROW IN CHEATSHEET', currentRow)
+	// console.log('BOARD IN CHEATSHEET', board)
+	// console.log('CURRENT ROW IN CHEATSHEET', currentRow)
 	const allLetterInfo = useSelector(state => state.lettersReducer)
 
 	const handleFillInBoard = letter => {

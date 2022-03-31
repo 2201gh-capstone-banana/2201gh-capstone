@@ -34,7 +34,6 @@ export const WordleDetection = () => {
 		}
 
 		const webcamInit = () => {
-			console.log('webcamInit is running...')
 			if (
 				webcamRef.current !== 'undefined' &&
 				webcamRef.current !== null &&

@@ -30,17 +30,18 @@ function WordleApp() {
 	// const [completedState, setCompletedState] = useState(nul);
 
 	// const [color, setColor] =useState(colorBoardDefault);
-	console.log("BOARD", board);
-	console.log("CURRENT ROW", currentRow)
-	console.log("GUESS COUNTER", guessCounter)
 	const dispatch = useDispatch()
 	const isValidGuess = useSelector(state => state.isValidGuess)
-	console.log("VALID GUESSES", isValidGuess)
 	// const addAcceptedGuess = useSelector(state => state.isValidGuess)
 
 	//componentDidMount equivalent-----------------
 	const alert = useSelector(state => state.wordle.alert)
-	console.log('ALERT IS', alert)
+	console.log("BOARD", board)
+	console.log("ALERT", alert)
+	console.log("Is this guess valid?", isValidGuess)
+	console.log("GUESS", guess)
+
+	// console.log('ALERT IS', alert)
 
 
 	useEffect(() => {
@@ -76,31 +77,34 @@ function WordleApp() {
 	}
 
 
-function handleSubmit() {
-    let newGuess = board[currentRow].join('').toLowerCase()
-    setGuess(newGuess)
-    dispatch(addAcceptedGuess(newGuess))
-	setMessage(alert);
-}
-/*
 	function handleSubmit() {
 		let newGuess = board[currentRow].join('').toLowerCase()
 		setGuess(newGuess)
-		dispatch(checkValidGuess(newGuess))
-		// setGuessCounter((guessCounter) => {return guessCounter + 1});
-		setGuessCounter(guessCounter + 1);
+		dispatch(addAcceptedGuess(newGuess))
 	}
 
 	useEffect(() => {
-		if (isValidGuess) {
-			console.log("GBEASDZNGBASDFNBASNDBNABG", guess)
-			dispatch(addAcceptedGuess(guess))
-		} else if (isValidGuess === false) {
-			setMessage('NOT A VALID WORD')
-			//	setTimeout(setMessage(''), 1000)
+		setMessage(alert);
+	}, [alert])
+	/*
+		function handleSubmit() {
+			let newGuess = board[currentRow].join('').toLowerCase()
+			setGuess(newGuess)
+			dispatch(checkValidGuess(newGuess))
+			// setGuessCounter((guessCounter) => {return guessCounter + 1});
+			setGuessCounter(guessCounter + 1);
 		}
-	}, [guessCounter])
-*/
+	
+		useEffect(() => {
+			if (isValidGuess) {
+				console.log("GBEASDZNGBASDFNBASNDBNABG", guess)
+				dispatch(addAcceptedGuess(guess))
+			} else if (isValidGuess === false) {
+				setMessage('NOT A VALID WORD')
+				//	setTimeout(setMessage(''), 1000)
+			}
+		}, [guessCounter])
+	*/
 	// useEffect(() => {
 	// 	setValidGuess(isValidGuess);
 	// }, [isValidGuess])
