@@ -27,34 +27,64 @@ export const WordleDetection = () => {
 
 	useEffect(() => {
 		const loadModel = async () => {
-			const net = await handpose.load()
-			netRef.current = net
-			setTimeout(() => webcamInit(), 100)
-			// webcamInit()
-		}
-
-		const webcamInit = () => {
-			if (
-				webcamRef.current !== 'undefined' &&
-				webcamRef.current !== null &&
-				webcamRef.current.video.readyState === 4
-			) {
-				const video = webcamRef.current.video
-				const videoWidth = webcamRef.current.video.videoWidth
-				const videoHeight = webcamRef.current.video.videoHeight
-				// Set video width
-				webcamRef.current.video.width = videoWidth
-				webcamRef.current.video.height = videoHeight
-
-				//  Set canvas height and width
-				canvasRef.current.width = videoWidth
-				canvasRef.current.height = videoHeight
-
-				window.requestAnimationFrame(loop)
-			} else {
-				console.log('Web cam did not initialize')
+			try {
+				const net = await handpose.load()
+				netRef.current = net
+				// setTimeout(() => webcamInit(), 100)
+				await webcamInit();
+			} catch (error) {
+				throw (error);
 			}
 		}
+
+		/**
+		 const detectCamera = () => new Promise((resolve, reject) => {
+	const checkIfReady = () => {
+		if (webgazer.isReady()) {
+			resolve('success');
+		} else {
+			console.log('called');
+			reject("some error");
+		}
+	}
+	setTimeout(checkIfReady,100);
+});
+		 */
+
+		const webcamInit = () => new Promise((resolve, reject) => {
+			const checkIfReady = () => {
+				console.log("webcamRef.current is not undefined", webcamRef.current !== 'undefined')
+				console.log("webcamRef.current is not null", webcamRef.current !== null)
+				console.log("webcamRef.current ready state is 4", webcamRef.current.video.readyState === 4)
+				console.log("WEBCAM REF", webcamRef.current)
+				if (
+					webcamRef.current !== 'undefined' &&
+					webcamRef.current !== null &&
+					webcamRef.current.video.readyState === 4
+				) {
+					const video = webcamRef.current.video
+					const videoWidth = webcamRef.current.video.videoWidth
+					const videoHeight = webcamRef.current.video.videoHeight
+					// Set video width
+					webcamRef.current.video.width = videoWidth
+					webcamRef.current.video.height = videoHeight
+
+					//  Set canvas height and width
+					canvasRef.current.width = videoWidth
+					canvasRef.current.height = videoHeight
+
+					window.requestAnimationFrame(loop)
+					resolve('Web cam initialized');
+				} else {
+					// console.log('Web cam did not initialize')
+					console.log('called but not resolved');
+					window.requestAnimationFrame(checkIfReady);
+					// reject("Web cam did not initialize");
+				}
+			}
+			window.requestAnimationFrame(checkIfReady);
+			// window.requestAnimationFrame(checkIfReady)
+		})
 
 		async function loop() {
 			await detect(netRef.current)
