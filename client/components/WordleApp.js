@@ -24,14 +24,13 @@ function WordleApp() {
 	const [guess, setGuess] = useState('')
 	const [answer, setAnswer] = useState('')
 	const [message, setMessage] = useState('')
-	const [winningState, setWinningState] = useState(null);
+	const [winningState, setWinningState] = useState(null)
 	// const [completedState, setCompletedState] = useState(nul);
 
 	// const [color, setColor] =useState(colorBoardDefault);
 	const dispatch = useDispatch()
 	const isValidGuess = useSelector(state => state.isValidGuess)
 	// const addAcceptedGuess = useSelector(state => state.isValidGuess)
-
 
 	//componentDidMount equivalent-----------------
 	useEffect(() => {
@@ -90,33 +89,8 @@ function WordleApp() {
 	const [cheatsheetOpen, setCheatsheetOpen] = useState(false)
 	const [currentLetter, setCurrentLetter] = useState(null)
 	return (
-		<>
-			{props.correctUser ? (
-				<div className="wordle-app">
-					{/* <div className="container">
-			<button
-				id="btn-cheatsheet"
-				className="header__link"
-				onClick={() => {
-					setCheatsheetOpen(!cheatsheetOpen)
-				}}>
-				Cheat Sheet
-			</button>
-			{cheatsheetOpen ? (
-				<CheatSheet
-					cheatsheetOpen={[cheatsheetOpen, setCheatsheetOpen]}
-					currentLetter={[currentLetter, setCurrentLetter]}
-				/>
-			) : null}
-		</div> */}
-
-					<Sidebar
-						cheatsheetOpen={[cheatsheetOpen, setCheatsheetOpen]}
-						currentLetter={[currentLetter, setCurrentLetter]}
-					/>
-
-				) : null}
-			</div>
+		<div className="wordle-app">
+			<h1>Wordle</h1>
 			<WordleAppContext.Provider
 				value={{
 					board,
@@ -130,6 +104,24 @@ function WordleApp() {
 					winningState,
 					setWinningState
 				}}>
+				<div className="container">
+					<button
+						id="btn-cheatsheet"
+						className="header__link"
+						onClick={() => {
+							setCheatsheetOpen(!cheatsheetOpen)
+						}}>
+						Cheat Sheet
+					</button>
+					{cheatsheetOpen ? (
+						<CheatSheet
+							cheatsheetOpen={[cheatsheetOpen, setCheatsheetOpen]}
+							currentLetter={[currentLetter, setCurrentLetter]}
+							currentRow={[currentRow, setCurrentRow]}
+							currentBoard={[board, setBoard]}
+						/>
+					) : null}
+				</div>
 				<Sidebar />
 				<div className="game">
 					<div id="webcam-parent">
