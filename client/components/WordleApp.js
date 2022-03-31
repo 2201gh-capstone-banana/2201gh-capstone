@@ -39,6 +39,10 @@ function WordleApp() {
 	// const addAcceptedGuess = useSelector(state => state.isValidGuess)
 
 	//componentDidMount equivalent-----------------
+	const alert = useSelector(state => state.wordle.alert)
+	console.log('ALERT IS', alert)
+
+
 	useEffect(() => {
 		dispatch(fetchAcceptedGuesses())
 		dispatch(fetchTargetWord())
@@ -68,8 +72,17 @@ function WordleApp() {
 			}
 		}
 		setBoard(boardCopy)
+		setMessage('');
 	}
 
+
+function handleSubmit() {
+    let newGuess = board[currentRow].join('').toLowerCase()
+    setGuess(newGuess)
+    dispatch(addAcceptedGuess(newGuess))
+	setMessage(alert);
+}
+/*
 	function handleSubmit() {
 		let newGuess = board[currentRow].join('').toLowerCase()
 		setGuess(newGuess)
@@ -87,7 +100,7 @@ function WordleApp() {
 			//	setTimeout(setMessage(''), 1000)
 		}
 	}, [guessCounter])
-
+*/
 	// useEffect(() => {
 	// 	setValidGuess(isValidGuess);
 	// }, [isValidGuess])

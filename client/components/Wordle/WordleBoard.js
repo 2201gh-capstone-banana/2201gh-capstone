@@ -18,7 +18,8 @@ function WordleBoard() {
 		setWinningState,
 		setValidGuess } = useContext(WordleAppContext)
 
-	const allAcceptedGuesses = useSelector(state => state.wordle)
+	// const allAcceptedGuesses = useSelector(state => state.wordle)
+	const allAcceptedGuesses = useSelector(state => state.wordle.guesses)
 	const targetWord = useSelector(state => state.targetWord)
 
 	useEffect(() => {

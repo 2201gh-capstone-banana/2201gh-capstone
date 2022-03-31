@@ -14,7 +14,7 @@ router.get('/game', requireToken, async (req, res, next) => {
 	try {
 		if (!req.user) {
 			throw new Error('Unauthorized');
-		  }
+		}
 		const latestWordle = await WordleGame.findOne({
 			where: { userId: req.user.id },
 			include: [{ model: AcceptedGuess }, { model: TargetWord }],
@@ -55,65 +55,66 @@ router.get('/game', requireToken, async (req, res, next) => {
 	}
 })
 
+// router.post('/addGuess', requireToken, async (req, res, next) => {
+// 	try {
+// 		if (!req.user) {
+// 			throw new Error('Unauthorized');
+// 		  }
+// 		const latestWordle = await WordleGame.findOne({
+// 			where: { userId: req.user.id },
+// 			order: [['createdAt', 'DESC']]
+// 		})
+// 		const newAcceptedGuess = await AcceptedGuess.create({
+// 			wordleGameId: latestWordle.id,
+// 			content: req.body.content
+// 		})
+// 		res.json(newAcceptedGuess)
+// 	} catch (error) {
+// 		console.log('Error in your post new guess route')
+// 		next(error)
+// 	}
+// })
 router.post('/addGuess', requireToken, async (req, res, next) => {
 	try {
 		if (!req.user) {
-			throw new Error('Unauthorized');
-		  }
-		const latestWordle = await WordleGame.findOne({
-			where: { userId: req.user.id },
-			order: [['createdAt', 'DESC']]
+			throw new Error('Unauthorized')
+		}
+
+		const isValidWord = await AcceptedWord.findOne({
+			where: { content: req.body.content }
 		})
-		const newAcceptedGuess = await AcceptedGuess.create({
-			wordleGameId: latestWordle.id,
-			content: req.body.content
-		})
-		res.json(newAcceptedGuess)
+		//isValidWord ? res.send(true) : res.send(false)
+
+		if (isValidWord) {
+			const latestWordle = await WordleGame.findOne({
+				where: { userId: req.user.id },
+				order: [['createdAt', 'DESC']]
+			})
+			const newAcceptedGuess = await AcceptedGuess.create({
+				wordleGameId: latestWordle.id,
+				content: req.body.content
+			})
+			res.json(newAcceptedGuess)
+		} else {
+			res.send(false)
+		}
 	} catch (error) {
 		console.log('Error in your post new guess route')
 		next(error)
 	}
 })
 
-// router.post('/addGuess', requireToken, async (req, res, next) => {
+// router.post('/acceptedWord', async (req, res, next) => {
 // 	try {
-// 		if (!req.user) {
-// 			throw new Error('Unauthorized');
-// 		  }
-// 		  const isValidWord = await AcceptedWord.findOne({
+// 		const isValidWord = await AcceptedWord.findOne({
 // 			where: { content: req.body.content }
 // 		})
-// 		// isValidWord ? res.send(true) : res.send(false)
-// 		if (isValidWord) {
-// 			const latestWordle = await WordleGame.findOne({
-// 				where: { userId: req.user.id },
-// 				order: [['createdAt', 'DESC']]
-// 			})
-// 			const newAcceptedGuess = await AcceptedGuess.create({
-// 				wordleGameId: latestWordle.id,
-// 				content: req.body.content
-// 			})
-// 			res.json(newAcceptedGuess)
-// 		} else {
-// 			res.send(false);
-// 		}
+// 		isValidWord ? res.send(true) : res.send(false)
 // 	} catch (error) {
-// 		console.log('Error in your post new guess route')
+// 		console.log('Err')
 // 		next(error)
 // 	}
 // })
-
-router.post('/acceptedWord', async (req, res, next) => {
-	try {
-		const isValidWord = await AcceptedWord.findOne({
-			where: { content: req.body.content }
-		})
-		isValidWord ? res.send(true) : res.send(false)
-	} catch (error) {
-		console.log('Err')
-		next(error)
-	}
-})
 
 // router.get('/:id/latestWordle', async (req, res, next) => {
 // 	try {
