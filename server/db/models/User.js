@@ -77,8 +77,8 @@ User.prototype.decryptPassword = async function (password) {
 User.decryptToken = async function (token) {
 	try {
 		//return jwt.verify(token, PASSPHRASE)
-		const { userId } = await jwt.verify(token, PASSPHRASE)
-		return { userId }
+		const { id } = await jwt.verify(token, PASSPHRASE)
+		return { id }
 	} catch (err) {
 		return false
 	}

@@ -6,14 +6,14 @@ import * as AiIcons from 'react-icons/ai'
 
 const LeaderBoard = () => {
 	const [modalOpen, setModalOpen] = useState(false)
-	const {winningState, setWinningState} = useContext(WordleAppContext)
-	useEffect(() => {
-		if(winningState){
-			setModalOpen(true);
-		} if (winningState === false){
-			setModalOpen(true)
-		}
-	}, [winningState])
+	// const {winningState, setWinningState} = useContext(WordleAppContext)
+	// useEffect(() => {
+	// 	if(winningState){
+	// 		setModalOpen(true);
+	// 	} if (winningState === false){
+	// 		setModalOpen(true)
+	// 	}
+	// }, [winningState])
 	return (
 		<>
 			<AiIcons.AiOutlineBarChart

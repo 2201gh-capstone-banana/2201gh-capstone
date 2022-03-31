@@ -38,7 +38,7 @@ router.get('/game', requireToken, async (req, res, next) => {
 			// const targetWord = await TargetWord.create({ content: randomWord.content })
 			const newWordleGame = await WordleGame.create({
 				targetWordId: targetWord.id,
-				userId: req.params.id
+				userId: req.user.id
 			})
 			const returnNewWordleGame = await WordleGame.findOne({
 				where: { id: newWordleGame.id },

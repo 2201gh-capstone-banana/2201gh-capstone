@@ -6,13 +6,13 @@ import { useSelector, useDispatch } from 'react-redux'
 
 const Modal = ({ setOpenModal }) => {
 	const modalRef = useRef()
-	const { winningState, setWinningState } = useContext(WordleAppContext)
-	const dispatch = useDispatch()
+	// const { winningState, setWinningState } = useContext(WordleAppContext)
+	// const dispatch = useDispatch()
 
-	function handleNewGame() {
-		setWinningState(null);
-		dispatch(fetchAcceptedGuesses());
-	}
+	// function handleNewGame() {
+	// 	setWinningState(null);
+	// 	dispatch(fetchAcceptedGuesses());
+	// }
 
 	return (
 		<div
@@ -28,12 +28,13 @@ const Modal = ({ setOpenModal }) => {
 					X
 				</button>
 				<div className="title">
-					<h1>{winningState && 'Congratulations! You win!' || winningState === false && 'Sorry not quite! Try again next time.'}</h1>
+					{/* <h1>{winningState && 'Congratulations! You win!' || winningState === false && 'Sorry not quite! Try again next time.'}</h1> */}
+					title
 				</div>
-				{winningState !== null &&
+				{/* {winningState !== null &&
 					<div className="new-game-button">
 						<button onClick={handleNewGame}>New Game</button>
-					</div>}
+					</div>} */}
 				<div className="footer">
 					<p>This is footer</p>
 				</div>

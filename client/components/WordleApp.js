@@ -90,7 +90,7 @@ function WordleApp() {
 	const [currentLetter, setCurrentLetter] = useState(null)
 	return (
 		<div className="wordle-app">
-			<h1>Wordle</h1>
+			<Sidebar />
 			<WordleAppContext.Provider
 				value={{
 					board,
@@ -122,7 +122,6 @@ function WordleApp() {
 						/>
 					) : null}
 				</div>
-				<Sidebar />
 				<div className="game">
 					<div id="webcam-parent">
 						<h2>{message}</h2>
@@ -133,8 +132,8 @@ function WordleApp() {
 						</h2>
 						<h3>
 							{(translation === 'delete' &&
-								'Click the button to delete your last submission') ||
-								`Click the button to submit letter ${translation}`}
+								'Click the button to delete your last submission') || 
+								translation && translation !== 'delete' && `Click the button to submit letter ${translation}`}
 						</h3>
 						{/* <h2>Detecting: {translation}</h2> */}
 						{/* <button id='wordle-capture' onClick={handleOnClick}>{translation === 'O' && 'Delete' || `Click to capture letter`} </button> */}
@@ -165,11 +164,11 @@ function WordleApp() {
 						<WordleBoard />
 					</div>
 				</div>
-			)}
-		</>
+			</WordleAppContext.Provider>
+		</div>
 	)
-	//     }
 }
+
 
 const mapStateToProps = state => {
 	return {
