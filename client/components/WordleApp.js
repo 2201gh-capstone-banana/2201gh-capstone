@@ -7,7 +7,7 @@ import { fetchAcceptedGuesses, addAcceptedGuess } from '../store/wordle'
 import { fetchTargetWord } from '../store/targetWord'
 import { checkValidGuess } from '../store/checkValidGuess'
 import Sidebar from './Sidebar'
-import CheatSheet from './CheatSheet'
+import CheatSheetWordle from './CheatSheetWordle'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
@@ -25,14 +25,24 @@ function WordleApp() {
 	const [answer, setAnswer] = useState('')
 	const [message, setMessage] = useState('')
 	const [winningState, setWinningState] = useState(null)
+	const [validGuess, setValidGuess] = useState(null);
+	const [guessCounter, setGuessCounter] = useState(0);
 	// const [completedState, setCompletedState] = useState(nul);
 
 	// const [color, setColor] =useState(colorBoardDefault);
+	console.log("BOARD", board);
+	console.log("CURRENT ROW", currentRow)
+	console.log("GUESS COUNTER", guessCounter)
 	const dispatch = useDispatch()
 	const isValidGuess = useSelector(state => state.isValidGuess)
+	console.log("VALID GUESSES", isValidGuess)
 	// const addAcceptedGuess = useSelector(state => state.isValidGuess)
 
 	//componentDidMount equivalent-----------------
+	const alert = useSelector(state => state.wordle.alert)
+	console.log('ALERT IS', alert)
+
+
 	useEffect(() => {
 		dispatch(fetchAcceptedGuesses())
 		dispatch(fetchTargetWord())
@@ -62,22 +72,51 @@ function WordleApp() {
 			}
 		}
 		setBoard(boardCopy)
+		setMessage('');
 	}
 
+
+function handleSubmit() {
+    let newGuess = board[currentRow].join('').toLowerCase()
+    setGuess(newGuess)
+    dispatch(addAcceptedGuess(newGuess))
+	setMessage(alert);
+}
+/*
 	function handleSubmit() {
 		let newGuess = board[currentRow].join('').toLowerCase()
 		setGuess(newGuess)
 		dispatch(checkValidGuess(newGuess))
+		// setGuessCounter((guessCounter) => {return guessCounter + 1});
+		setGuessCounter(guessCounter + 1);
 	}
 
 	useEffect(() => {
 		if (isValidGuess) {
+			console.log("GBEASDZNGBASDFNBASNDBNABG", guess)
 			dispatch(addAcceptedGuess(guess))
 		} else if (isValidGuess === false) {
 			setMessage('NOT A VALID WORD')
 			//	setTimeout(setMessage(''), 1000)
 		}
-	}, [isValidGuess])
+	}, [guessCounter])
+*/
+	// useEffect(() => {
+	// 	setValidGuess(isValidGuess);
+	// }, [isValidGuess])
+
+	// useEffect(() => {
+	// 	if (validGuess) {
+	// 		dispatch(addAcceptedGuess(guess))
+	// 	} else if (validGuess === false) {
+	// 		setMessage('NOT A VALID WORD')
+	// 		//	setTimeout(setMessage(''), 1000)
+	// 	}
+	// }, [validGuess])
+
+	useEffect(() => {
+		setValidGuess(null);
+	}, [currentRow])
 
 	// useEffect(() => {
 	// 	if (winningState) {
@@ -90,7 +129,7 @@ function WordleApp() {
 	const [currentLetter, setCurrentLetter] = useState(null)
 	return (
 		<div className="wordle-app">
-			<h1>Wordle</h1>
+			<Sidebar />
 			<WordleAppContext.Provider
 				value={{
 					board,
@@ -102,7 +141,9 @@ function WordleApp() {
 					answer,
 					setAnswer,
 					winningState,
-					setWinningState
+					setWinningState,
+					validGuess,
+					setValidGuess
 				}}>
 				<div className="container">
 					<button
@@ -114,7 +155,7 @@ function WordleApp() {
 						Cheat Sheet
 					</button>
 					{cheatsheetOpen ? (
-						<CheatSheet
+						<CheatSheetWordle
 							cheatsheetOpen={[cheatsheetOpen, setCheatsheetOpen]}
 							currentLetter={[currentLetter, setCurrentLetter]}
 							currentRow={[currentRow, setCurrentRow]}
@@ -122,7 +163,6 @@ function WordleApp() {
 						/>
 					) : null}
 				</div>
-				<Sidebar />
 				<div className="game">
 					<div id="webcam-parent">
 						<h2>{message}</h2>
@@ -134,7 +174,7 @@ function WordleApp() {
 						<h3>
 							{(translation === 'delete' &&
 								'Click the button to delete your last submission') ||
-								`Click the button to submit letter ${translation}`}
+								translation && translation !== 'delete' && `Click the button to submit letter ${translation}`}
 						</h3>
 						{/* <h2>Detecting: {translation}</h2> */}
 						{/* <button id='wordle-capture' onClick={handleOnClick}>{translation === 'O' && 'Delete' || `Click to capture letter`} </button> */}
@@ -165,11 +205,11 @@ function WordleApp() {
 						<WordleBoard />
 					</div>
 				</div>
-			)}
-		</>
+			</WordleAppContext.Provider>
+		</div>
 	)
-	//     }
 }
+
 
 const mapStateToProps = state => {
 	return {

@@ -15,15 +15,18 @@ function WordleBoard() {
 		answer,
 		setAnswer,
 		winningState,
-		setWinningState } = useContext(WordleAppContext)
+		setWinningState,
+		setValidGuess } = useContext(WordleAppContext)
 
-	const allAcceptedGuesses = useSelector(state => state.wordle)
+	// const allAcceptedGuesses = useSelector(state => state.wordle)
+	const allAcceptedGuesses = useSelector(state => state.wordle.guesses)
 	const targetWord = useSelector(state => state.targetWord)
 
 	useEffect(() => {
 		const generateNewBoard = arr => {
 			// let newBoardArr = Array(6).fill('');
 			// console.log("GENERATE BOARD IS CALLED")
+
 			const boardCopy = [
 				['', '', '', '', ''],
 				['', '', '', '', ''],
@@ -57,6 +60,7 @@ function WordleBoard() {
 			// newBoardArr.push(allAcceptedGuesses);
 			// console.log('GENERATE NEWBOARD-----', generateNewBoard(allAcceptedGuesses))
 		}
+		// setValidGuess(null);
 		setBoard(generateNewBoard(allAcceptedGuesses))
 		setCurrentRow(allAcceptedGuesses.length)
 	}, [allAcceptedGuesses])
