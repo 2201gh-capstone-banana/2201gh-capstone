@@ -1,16 +1,15 @@
-.wordle-app{
-  width: 100vw;
+.wordle-app {
+	width: 100vw;
 	height: calc(100vh - 60px);
-  font-family: Helvetica, Arial, sans-serif;
+	font-family: Helvetica, Arial, sans-serif;
 }
 
 .wordle-app {
 	text-align: center;
 	background-color: white;
 	color: black;
-	
 }
-.wordle-app h1{
+.wordle-app h1 {
 	font-size: 50px;
 	margin-top: 20px;
 }
@@ -74,7 +73,7 @@ nav h1 {
 	font-family: Arial, Helvetica, sans-serif;
 }
 
-.white{
+.white {
 	background-color: white;
 }
 
@@ -142,11 +141,11 @@ nav h1 {
 
 .webcam-detection {
 	width: 320px;
-  height: 290px;
-  display: flex;
+	height: 290px;
+	display: flex;
 	/* flex-direction: column; */
 	align-items: center;
-  justify-content: center;
+	justify-content: center;
 	/* width: 270px;
 	height: 240px; */
 	/* width: 450px;
@@ -169,37 +168,49 @@ nav h1 {
 	height: 240px;
 }
 
-#board-parent{
-  width: 50vw;
+#board-parent {
+	width: 50vw;
 	margin-top: 100px;
 }
 
-#webcam-parent{
-  display: flex;
+#webcam-parent {
+	display: flex;
 	flex-direction: column;
-  width: 50vw;
-  justify-content: flex-end;
-  align-items: center;
+	width: 50vw;
+	justify-content: flex-end;
+	align-items: center;
 	/* height: 100vh; */
 }
 
-.detecting{
-  /* display: flex;
+.detecting {
+	/* display: flex;
 	flex-direction: column;
   width: 50vw;
   justify-content: flex-end; */
-  display: flex;
-  text-align: center;
-  /* align-items: center; */
+	display: flex;
+	text-align: center;
+	/* align-items: center; */
 	/* height: 100vh; */
 }
-.guess{
-  /* display: flex;
+.guess {
+	/* display: flex;
 	flex-direction: column;
   width: 50vw;
   justify-content: flex-end;
   align-items: center; */
-  display: flex;
-  text-align: center;
+	display: flex;
+	text-align: center;
 	/* height: 100vh; */
+}
+
+.btn__wordle {
+	margin-top: 10rem;
+	padding: 1.2rem 5rem;
+	background-color: var(--clr-one);
+	border: 3px solid black;
+	border-radius: 50px;
+	color: black;
+	text-transform: uppercase;
+	letter-spacing: 0.07rem;
+	font: var(--fnt-weg-800) 1.3rem/1.3rem var(--fnt-fmly);
 }

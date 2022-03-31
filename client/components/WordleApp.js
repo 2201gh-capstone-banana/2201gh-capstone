@@ -8,6 +8,8 @@ import { fetchTargetWord } from '../store/targetWord'
 import { checkValidGuess } from '../store/checkValidGuess'
 import Sidebar from './Sidebar'
 import CheatSheet from './CheatSheet'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 // class WordleApp extends Component {
 
@@ -29,10 +31,6 @@ function WordleApp() {
 	const dispatch = useDispatch()
 	const isValidGuess = useSelector(state => state.isValidGuess)
 	// const addAcceptedGuess = useSelector(state => state.isValidGuess)
-
-	console.log('WINNINGSTATE', winningState)
-
-	// console.log("TRANSLATION", translation);
 
 	//componentDidMount equivalent-----------------
 	useEffect(() => {
@@ -93,7 +91,6 @@ function WordleApp() {
 	return (
 		<div className="wordle-app">
 			<h1>Wordle</h1>
-
 			<WordleAppContext.Provider
 				value={{
 					board,
@@ -168,10 +165,23 @@ function WordleApp() {
 						<WordleBoard />
 					</div>
 				</div>
-			</WordleAppContext.Provider>
-		</div>
+			)}
+		</>
 	)
 	//     }
 }
 
-export default WordleApp
+const mapStateToProps = state => {
+	return {
+		/* This is to check if the user is signed in. */
+		correctUser: state.auth.correctUser
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		signout: () => dispatch(signout())
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WordleApp)

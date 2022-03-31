@@ -86,8 +86,8 @@ video {
 	font: var(--fnt-weg-800) 1rem/1rem var(--fnt-fmly);
 }
 .btn:hover {
-	color: white;
-	background: #ffbf0f;
+	color: black;
+	background: rgb(238, 187, 112);
 	box-shadow: 0 1rem 1rem rgb(243, 202, 165);
 	border: none;
 }
