@@ -36,27 +36,9 @@ export const WordleDetection = () => {
 				throw (error);
 			}
 		}
-
-		/**
-		 const detectCamera = () => new Promise((resolve, reject) => {
-	const checkIfReady = () => {
-		if (webgazer.isReady()) {
-			resolve('success');
-		} else {
-			console.log('called');
-			reject("some error");
-		}
-	}
-	setTimeout(checkIfReady,100);
-});
-		 */
-
 		const webcamInit = () => new Promise((resolve, reject) => {
 			const checkIfReady = () => {
-				console.log("webcamRef.current is not undefined", webcamRef.current !== 'undefined')
-				console.log("webcamRef.current is not null", webcamRef.current !== null)
-				console.log("webcamRef.current ready state is 4", webcamRef.current.video.readyState === 4)
-				console.log("WEBCAM REF", webcamRef.current)
+
 				if (
 					webcamRef.current !== 'undefined' &&
 					webcamRef.current !== null &&
@@ -83,7 +65,7 @@ export const WordleDetection = () => {
 				}
 			}
 			window.requestAnimationFrame(checkIfReady);
-			// window.requestAnimationFrame(checkIfReady)
+			// setTimeout(checkIfReady, 100);
 		})
 
 		async function loop() {
