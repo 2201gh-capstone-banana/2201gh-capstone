@@ -9,8 +9,8 @@ const WordleGame = db.define('wordleGame', {
 		allowNull: false
 	},
 	status: {
-		type: Sequelize.STRING,
-		defaultValue: 'in-progress'
+		type: Sequelize.INTEGER,
+		defaultValue: null
 	}
 })
 

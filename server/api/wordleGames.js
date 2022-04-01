@@ -94,6 +94,7 @@ router.get('/:id/game', async (req, res, next) => {
 		} else {
 			res.json(latestWordle)
 		}
+		//		res.send(latestWordle)
 	} catch (error) {
 		console.log('Error in your post new game route')
 		next(error)
@@ -195,12 +196,12 @@ router.post('/:id/addGuess', async (req, res, next) => {
 			const allguessArr = allAcceptedGuesses.map(ele => ele.content)
 
 			if (allguessArr.includes(latestWordle.targetWord.content)) {
-				await latestWordle.update({ ...latestWordle, status: true })
+				await latestWordle.update({ ...latestWordle, status: 1 })
 			} else if (
 				allguessArr.length === 6 &&
 				!allguessArr.includes(latestWordle.targetWord.content)
 			) {
-				await latestWordle.update({ ...latestWordle, status: false })
+				await latestWordle.update({ ...latestWordle, status: 0 })
 			}
 
 			//	res.json(newAcceptedGuess)
@@ -214,18 +215,18 @@ router.post('/:id/addGuess', async (req, res, next) => {
 	}
 })
 
-router.put('/:id/updatewinning', async (req, res, next) => {
-	try {
-		const latestWordle = await WordleGame.findOne({
-			where: { userId: req.user.id },
-			order: [['createdAt', 'DESC']]
-		})
-		await latestWordle.update({ ...latestWordle, status: req.body })
-		res.json(latestWordle)
-	} catch (error) {
-		next(error)
-	}
-})
+// router.put('/:id/updatewinning', async (req, res, next) => {
+// 	try {
+// 		const latestWordle = await WordleGame.findOne({
+// 			where: { userId: req.user.id },
+// 			order: [['createdAt', 'DESC']]
+// 		})
+// 		await latestWordle.update({ ...latestWordle, status: req.body })
+// 		res.json(latestWordle)
+// 	} catch (error) {
+// 		next(error)
+// 	}
+// })
 
 // router.post('/acceptedWord', async (req, res, next) => {
 // 	try {
@@ -239,21 +240,25 @@ router.put('/:id/updatewinning', async (req, res, next) => {
 // 	}
 // })
 
-router.get('/:id/latestWordle', async (req, res, next) => {
+router.get('/:id/max-streak', async (req, res, next) => {
 	try {
-		const latestWordle = await WordleGame.findAll({
+		const allWordle = await WordleGame.findAll({
 			where: { userId: req.params.id },
-			order: [['createdAt', 'DESC']],
+			order: [['createdAt']],
 			include: TargetWord
 		})
-		// const allAcceptedGuesses = await AcceptedGuess.findAll({
-		// 	where: {
-		// 		wordleGameId: latestWordle.id
-		// 	}
-		// })
-		//	const statusArr = allAcceptedGuesses.map(ele => ele.content)
 
-		res.json(latestWordle)
+		//UNCOMMON THE LINES BELOW AND COMMENT OUT LINE 255 TO SEND AN ARRAY OF WINNING STATUS
+
+		const allWordleStatus = allWordle.map(ele => ele.status)
+		// null: inprogress, 0: lost, 1: won
+		// ex:	allWordleStatus = [0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, null]
+
+		let streaks = allWordleStatus.reduce(
+			(res, n) => (n ? res[res.length - 1]++ : res.push(0), res),
+			[0]
+		)
+		res.json(Math.max(...streaks))
 	} catch (err) {
 		next(err)
 	}

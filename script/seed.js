@@ -212,7 +212,8 @@ async function seed() {
 
 	const wordle1 = await WordleGame.create({
 		createdAt: '2022-02-30T01:42:34.181Z',
-		updatedAt: '2022-02-30T01:42:34.181Z'
+		updatedAt: '2022-02-30T01:42:34.181Z',
+		status: 1
 	})
 	const wordle2 = await WordleGame.create({})
 	const wordle3 = await WordleGame.create({})
