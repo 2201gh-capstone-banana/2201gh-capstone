@@ -166,7 +166,11 @@ async function seed() {
 		acceptedGuess5,
 		acceptedGuess6,
 		acceptedGuess7,
-		acceptedGuess8
+		acceptedGuess8,
+		acceptedGuess9,
+		acceptedGuess10,
+		acceptedGuess11,
+		acceptedGuess12
 	] = await Promise.all([
 		AcceptedGuess.create({
 			content: 'shark'
@@ -188,6 +192,18 @@ async function seed() {
 		}),
 		AcceptedGuess.create({
 			content: 'solve'
+		}),
+		AcceptedGuess.create({
+			content: 'crave'
+		}),
+		AcceptedGuess.create({
+			content: 'crave'
+		}),
+		AcceptedGuess.create({
+			content: 'crave'
+		}),
+		AcceptedGuess.create({
+			content: 'crave'
 		}),
 		AcceptedGuess.create({
 			content: 'crave'
@@ -217,7 +233,13 @@ async function seed() {
 	])
 
 	await wordle2.addAcceptedGuess(acceptedGuess7)
-	await wordle3.addAcceptedGuess([acceptedGuess8])
+	await wordle3.addAcceptedGuess([
+		acceptedGuess8,
+		acceptedGuess9,
+		acceptedGuess10,
+		acceptedGuess11,
+		acceptedGuess12
+	])
 
 	console.log(`seeded successfully`)
 	return {
