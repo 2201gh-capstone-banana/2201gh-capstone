@@ -4,9 +4,6 @@
 strong {
 	font-weight: bold;
 }
-div {
-	display: block;
-}
 
 .row {
 	flex: 33%;

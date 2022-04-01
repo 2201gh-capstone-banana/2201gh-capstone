@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useCallback } from 'react'
 import { WordleAppContext } from './WordleApp'
 import { useSpring, animated } from 'react-spring'
 import { useSelector, useDispatch } from 'react-redux'
-import './InstructionModal.css'
 
 const InstructionModal = props => {
 	const modalRef = useRef()
@@ -10,7 +9,9 @@ const InstructionModal = props => {
 	return props.trigger ? (
 		<div className="modalBackground">
 			<div className="modalContainer">
-				<button className ='modalbtn'onClick={() => props.setTrigger(false)}>X</button>
+				<button className="modalbtn" onClick={() => props.setTrigger(false)}>
+					X
+				</button>
 				<div class="instructions">
 					<p>
 						Guess the <strong>WORDLE</strong> in six tries.
