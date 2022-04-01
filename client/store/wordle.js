@@ -13,17 +13,21 @@ const getAcceptedGuesses = acceptedGuesses => {
 }
 
 const addAcceptedGuesses = acceptedGuesses => {
-	let result
-	acceptedGuesses
-		? (result = {
-			type: ADD_ACCEPTED_GUESSES,
-			acceptedGuesses: acceptedGuesses.content
-		})
-		: (result = {
-			type: ADD_ACCEPTED_GUESSES,
-			acceptedGuesses: null
-		})
-	return result
+	return {
+		type: ADD_ACCEPTED_GUESSES,
+		acceptedGuesses: acceptedGuesses.content
+	}
+	// let result
+	// acceptedGuesses
+	// 	? (result = {
+	// 		type: ADD_ACCEPTED_GUESSES,
+	// 		acceptedGuesses: acceptedGuesses.content
+	// 	})
+	// 	: (result = {
+	// 		type: ADD_ACCEPTED_GUESSES,
+	// 		acceptedGuesses: null
+	// 	})
+	// return result
 }
 
 export const fetchAcceptedGuesses = () => {
@@ -85,14 +89,14 @@ export default (state = initialState, action) => {
 			// 	...state.guesses,
 			// 	action.acceptedGuesses.toUpperCase()
 			// ])
-			if (action.acceptedGuesses !== null) {
-				return {
-					...state,
-					guesses: [...state.guesses, action.acceptedGuesses.toUpperCase()]
-				}
-			} else {
-				return { ...state, alert: 'NOT A VALID WORD!' }
+			// if (action.acceptedGuesses !== null) {
+			return {
+				...state,
+				guesses: [...state.guesses, action.acceptedGuesses.toUpperCase()]
 			}
+		// } else {
+		// 	return { ...state, alert: 'NOT A VALID WORD!' }
+		// }
 		default:
 			return state
 	}

@@ -10,6 +10,7 @@ import Sidebar from './Sidebar'
 import CheatSheetWordle from './CheatSheetWordle'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { data } from './Wordle/wordleUtilities/data'
 
 // class WordleApp extends Component {
 
@@ -25,20 +26,20 @@ function WordleApp() {
 	const [answer, setAnswer] = useState('')
 	const [message, setMessage] = useState('')
 	const [winningState, setWinningState] = useState(null)
-	const [validGuess, setValidGuess] = useState(null);
+	// const [validGuess, setValidGuess] = useState(null);
 	const [guessCounter, setGuessCounter] = useState(0);
 	// const [completedState, setCompletedState] = useState(nul);
 
 	// const [color, setColor] =useState(colorBoardDefault);
 	const dispatch = useDispatch()
-	const isValidGuess = useSelector(state => state.isValidGuess)
+	// const isValidGuess = useSelector(state => state.isValidGuess)
 	// const addAcceptedGuess = useSelector(state => state.isValidGuess)
 
 	//componentDidMount equivalent-----------------
-	const alert = useSelector(state => state.wordle.alert)
+	// const alert = useSelector(state => state.wordle.alert)
 	console.log("BOARD", board)
 	console.log("ALERT", alert)
-	console.log("Is this guess valid?", isValidGuess)
+	// console.log("Is this guess valid?", isValidGuess)
 	console.log("GUESS", guess)
 
 	// console.log('ALERT IS', alert)
@@ -79,13 +80,17 @@ function WordleApp() {
 
 	function handleSubmit() {
 		let newGuess = board[currentRow].join('').toLowerCase()
-		setGuess(newGuess)
-		dispatch(addAcceptedGuess(newGuess))
+		if (data.includes(newGuess)) {
+			setGuess(newGuess)
+			dispatch(addAcceptedGuess(newGuess))
+		} else{
+			setMessage("This is not a valid word!");
+		}
 	}
 
-	useEffect(() => {
-		setMessage(alert);
-	}, [alert])
+	// useEffect(() => {
+	// 	setMessage(alert);
+	// }, [alert])
 	/*
 		function handleSubmit() {
 			let newGuess = board[currentRow].join('').toLowerCase()
@@ -118,9 +123,9 @@ function WordleApp() {
 	// 	}
 	// }, [validGuess])
 
-	useEffect(() => {
-		setValidGuess(null);
-	}, [currentRow])
+	// useEffect(() => {
+	// 	setValidGuess(null);
+	// }, [currentRow])
 
 	// useEffect(() => {
 	// 	if (winningState) {
@@ -146,8 +151,8 @@ function WordleApp() {
 					setAnswer,
 					winningState,
 					setWinningState,
-					validGuess,
-					setValidGuess
+					// validGuess,
+					// setValidGuess
 				}}>
 				<div className="container">
 					<button
