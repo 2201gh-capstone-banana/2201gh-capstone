@@ -13,6 +13,9 @@ const Modal = ({ setOpenModal }) => {
 	// 	dispatch(fetchAcceptedGuesses());
 	// }
 
+	const maxStreak = useSelector(state => state.maxStreak)
+	console.log('MAXSTREAK TAKEN FROM USE SELECTOR IS', maxStreak)
+
 	return (
 		<div
 			className="modalBackground"
@@ -27,7 +30,7 @@ const Modal = ({ setOpenModal }) => {
 					X
 				</button>
 				<div class="leaderboard_container">
-					<p className='container_header'>Statistics</p>
+					<p className="container_header">Statistics</p>
 					<div id="statistics">
 						<div class="statistic-container">
 							<div class="statistic">0</div>
@@ -45,11 +48,11 @@ const Modal = ({ setOpenModal }) => {
 						</div>
 
 						<div class="statistic-container">
-							<div class="statistic">0</div>
+							<div class="statistic">{maxStreak}</div>
 							<div class="label">Max Streak</div>
 						</div>
 					</div>
-					<p className='container_header'>Guess Distribution</p>
+					<p className="container_header">Guess Distribution</p>
 					<div id="guess-distribution">
 						<div class="no-data">No Data</div>
 					</div>
