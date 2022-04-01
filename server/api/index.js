@@ -4,6 +4,7 @@ module.exports = router
 router.use('/users', require('./users'))
 router.use('/wordle', require('./wordleGames'))
 router.use('/letters', require('./letters'))
+router.use('/score', require('./scoreBoard'))
 
 router.use((req, res, next) => {
 	const error = new Error('Not Found')

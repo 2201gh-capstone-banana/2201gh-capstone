@@ -7,7 +7,9 @@ const AcceptedGuess = db.define('acceptedGuess', {
 		allowNull: false,
 		validate: {
 			notEmpty: true
-		}
+		},
+		required: true,
+		// duplicating: false
 	},
 	// rowNum: {
 	// 	type: Sequelize.INTEGER,

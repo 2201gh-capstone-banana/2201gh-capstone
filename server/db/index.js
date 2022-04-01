@@ -8,6 +8,7 @@ const TargetWord = require('./models/TargetWord')
 const AcceptedGuess = require('./models/AcceptedGuess')
 const WordleGame = require('./models/WordleGame')
 const AcceptedWord = require('./models/AcceptedWord')
+// const ScoreBoard = require()
 
 
 //associations could go here!

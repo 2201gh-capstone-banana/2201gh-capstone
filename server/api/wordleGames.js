@@ -9,6 +9,24 @@ const getRandomIdx = max => {
 	return Math.floor(Math.random() * max)
 }
 
+const getMaxStreak = arr => {
+	let maxStreak = 0;
+	let streak = false;
+	for (let i =0; i < arr.length; i++){
+		let counter = 0
+		if(arr[i]){
+			counter ++;
+			streak = true;
+			if(counter > maxStreak){
+				maxStreak = counter;
+			}
+		} else if(!arr[i]){
+			counter = 0;
+			streak = false
+		}
+	}
+}
+
 //find or create
 router.get('/game', requireToken, async (req, res, next) => {
 	try {
@@ -49,6 +67,27 @@ router.get('/game', requireToken, async (req, res, next) => {
 		} else {
 			res.json(latestWordle)
 		}
+	} catch (error) {
+		console.log('Error in your post new game route')
+		next(error)
+	}
+})
+
+router.get('/score', async (req, res, next) => {
+	try {
+		if (!req.user) {
+			throw new Error('Unauthorized');
+		}
+		const wordleGames = await WordleGame.findAll({
+			where: { userId: req.user.id },
+			// include: [{ model: AcceptedGuess }, { model: TargetWord }],
+			order: [['createdAt', 'DESC']]
+		})
+		let previousGuessesArr = wordleGames.map(game => {
+			return game.status;
+		})
+		
+
 	} catch (error) {
 		console.log('Error in your post new game route')
 		next(error)
