@@ -26,7 +26,7 @@ const ContactFormModal = ({ setOpenModal }) => {
 					X
 				</button>
 
-				<form className="footer" ref={form} onSubmit={sendEmail}>
+				{/* <form ref={form} onSubmit={sendEmail}>
 					<input
 						type="text"
 						name="name"
@@ -44,10 +44,45 @@ const ContactFormModal = ({ setOpenModal }) => {
 						rows="7"
 						placeholder="Your message"
 						required></textarea>
-					<button type="submit" >
-						Send Message
-					</button>
-				</form>
+					<button type="submit">Send Message</button>
+				</form> */}
+				<div class="wrapper">
+					<h2>CONTACT US</h2>
+					<form action="" method="POST" ref={form} onSubmit={sendEmail}>
+						<div class="form-group">
+							<input
+								type="text"
+								name="Name"
+								id="name"
+								placeholder="First and Last"
+								required
+								minlength="3"
+								maxlength="25"
+							/>
+						</div>
+						<div class="form-group">
+							<input
+								type="email"
+								name="Email"
+								id="email"
+								placeholder="email@domain.tld"
+								required
+							/>
+						</div>
+						<div class="form-group">
+							<textarea
+								name="Message"
+								id="message"
+								rows="5"
+								placeholder="Type your message here...."></textarea>
+						</div>
+						<div class="form-group">
+							<button type="submit" class="submit">
+								<i class="far fa-paper-plane"></i>Send
+							</button>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 	)
