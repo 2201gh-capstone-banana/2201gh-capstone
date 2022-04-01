@@ -53,7 +53,7 @@ function WordleBoard() {
 				}
 				if (arr.length === 6 && arr.includes(targetWord) === false) {
 					setWinningState(false)
-				} else if (arr.length === 6 && arr.includes(targetWord)) {
+				} else if (arr.includes(targetWord)) {
 					setWinningState(true)
 				}
 

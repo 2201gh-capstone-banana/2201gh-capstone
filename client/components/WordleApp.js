@@ -11,6 +11,7 @@ import CheatSheetWordle from './CheatSheetWordle'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import WinningStateModal from './WinningStateModal'
+import GameOver from './GameOver'
 
 // class WordleApp extends Component {
 
@@ -39,6 +40,7 @@ function WordleApp() {
 	//componentDidMount equivalent-----------------
 	const alert = useSelector(state => state.wordle.alert)
 	console.log('BOARD', board)
+	console.log('answer=====', answer)
 	console.log('ALERT', alert)
 	console.log('Is this guess valid?', isValidGuess)
 	console.log('GUESS', guess)
@@ -130,6 +132,7 @@ function WordleApp() {
 
 	const [cheatsheetOpen, setCheatsheetOpen] = useState(false)
 	const [currentLetter, setCurrentLetter] = useState(null)
+
 	return (
 		<div className="wordle-app">
 			<Sidebar />
@@ -149,7 +152,7 @@ function WordleApp() {
 					setValidGuess
 				}}>
 				{/* {winningState === false ? <Modal /> : null} */}
-				<>
+				{/* <>
 					{modalOpen && <WinningStateModal setOpenModal={setModalOpen} />}
 					{winningState === false && <div>Sorry! Try Again</div>}
 					{winningState === true && <div>You Win!!</div>}
@@ -160,7 +163,8 @@ function WordleApp() {
 							<button onClick={redirectToLearning}>Practice Again</button>
 						</div>
 					)}
-				</>
+				</> */}
+				{winningState !== null && <GameOver />}
 
 				<div className="container">
 					<button
