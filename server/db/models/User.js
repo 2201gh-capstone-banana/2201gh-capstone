@@ -45,7 +45,16 @@ const User = db.define('user', {
 	},
 	isAdmin: {
 		type: Sequelize.BOOLEAN
-	}
+	},
+	currentStreak: {
+		type: Sequelize.INTEGER,
+		defaultValue: 0
+	},
+	maxStreak: {
+		type: Sequelize.INTEGER,
+		defaultValue: 0
+	}, 
+
 })
 
 /* HOOK: Hash password before adding to database. */
