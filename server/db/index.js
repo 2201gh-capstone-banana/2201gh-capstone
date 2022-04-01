@@ -7,7 +7,7 @@ const Alphabet = require('./models/Alphabet')
 const TargetWord = require('./models/TargetWord')
 const AcceptedGuess = require('./models/AcceptedGuess')
 const WordleGame = require('./models/WordleGame')
-const AcceptedWord = require('./models/AcceptedWord')
+// const AcceptedWord = require('./models/AcceptedWord')
 
 
 //associations could go here!
@@ -34,7 +34,7 @@ module.exports = {
 		Alphabet,
 		TargetWord,
 		WordleGame,
-		AcceptedWord,
+		// AcceptedWord,
 		AcceptedGuess
 	}
 }

@@ -80,24 +80,24 @@ router.post('/addGuess', requireToken, async (req, res, next) => {
 			throw new Error('Unauthorized')
 		}
 
-		const isValidWord = await AcceptedWord.findOne({
-			where: { content: req.body.content }
-		})
+		// const isValidWord = await AcceptedWord.findOne({
+		// 	where: { content: req.body.content }
+		// })
 		//isValidWord ? res.send(true) : res.send(false)
 
-		if (isValidWord) {
-			const latestWordle = await WordleGame.findOne({
-				where: { userId: req.user.id },
-				order: [['createdAt', 'DESC']]
-			})
-			const newAcceptedGuess = await AcceptedGuess.create({
-				wordleGameId: latestWordle.id,
-				content: req.body.content
-			})
-			res.json(newAcceptedGuess)
-		} else {
-			res.send(false)
-		}
+		// if (isValidWord) {
+		const latestWordle = await WordleGame.findOne({
+			where: { userId: req.user.id },
+			order: [['createdAt', 'DESC']]
+		})
+		const newAcceptedGuess = await AcceptedGuess.create({
+			wordleGameId: latestWordle.id,
+			content: req.body.content
+		})
+		res.json(newAcceptedGuess)
+		// } else {
+		// 	res.send(false)
+		// }
 	} catch (error) {
 		console.log('Error in your post new guess route')
 		next(error)
