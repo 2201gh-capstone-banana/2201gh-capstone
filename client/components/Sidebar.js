@@ -9,6 +9,8 @@ import LeaderBoard from './LeaderBoard'
 import ContactForm from './ContactForm'
 import Sheet from './Sheet'
 import CheatSheet from './CheatSheet'
+import Instruction from './Instruction'
+
 
 function Sidebar() {
 	const [sidebar, setSidebar] = useState(false)
@@ -16,7 +18,7 @@ function Sidebar() {
 	const [currentLetter, setCurrentLetter] = useState(null)
 	const showSidebar = () => setSidebar(!sidebar)
 	// const { winningState, setWinningState } = useContext(WordleAppContext)
-	
+
 	return (
 		<>
 			<IconContext.Provider value={{ color: '#fff' }}>
@@ -24,11 +26,12 @@ function Sidebar() {
 					<Link to="#" className="menu-bars">
 						<FaIcons.FaBars onClick={showSidebar} color="black" />
 					</Link>
-					<h1 className='sidebar__header'>Wordle</h1>
+					<h1 className="sidebar__header">Wordle</h1>
 					<div className="left__bar">
 						<LeaderBoard />
 						<ContactForm />
-						<div>
+						<Instruction/>
+						{/* <div>
 							<AiIcons.AiOutlineCalendar
 								className="openModalBtn"
 								color="black"
@@ -43,7 +46,7 @@ function Sidebar() {
 									currentLetter={[currentLetter, setCurrentLetter]}
 								/>
 							) : null}
-						</div>
+						</div> */}
 					</div>
 				</div>
 				<nav className={sidebar ? 'sidebar-menu active' : 'sidebar-menu'}>

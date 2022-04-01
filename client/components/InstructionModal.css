@@ -1,0 +1,37 @@
+.instructions {
+	font-size: 14px;
+}
+strong {
+	font-weight: bold;
+}
+div {
+	display: block;
+}
+
+.row {
+	flex: 33%;
+	display: flex;
+	flex-direction: row;
+	margin: 5px;
+	justify-content: center;
+}
+.row_letter {
+	box-sizing: border-box;
+	border: 1px solid black;
+	padding: 5px 15px;
+	font-weight: bold;
+	font-size: 20px;
+	margin: 0;
+}
+.row_green {
+	background-color: green;
+	color: white;
+}
+.row_yellow {
+	background-color: rgb(170, 153, 105);
+	color: white;
+}
+.row_grey {
+	background-color: grey;
+	color: white;
+}
