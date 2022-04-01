@@ -2,7 +2,7 @@
 
 const {
 	db,
-	models: { User, Alphabet, TargetWord, WordleGame, AcceptedGuess, AcceptedWord }
+	models: { User, Alphabet, TargetWord, WordleGame, AcceptedGuess }
 } = require('../server/db')
 
 // const {data} = require('./data');

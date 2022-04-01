@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const { requireToken, isAdmin } = require('./securityMiddleware')
 const {
-	models: { WordleGame, AcceptedGuess, AcceptedWord, TargetWord }
+	models: { WordleGame, AcceptedGuess, TargetWord }
 } = require('../db')
 module.exports = router
 
