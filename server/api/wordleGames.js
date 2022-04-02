@@ -215,12 +215,26 @@ router.get('/stats', requireToken, async (req, res, next) => {
 			[0]
 		)
 
+		const findCurrentStreak = arr => {
+			let currentStreak = 0
+			if (arr[arr.length - 1] === 0) {
+				return currentStreak
+			} else {
+				for (let i = arr.length - 1; i > 0; i--) {
+					if (arr[i] === 1) currentStreak++
+					else if (arr[i] === 0) break
+				}
+			}
+			return currentStreak
+		}
+
 		const percentageWin =
 			(allWordleStatus.filter(ele => ele === 1).length / allWordleStatus.length) *
 			100
 		res.json({
 			totalGamePlayed: allWordleStatus.length,
 			percentageWin: Math.round(percentageWin * 10) / 10,
+			currentStreak: findCurrentStreak(allWordleStatus),
 			maxStreak: Math.max(...streaks)
 		})
 	} catch (err) {

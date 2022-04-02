@@ -13,7 +13,7 @@ const Modal = ({ setOpenModal }) => {
 	// 	dispatch(fetchAcceptedGuesses());
 	// }
 
-	const { totalGamePlayed, percentageWin, maxStreak } = useSelector(
+	const { totalGamePlayed, percentageWin, currentStreak, maxStreak } = useSelector(
 		state => state.stats
 	)
 	console.log('MAXSTREAK TAKEN FROM USE SELECTOR IS', maxStreak)
@@ -45,7 +45,7 @@ const Modal = ({ setOpenModal }) => {
 						</div>
 
 						<div class="statistic-container">
-							<div class="statistic">0</div>
+							<div class="statistic">{currentStreak}</div>
 							<div class="label">Current Streak</div>
 						</div>
 

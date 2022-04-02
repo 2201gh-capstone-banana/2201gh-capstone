@@ -8,6 +8,7 @@ const getMaxStreak = statsObj => {
 		type: GET_STATS,
 		totalGamePlayed: statsObj.totalGamePlayed,
 		percentageWin: statsObj.percentageWin,
+		currentStreak: statsObj.currentStreak,
 		maxStreak: statsObj.maxStreak
 	}
 }
@@ -31,7 +32,12 @@ export const fetchMaxStreak = () => {
 		}
 	}
 }
-const initialState = { totalGamePlayed: 0, percentageWin: 0, maxStreak: 0 }
+const initialState = {
+	totalGamePlayed: 0,
+	percentageWin: 0,
+	currentStreak: 0,
+	maxStreak: 0
+}
 
 export default (state = initialState, action) => {
 	switch (action.type) {
@@ -40,6 +46,7 @@ export default (state = initialState, action) => {
 				...state,
 				totalGamePlayed: action.totalGamePlayed,
 				percentageWin: action.percentageWin,
+				currentStreak: action.currentStreak,
 				maxStreak: action.maxStreak
 			}
 		default:
