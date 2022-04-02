@@ -1,12 +1,14 @@
 import axios from 'axios'
 
 const TOKEN = 'token'
-const GET_MAX_STREAK = 'GET_MAX_STREAK'
+const GET_STATS = 'GET_STATS'
 
-const getMaxStreak = maxStreak => {
+const getMaxStreak = statsObj => {
 	return {
-		type: GET_MAX_STREAK,
-		maxStreak
+		type: GET_STATS,
+		totalGamePlayed: statsObj.totalGamePlayed,
+		percentageWin: statsObj.percentageWin,
+		maxStreak: statsObj.maxStreak
 	}
 }
 
@@ -16,7 +18,7 @@ export const fetchMaxStreak = () => {
 		try {
 			console.log('GET TO TRY IN FETCH MAX STREAK')
 			const token = window.localStorage.getItem(TOKEN)
-			const { data } = await axios.get(`/api/wordle/max-streak`, {
+			const { data } = await axios.get('/api/wordle/stats', {
 				headers: {
 					authorization: token
 				}
@@ -29,12 +31,17 @@ export const fetchMaxStreak = () => {
 		}
 	}
 }
-const initialState = 0
+const initialState = { totalGamePlayed: 0, percentageWin: 0, maxStreak: 0 }
 
 export default (state = initialState, action) => {
 	switch (action.type) {
-		case GET_MAX_STREAK:
-			return action.maxStreak
+		case GET_STATS:
+			return {
+				...state,
+				totalGamePlayed: action.totalGamePlayed,
+				percentageWin: action.percentageWin,
+				maxStreak: action.maxStreak
+			}
 		default:
 			return state
 	}

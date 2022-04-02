@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { WordleAppContext } from './WordleApp'
 import Modal from './Modal'
 import * as AiIcons from 'react-icons/ai'
-import { fetchMaxStreak } from '../store/maxStreak'
+import { fetchMaxStreak } from '../store/stats'
 import { useDispatch } from 'react-redux'
 
 const LeaderBoard = () => {

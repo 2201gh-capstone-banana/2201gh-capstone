@@ -197,14 +197,16 @@ router.post('/addGuess', requireToken, async (req, res, next) => {
 	}
 })
 
-router.get('/max-streak', requireToken, async (req, res, next) => {
+router.get('/stats', requireToken, async (req, res, next) => {
 	try {
 		const allWordle = await WordleGame.findAll({
 			where: { userId: req.user.id },
 			order: [['createdAt']],
 			include: TargetWord
 		})
-		const allWordleStatus = allWordle.map(ele => ele.status)
+		const allWordleStatus = allWordle
+			.map(ele => ele.status)
+			.filter(ele => ele !== null)
 		// null: inprogress, 0: lost, 1: won
 		// ex:  allWordleStatus = [0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, null]
 
@@ -212,7 +214,15 @@ router.get('/max-streak', requireToken, async (req, res, next) => {
 			(res, n) => (n ? res[res.length - 1]++ : res.push(0), res),
 			[0]
 		)
-		res.json(Math.max(...streaks))
+
+		const percentageWin =
+			(allWordleStatus.filter(ele => ele === 1).length / allWordleStatus.length) *
+			100
+		res.json({
+			totalGamePlayed: allWordleStatus.length,
+			percentageWin,
+			maxStreak: Math.max(...streaks)
+		})
 	} catch (err) {
 		next(err)
 	}
