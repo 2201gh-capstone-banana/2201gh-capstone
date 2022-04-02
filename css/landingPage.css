@@ -108,5 +108,5 @@ video {
 	color: white;
 	background: #ffbf0f;
 	box-shadow: 0 1rem 1rem rgb(243, 202, 165);
-	border: none;
+	border: 3px solid transparent;
 }

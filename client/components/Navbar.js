@@ -17,75 +17,82 @@ function Navbar(props) {
 		<>
 			<nav className="navbar">
 				<div className="navbar-container">
-					<Link to="/" className="navbar-logo">
-						<img src="logo.svg" alt="website logo" className="navbar__logo" />{' '}
-						&nbsp; BE MY VOICE
-					</Link>
-					<div className="menu-icon" onClick={handleClick}>
-						<FontAwesomeIcon icon={click ? faX : faAlignJustify} />
+					<div>
+						<Link to="/" className="navbar-logo">
+							<img
+								src="logo.svg"
+								alt="website logo"
+								className="navbar__logo"
+							/>{' '}
+							&nbsp; BE MY VOICE
+						</Link>
 					</div>
-					<ul className={click ? 'nav-menu active' : 'nav-menu'}>
-						<li>
-							<Link
-								to="/"
-								className="nav-links"
-								onClick={closeMobileMenu}>
-								Home
-							</Link>
-						</li>
-
-						<li>
-							<Link
-								to="/learning"
-								className="nav-links"
-								onClick={closeMobileMenu}>
-								Learning
-							</Link>
-						</li>
-
-						<li>
-							<Link
-								to="/about"
-								className="nav-links"
-								onClick={closeMobileMenu}>
-								About
-							</Link>
-						</li>
-
-						<li>
-							<Link
-								to="/wordle"
-								className="nav-links"
-								onClick={closeMobileMenu}>
-								Game
-							</Link>
-						</li>
-						
-
-						{/* Show the signout only if the user is not logged in */}
-						{!props.correctUser ? (
-							<li>
-								<Link
-									to="/signin"
-									className="nav-links"
-									onClick={closeMobileMenu}>
-									Sign In
-								</Link>
-							</li>
-						) : null}
-
-						{/* Show the signout only if user is logged in. */}
-						{props.correctUser ? (
-							<li>
+					<div>
+						<div className="menu-icon" onClick={handleClick}>
+							<FontAwesomeIcon icon={click ? faX : faAlignJustify} />
+						</div>
+						<ul className={click ? 'nav-menu active' : 'nav-menu'}>
+							<li className="no-bullets">
 								<Link
 									to="/"
 									className="nav-links"
-									onClick={closeAndSignOut}>
-									Sign Out
+									onClick={closeMobileMenu}>
+									Home
 								</Link>
 							</li>
-						) : null}
-					</ul>
+
+							<li className="no-bullets">
+								<Link
+									to="/learning"
+									className="nav-links"
+									onClick={closeMobileMenu}>
+									Learning
+								</Link>
+							</li>
+
+							<li className="no-bullets">
+								<Link
+									to="/about"
+									className="nav-links"
+									onClick={closeMobileMenu}>
+									About
+								</Link>
+							</li>
+
+							<li className="no-bullets">
+								<Link
+									to="/wordle"
+									className="nav-links"
+									onClick={closeMobileMenu}>
+									Game
+								</Link>
+							</li>
+
+							{/* Show the signout only if the user is not logged in */}
+							{!props.correctUser ? (
+								<li className="no-bullets">
+									<Link
+										to="/signin"
+										className="nav-links"
+										onClick={closeMobileMenu}>
+										Sign In
+									</Link>
+								</li>
+							) : null}
+
+							{/* Show the signout only if user is logged in. */}
+							{props.correctUser ? (
+								<li className="no-bullets">
+									<Link
+										to="/"
+										className="nav-links"
+										onClick={closeAndSignOut}>
+										Sign Out
+									</Link>
+								</li>
+							) : null}
+						</ul>
+					</div>
 				</div>
 			</nav>
 		</>
