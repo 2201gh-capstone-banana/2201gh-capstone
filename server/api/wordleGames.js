@@ -220,7 +220,7 @@ router.get('/stats', requireToken, async (req, res, next) => {
 			100
 		res.json({
 			totalGamePlayed: allWordleStatus.length,
-			percentageWin,
+			percentageWin: Math.round(percentageWin * 10) / 10,
 			maxStreak: Math.max(...streaks)
 		})
 	} catch (err) {
