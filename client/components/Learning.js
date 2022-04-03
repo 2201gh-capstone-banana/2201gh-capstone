@@ -10,6 +10,7 @@ import lettersReducer from '../store/letters'
 import { letters } from './letters'
 import CheatSheet from './CheatSheet'
 import CongratsModal from './CongratsModal'
+import Loading from './Loading'
 
 function Learning() {
 	const allLetterInfo = useSelector(state => state.lettersReducer)
@@ -51,7 +52,11 @@ function Learning() {
 
 	useEffect(() => {
 		// allLetterInfo[0] ? setCurrentLetter(allLetterInfo[0].letterwords) : ''
-		allLetterInfo[0] ? setCurrentLetter('A') : ''
+		allLetterInfo[0]
+			? setTimeout(() => {
+					setCurrentLetter('A')
+			  }, 1500)
+			: ''
 		setImage(
 			allLetterInfo.reduce((acc, letter) => {
 				acc[letter.letter] = [letter.imageUrl, letter.textUrl]
@@ -139,6 +144,7 @@ function Learning() {
 						}}>
 						Cheat Sheet
 					</button>
+					{!currentLetter && <Loading />}
 					{cheatsheetOpen ? (
 						<CheatSheet
 							cheatsheetOpen={[cheatsheetOpen, setCheatsheetOpen]}
@@ -217,7 +223,7 @@ function Learning() {
 					</div>
 				) : null}
 
-				{translation === currentLetter ? (
+				{translation && translation === currentLetter ? (
 					<img
 						src="checkmark.gif"
 						style={{
