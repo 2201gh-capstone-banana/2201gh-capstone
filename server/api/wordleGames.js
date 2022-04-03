@@ -60,15 +60,18 @@ router.get('/game', requireToken, async (req, res, next) => {
 		// if (!req.user) {
 		//  throw new Error('Unauthorized')
 		// }
+		let previousGuessesArr, targetWord
 		const latestWordle = await WordleGame.findOne({
 			where: { userId: req.user.id },
 			include: [{ model: AcceptedGuess }, { model: TargetWord }],
 			order: [['createdAt', 'DESC']]
 		})
-		let previousGuessesArr = latestWordle.acceptedGuesses.map(guess => {
-			return guess.content.toUpperCase()
-		})
-		let targetWord = latestWordle.targetWord.content.toUpperCase()
+		if (latestWordle) {
+			previousGuessesArr = latestWordle.acceptedGuesses.map(guess => {
+				return guess.content.toUpperCase()
+			})
+			targetWord = latestWordle.targetWord.content.toUpperCase()
+		}
 		if (
 			!latestWordle ||
 			latestWordle.acceptedGuesses.length === 6 ||
@@ -77,9 +80,7 @@ router.get('/game', requireToken, async (req, res, next) => {
 			const targetWordList = await TargetWord.findAll({
 				attributes: ['content']
 			})
-			const targetWord = await TargetWord.findByPk(
-				getRandomIdx(targetWordList.length)
-			)
+			targetWord = await TargetWord.findByPk(getRandomIdx(targetWordList.length))
 			// const targetWord = await TargetWord.create({ content: randomWord.content })
 			const newWordleGame = await WordleGame.create({
 				targetWordId: targetWord.id,
