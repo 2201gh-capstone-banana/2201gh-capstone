@@ -45,7 +45,7 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				totalGamePlayed: action.totalGamePlayed,
-				percentageWin: action.percentageWin,
+				percentageWin: action.percentageWin || 0,
 				currentStreak: action.currentStreak,
 				maxStreak: action.maxStreak
 			}
