@@ -25,21 +25,27 @@ function CheatSheetWordle(props) {
 	}
 
 	return (
-		<div className="cheat-sheet">
-			<div className="container">
-				{allLetterInfo.map(ele => (
-					<div
-						key={ele.id}
-						className="card"
-						onClick={() => {
-							// setCurrentLetter(ele.letter)
-							setCheatsheetOpen(!cheatsheetOpen)
-							handleFillInBoard(ele.letter)
-						}}>
-						<img className="img-cheatsheet" src={ele.imageUrl} />
-						<div>{ele.letter}</div>
-					</div>
-				))}
+		<div
+			className="modalBackground"
+			onClick={() => {
+				setCheatsheetOpen(false)
+			}}>
+			<div className="cheat-sheet">
+				<div className="container">
+					{allLetterInfo.map(ele => (
+						<div
+							key={ele.id}
+							className="card"
+							onClick={() => {
+								// setCurrentLetter(ele.letter)
+								setCheatsheetOpen(!cheatsheetOpen)
+								handleFillInBoard(ele.letter)
+							}}>
+							<img className="img-cheatsheet" src={ele.imageUrl} />
+							<div>{ele.letter}</div>
+						</div>
+					))}
+				</div>
 			</div>
 		</div>
 	)

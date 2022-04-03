@@ -9,6 +9,7 @@ import { drawHand } from '../utilities/hand'
 import lettersReducer from '../store/letters'
 import { letters } from './letters'
 import CheatSheet from './CheatSheet'
+import CongratsModal from './CongratsModal'
 
 function Learning() {
 	const allLetterInfo = useSelector(state => state.lettersReducer)
@@ -18,6 +19,7 @@ function Learning() {
 	const [image, setImage] = useState(null)
 	const [translation, setTranslation] = useState(null)
 	const [cheatsheetOpen, setCheatsheetOpen] = useState(false)
+	const [congratsModalOpen, setCongratsModalOpen] = useState(false)
 	const webcamRef = useRef(null)
 	const canvasRef = useRef(null)
 	const netRef = useRef(null)
@@ -70,6 +72,10 @@ function Learning() {
 				if (letterIndex < letterArr.length) {
 					timeIntervalBetweenLetters = setTimeout(() => {
 						setCurrentLetter(letterArr[letterIndex])
+					}, 1100)
+				} else {
+					setTimeout(() => {
+						setCongratsModalOpen(true)
 					}, 1100)
 				}
 			}
@@ -140,6 +146,11 @@ function Learning() {
 						/>
 					) : null}
 				</div>
+				{congratsModalOpen && (
+					<CongratsModal
+						congratsModalOpen={[congratsModalOpen, setCongratsModalOpen]}
+					/>
+				)}
 
 				<Webcam
 					ref={webcamRef}
@@ -242,4 +253,3 @@ function Learning() {
 	)
 }
 export default Learning
-
