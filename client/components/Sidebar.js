@@ -11,7 +11,6 @@ import Sheet from './Sheet'
 import CheatSheet from './CheatSheet'
 import Instruction from './Instruction'
 
-
 function Sidebar() {
 	const [sidebar, setSidebar] = useState(false)
 	const [cheatsheetOpen, setCheatsheetOpen] = useState(false)
@@ -23,14 +22,10 @@ function Sidebar() {
 		<>
 			<IconContext.Provider value={{ color: '#fff' }}>
 				<div className="sidebar">
-					<Link to="#" className="menu-bars">
-						<FaIcons.FaBars onClick={showSidebar} color="black" />
-					</Link>
-					<h1 className="sidebar__header">Wordle</h1>
 					<div className="left__bar">
 						<LeaderBoard />
 						<ContactForm />
-						<Instruction/>
+						<Instruction />
 						{/* <div>
 							<AiIcons.AiOutlineCalendar
 								className="openModalBtn"

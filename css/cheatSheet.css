@@ -35,10 +35,11 @@
 	color: white;
 }
 
-#btn-wordle{
+.btn-wordle {
 	padding: 0.5rem;
+	width: 90%;
 }
-#btn-wordle:hover {
+.btn-wordle:hover {
 	background-color: yellow;
 	color: black;
 }

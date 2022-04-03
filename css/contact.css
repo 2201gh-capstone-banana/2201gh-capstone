@@ -5,6 +5,9 @@ button {
 	font-family: inherit;
 	font-size: initial;
 }
+.wrapper h2 {
+	color: black;
+}
 .form-group label {
 	display: block;
 	margin: 2rem 0 0.5rem 0;

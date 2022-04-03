@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUpAZ, faAlignJustify, faX } from '@fortawesome/free-solid-svg-icons'
 import { signout } from '../store/auth'
 import { connect } from 'react-redux'
+import Sidebar from '../components/Sidebar'
 
 function Navbar(props) {
 	const [click, setClick] = useState(false)
@@ -32,6 +33,7 @@ function Navbar(props) {
 							<FontAwesomeIcon icon={click ? faX : faAlignJustify} />
 						</div>
 						<ul className={click ? 'nav-menu active' : 'nav-menu'}>
+							{window.location.pathname === '/wordle' && <Sidebar />}
 							<li className="no-bullets">
 								<Link
 									to="/"

@@ -29,7 +29,7 @@ function WordleApp() {
 	const [winningState, setWinningState] = useState(null)
 	const [validGuess, setValidGuess] = useState(null)
 	const [guessCounter, setGuessCounter] = useState(0)
-	const [modalOpen, setModalOpen] = useState(false)
+
 	// const [completedState, setCompletedState] = useState(nul);
 
 	// const [color, setColor] =useState(colorBoardDefault);
@@ -39,13 +39,6 @@ function WordleApp() {
 
 	//componentDidMount equivalent-----------------
 	const alert = useSelector(state => state.wordle.alert)
-	console.log('BOARD', board)
-	console.log('answer=====', answer)
-	console.log('ALERT', alert)
-	console.log('Is this guess valid?', isValidGuess)
-	console.log('GUESS', guess)
-
-	// console.log('ALERT IS', alert)
 
 	useEffect(() => {
 		dispatch(fetchAcceptedGuesses())
@@ -135,7 +128,9 @@ function WordleApp() {
 
 	return (
 		<div className="wordle-app">
-			<Sidebar />
+			<h1 className="sidebar__header">Wordle</h1>
+
+			{/* <Sidebar /> */}
 			<WordleAppContext.Provider
 				value={{
 					board,
@@ -188,17 +183,13 @@ function WordleApp() {
 					<div id="webcam-parent">
 						<h2>{message}</h2>
 						<h2>
-							{(translation === 'delete' && 'Deleting...') ||
-								translation ||
-								'Hold up a letter in ASL to begin the detection!'}
+							{translation === 'delete'
+								? 'Deleting...'
+								: translation
+								? translation
+								: 'Listening...'}
 						</h2>
-						<h3>
-							{(translation === 'delete' &&
-								'Click the button to delete your last submission') ||
-								(translation &&
-									translation !== 'delete' &&
-									`Click the button to submit letter ${translation}`)}
-						</h3>
+						<h2>Hold up a letter in ASL to begin the detection!</h2>
 						{/* <h2>Detecting: {translation}</h2> */}
 						{/* <button id='wordle-capture' onClick={handleOnClick}>{translation === 'O' && 'Delete' || `Click to capture letter`} </button> */}
 						{(board[currentRow] &&

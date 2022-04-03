@@ -7,7 +7,7 @@ const ContactForm = () => {
 	return (
 		<>
 			<AiIcons.AiOutlineContacts
-				color="black"
+				color="white"
 				className="openModalBtn"
 				onClick={() => {
 					setModalOpen(true)

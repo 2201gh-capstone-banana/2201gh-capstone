@@ -105,25 +105,19 @@ export const Main = props => {
 	}, [])
 
 	useEffect(() => {
-
 		let t
-		console.log('t is !!!---', t)
 		clearTimeout(t)
 		let copyGuessWord = guess.slice()
 		if (translation !== null && translation !== 'O') {
 			if (translation === 'Q' && !copyGuessWord.includes('*')) {
-				console.log('GET IN Q 1')
 				if (acceptedWordList.includes(copyGuessWord.join(''))) {
-					console.log('GET IN Q 2')
 					setTimeout(setAcceptedGuess(copyGuessWord.join('')), 2000)
 					setTimeout(setGuess(['*', '*', '*', '*', '*']), 0)
 				} else {
 					setIsValid(false)
 				}
 			} else {
-				console.log('in translation not O')
 				//	const timeIntervalBetweenGuesses = setTimeout(() => { setGuess(translation) }, 3000)
-				console.log('tranlation in use effect is -----', translation)
 				// if (timer > 0) {
 				// 	setInterval(() => {
 				// 		timer > 0 ? setTimer(timer - 1) : setTimer('time is up')
@@ -140,7 +134,6 @@ export const Main = props => {
 				setTimeout(setGuess(copyGuessWord), 0)
 			}
 		} else if (translation === 'O') {
-			console.log('in translation is O')
 			clearTimeout(t)
 			t = setTimeout(() => {
 				for (let i = 0; i < 6; i++) {
@@ -157,11 +150,6 @@ export const Main = props => {
 			setTimeout(setGuess(copyGuessWord), 0)
 		}
 	}, [translation])
-
-	console.log('new guess is', guess)
-	console.log('is valid-----------------', isValid)
-	console.log('accepted guess word is', acceptedGuess)
-
 	return (
 		<div>
 			<div className="container">

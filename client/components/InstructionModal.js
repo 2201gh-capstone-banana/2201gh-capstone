@@ -7,9 +7,9 @@ const InstructionModal = props => {
 	const modalRef = useRef()
 
 	return props.trigger ? (
-		<div className="modalBackground">
+		<div className="modalBackground" onClick={props.toggle}>
 			<div className="modalContainer">
-				<button className="modalbtn" onClick={() => props.setTrigger(false)}>
+				<button className="modalbtn" onClick={props.toggle}>
 					X
 				</button>
 				<div class="instructions">

@@ -15,11 +15,17 @@ const Instruction = () => {
 	return (
 		<>
 			<AiIcons.AiOutlineFileSearch
-				color="black"
+				color="white"
 				className="openModalBtn"
 				onClick={() => setTimePopup(true)}
 			/>
-			{<InstructionModal trigger={timePopup} setTrigger={setTimePopup} />}
+			{
+				<InstructionModal
+					trigger={timePopup}
+					setTrigger={setTimePopup}
+					toggle={() => setTimePopup(!timePopup)}
+				/>
+			}
 		</>
 	)
 }

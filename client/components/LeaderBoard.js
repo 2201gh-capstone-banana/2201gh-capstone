@@ -16,7 +16,7 @@ const LeaderBoard = () => {
 	return (
 		<>
 			<AiIcons.AiOutlineBarChart
-				color="black"
+				color="white"
 				className="openModalBtn"
 				onClick={() => {
 					setModalOpen(true)

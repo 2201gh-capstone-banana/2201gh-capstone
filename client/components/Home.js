@@ -32,15 +32,25 @@ function Home() {
 	const videoId = 'tkMg8g8vVUo'
 	return (
 		<header className="header">
+			<section className="iframe_background">
+				<iframe
+					width="2000"
+					height="2000"
+					src="https://www.youtube.com/embed/mvGQS8IMxqU?controls=0&autoplay=1&mute=1&loop=1"
+					frameborder="0"
+					allow="accelerometer;encrypted-media; gyroscope;"
+					allowfullscreen></iframe>
+			</section>
 			<section className="header__section">
 				<Brand />
-				<YouTube
+				{/* <YouTube
 					videoId={videoId}
 					opts={opts}
 					onReady={videoOnReady}
 					onPlay={videoOnPlay}
 					onStateChange={videoStateChange}
-				/>
+				/> */}
+
 				<p className="header__about-main">
 					Be My Voice is a translation web app that uses machine learning models
 					to translate American sign language.
