@@ -30,7 +30,6 @@ export const WordleDetection = () => {
 			try {
 				const net = await handpose.load()
 				netRef.current = net
-				// setTimeout(() => webcamInit(), 100)
 				await webcamInit();
 			} catch (error) {
 				throw (error);
@@ -58,14 +57,11 @@ export const WordleDetection = () => {
 					window.requestAnimationFrame(loop)
 					resolve('Web cam initialized');
 				} else {
-					// console.log('Web cam did not initialize')
 					console.log('called but not resolved');
 					window.requestAnimationFrame(checkIfReady);
-					// reject("Web cam did not initialize");
 				}
 			}
 			window.requestAnimationFrame(checkIfReady);
-			// setTimeout(checkIfReady, 100);
 		})
 
 		async function loop() {
@@ -104,7 +100,6 @@ export const WordleDetection = () => {
 			}
 		}
 		loadModel()
-		// window.location.reload();
 	}, [])
 
 
@@ -118,10 +113,5 @@ export const WordleDetection = () => {
 /*
  * CONTAINER
  */
-// const mapState = state => {
-// 	return {
-// 		username: state.auth.username
-// 	}
-// }
 
 export default WordleDetection

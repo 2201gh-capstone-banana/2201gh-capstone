@@ -14,7 +14,7 @@ function CongratsModal(props) {
 	const redirectToLearning = () => {
 		window.location.pathname = '/learning'
 	}
-	console.log('CORRECT USER IS ', correctUser)
+
 	return (
 		<div className="modalBackground">
 			<div className="congrats">

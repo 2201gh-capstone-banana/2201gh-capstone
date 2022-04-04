@@ -26,11 +26,6 @@ function Learning() {
 	const netRef = useRef(null)
 	let timeIntervalBetweenLetters
 
-	//componentDidMount equivalent
-	// useEffect(() => {
-	// 	dispatch(fetchAllLetters())
-	// }, [])
-
 	//componentWillUpdate equivalent
 	useEffect(() => {
 		const loop = async () => {
@@ -46,16 +41,11 @@ function Learning() {
 		}
 	}, [currentLetter])
 
-	// ComponentWillUpdate equivalent
-	// allLetterInfo.reduce transform arr to obj with key and value pairs
-	// [ { letter: 'A', url: 'aa', textUrl: 'AA' }, { letter: 'B', url: 'bb', textUrl: 'BB' }]  ---> { A: [ 'aa', 'AA' ], B: [ 'bb', 'BB' ] }
-
 	useEffect(() => {
-		// allLetterInfo[0] ? setCurrentLetter(allLetterInfo[0].letterwords) : ''
 		allLetterInfo[0]
 			? setTimeout(() => {
-					setCurrentLetter('A')
-			  }, 1500)
+				setCurrentLetter('A')
+			}, 1500)
 			: ''
 		setImage(
 			allLetterInfo.reduce((acc, letter) => {

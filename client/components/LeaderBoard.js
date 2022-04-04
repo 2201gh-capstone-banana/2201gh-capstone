@@ -8,21 +8,13 @@ import { useDispatch } from 'react-redux'
 const LeaderBoard = () => {
 	const [modalOpen, setModalOpen] = useState(false)
 	const dispatch = useDispatch()
-	// const {winningState, setWinningState} = useContext(WordleAppContext)
-	// useEffect(() => {
-	// 	if(winningState){
-	// 		setModalOpen(true);
-	// 	} if (winningState === false){
-	// 		setModalOpen(true)
-	// 	}
-	// }, [winningState])
+
 	return (
 		<>
 			<AiIcons.AiOutlineBarChart
 				color="black"
 				className="openModalBtn"
 				onClick={() => {
-					console.log('ABOUT TO FETCH MAX STREAK')
 					setModalOpen(true)
 					dispatch(fetchMaxStreak())
 				}}

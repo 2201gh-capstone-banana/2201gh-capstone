@@ -5,18 +5,9 @@ import { useSelector, useDispatch } from 'react-redux'
 
 const Modal = ({ setOpenModal }) => {
 	const modalRef = useRef()
-	// const { winningState, setWinningState } = useContext(WordleAppContext)
-	// const dispatch = useDispatch()
-
-	// function handleNewGame() {
-	// 	setWinningState(null);
-	// 	dispatch(fetchAcceptedGuesses());
-	// }
-
 	const { totalGamePlayed, percentageWin, currentStreak, maxStreak } = useSelector(
 		state => state.stats
 	)
-	console.log('MAXSTREAK TAKEN FROM USE SELECTOR IS', maxStreak)
 
 	return (
 		<div

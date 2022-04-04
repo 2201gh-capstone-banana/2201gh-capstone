@@ -17,7 +17,6 @@ function Sidebar() {
 	const [cheatsheetOpen, setCheatsheetOpen] = useState(false)
 	const [currentLetter, setCurrentLetter] = useState(null)
 	const showSidebar = () => setSidebar(!sidebar)
-	// const { winningState, setWinningState } = useContext(WordleAppContext)
 
 	return (
 		<>
