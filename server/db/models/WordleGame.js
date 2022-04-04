@@ -7,6 +7,10 @@ const WordleGame = db.define('wordleGame', {
 		primaryKey: true,
 		autoIncrement: true,
 		allowNull: false
+	},
+	status: {
+		type: Sequelize.INTEGER,
+		defaultValue: null
 	}
 })
 

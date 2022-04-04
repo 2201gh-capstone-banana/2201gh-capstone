@@ -12,6 +12,7 @@
 @import url('sidebar.css');
 @import url('contact.css');
 @import url('InstructionModal.css');
+@import url('congratsModal.css');
 /* Global variables. */
 :root {
 	--fnt-siz: 17px;

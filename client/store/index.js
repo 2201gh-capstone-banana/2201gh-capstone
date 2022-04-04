@@ -7,8 +7,16 @@ import lettersReducer from './letters'
 import wordle from './wordle'
 import isValidGuess from './checkValidGuess'
 import targetWord from './targetWord'
+import stats from './stats'
 
-const reducer = combineReducers({ auth, lettersReducer, wordle, isValidGuess, targetWord })
+const reducer = combineReducers({
+	auth,
+	lettersReducer,
+	wordle,
+	isValidGuess,
+	targetWord,
+	stats
+})
 
 const middleware = composeWithDevTools(
 	applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))

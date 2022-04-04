@@ -2,9 +2,12 @@ import React, { useState, useContext, useEffect } from 'react'
 import { WordleAppContext } from './WordleApp'
 import Modal from './Modal'
 import * as AiIcons from 'react-icons/ai'
+import { fetchMaxStreak } from '../store/stats'
+import { useDispatch } from 'react-redux'
 
 const LeaderBoard = () => {
 	const [modalOpen, setModalOpen] = useState(false)
+	const dispatch = useDispatch()
 	// const {winningState, setWinningState} = useContext(WordleAppContext)
 	// useEffect(() => {
 	// 	if(winningState){
@@ -19,7 +22,9 @@ const LeaderBoard = () => {
 				color="black"
 				className="openModalBtn"
 				onClick={() => {
+					console.log('ABOUT TO FETCH MAX STREAK')
 					setModalOpen(true)
+					dispatch(fetchMaxStreak())
 				}}
 			/>
 
