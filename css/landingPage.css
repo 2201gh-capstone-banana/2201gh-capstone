@@ -94,6 +94,7 @@ video {
 
 .header__link {
 	margin-top: 1.7rem;
+	margin-bottom: 1.7rem;
 	padding: 1.2rem 1.3rem;
 	background-color: var(--clr-one);
 	border: 3px solid black;
