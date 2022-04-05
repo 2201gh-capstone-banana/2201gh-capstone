@@ -7,18 +7,24 @@ const InstructionModal = props => {
 	const modalRef = useRef()
 
 	return props.trigger ? (
-		<div className="modalBackground">
+		<div className="modalBackground" onClick={() => props.setTrigger(false)}>
 			<div className="modalContainer">
-				<button className="modalbtn" onClick={() => props.setTrigger(false)}>
-					X
-				</button>
+				<div className="x-container">
+					<button className="modalbtn" onClick={() => props.setTrigger(false)}>
+						X
+					</button>
+				</div>
 				<div class="instructions">
 					<p>
 						Guess the <strong>WORDLE</strong> in six tries.
 					</p>
 					<p>
-						Each guess must be a valid five-letter word. Hit the enter button
-						to submit.
+						Each guess must be a valid five-letter word.
+						<p>
+							Hold your hand up to the camera and click to capture the
+							letter. Make thumb down gesture for deleting. And click submit
+							when ready.
+						</p>
 					</p>
 					<p>
 						After each guess, the color of the tiles will change to show how
@@ -69,9 +75,9 @@ const InstructionModal = props => {
 						</div>
 					</div>
 					<p>
-						<strong>
+						{/* <strong>
 							A new WORDLE will be available each day!<strong></strong>
-						</strong>
+						</strong> */}
 					</p>
 					<strong>
 						<strong></strong>

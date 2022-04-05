@@ -32,3 +32,13 @@ strong {
 	background-color: grey;
 	color: white;
 }
+
+.x-container{
+	display: flex;
+	justify-content: flex-end;
+}
+
+.modalbtn{
+	background: none;
+	border: none;
+}
