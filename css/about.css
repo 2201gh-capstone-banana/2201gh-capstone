@@ -76,3 +76,21 @@ body {
 		margin: 0 auto;
 	}
 }
+
+.developer-row{
+	font-family: var(--fnt-fmly);
+	font-size: 1.2rem;
+	display: flex;
+	justify-content: center;
+	flex-direction: row;
+}
+
+.linkedInLogo{
+	width: 30px;
+	height: 30px;
+}
+
+.gitHubLogo{
+	width: 30px;
+	height: 30px;
+}

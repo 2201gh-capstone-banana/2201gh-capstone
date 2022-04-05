@@ -1,8 +1,12 @@
 import React from 'react'
 
 import AboutRow from './AboutRow'
+import ContactRow from './ContactRow'
 
 const About = () => {
+	const teamInfo = [
+		{ id: 1, name: 'Kelsey Roy', linkedInURL: 'https://www.linkedin.com/in/kelseytroy/', gitHubURL: 'https://github.com/kroy94'}
+	]
 	return (
 		<div className="about__wrapper">
 			<div className="about">
@@ -24,6 +28,12 @@ const About = () => {
 					built as a Capstone project for the Grace Hopper Program at Fullstack
 					Academy.
 				</AboutRow>
+				{teamInfo.map((developer) => (
+					<ContactRow
+						key={developer.id}
+						developer={developer}
+					/>
+				))}
 			</div>
 		</div>
 	)
