@@ -11,7 +11,6 @@ import CheatSheetWordle from './CheatSheetWordle'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-
 import GameOver from './GameOver'
 
 // class WordleApp extends Component {
@@ -149,7 +148,9 @@ function WordleApp() {
 					winningState,
 					setWinningState,
 					validGuess,
-					setValidGuess
+					setValidGuess,
+					modalOpen,
+					setModalOpen
 				}}>
 				{/* {winningState === false ? <Modal /> : null} */}
 				{/* <>
@@ -164,7 +165,7 @@ function WordleApp() {
 						</div>
 					)}
 				</> */}
-				{winningState !== null && <GameOver />}
+				{winningState !== null && modalOpen && <GameOver />}
 
 				<div className="container">
 					<button
