@@ -26,6 +26,7 @@ const Modal = ({ setOpenModal }) => {
 			}}>
 			<div className="modal_Container">
 				<button
+					className="x-popup"
 					onClick={() => {
 						setOpenModal(false)
 					}}>
