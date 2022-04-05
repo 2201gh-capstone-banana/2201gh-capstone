@@ -25,12 +25,15 @@ const Modal = ({ setOpenModal }) => {
 				setOpenModal(false)
 			}}>
 			<div className="modal_Container">
-				<button
-					onClick={() => {
-						setOpenModal(false)
-					}}>
-					X
-				</button>
+				<div className="x-container">
+					<button
+						className="modalbtn"
+						onClick={() => {
+							setOpenModal(false)
+						}}>
+						X
+					</button>
+				</div>
 				<div class="leaderboard_container">
 					<p className="container_header">Statistics</p>
 					<div id="statistics">

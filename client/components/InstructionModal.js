@@ -7,11 +7,13 @@ const InstructionModal = props => {
 	const modalRef = useRef()
 
 	return props.trigger ? (
-		<div className="modalBackground">
+		<div className="modalBackground" onClick={() => props.setTrigger(false)}>
 			<div className="modalContainer">
-				<button className="modalbtn" onClick={() => props.setTrigger(false)}>
-					X
-				</button>
+				<div className="x-container">
+					<button className="modalbtn" onClick={() => props.setTrigger(false)}>
+						X
+					</button>
+				</div>
 				<div class="instructions">
 					<p>
 						Guess the <strong>WORDLE</strong> in six tries.

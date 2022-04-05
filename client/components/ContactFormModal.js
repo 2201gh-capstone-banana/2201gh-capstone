@@ -17,14 +17,21 @@ const ContactFormModal = ({ setOpenModal }) => {
 	const modalRef = useRef()
 
 	return (
-		<div className="modalBackground">
+		<div
+			className="modalBackground"
+			onClick={() => {
+				setOpenModal(false)
+			}}>
 			<div className="modalContainer">
-				<button
-					onClick={() => {
-						setOpenModal(false)
-					}}>
-					X
-				</button>
+				<div className="x-container">
+					<button
+						className="modalbtn"
+						onClick={() => {
+							setOpenModal(false)
+						}}>
+						X
+					</button>
+				</div>
 
 				{/* <form ref={form} onSubmit={sendEmail}>
 					<input
