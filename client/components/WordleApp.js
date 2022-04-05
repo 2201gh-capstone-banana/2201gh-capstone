@@ -10,7 +10,8 @@ import Sidebar from './Sidebar'
 import CheatSheetWordle from './CheatSheetWordle'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { data } from './Wordle/wordleUtilities/data'
+
+import GameOver from './GameOver'
 
 // class WordleApp extends Component {
 
@@ -26,24 +27,25 @@ function WordleApp() {
 	const [answer, setAnswer] = useState('')
 	const [message, setMessage] = useState('')
 	const [winningState, setWinningState] = useState(null)
-	// const [validGuess, setValidGuess] = useState(null);
-	const [guessCounter, setGuessCounter] = useState(0);
+	const [validGuess, setValidGuess] = useState(null)
+	const [guessCounter, setGuessCounter] = useState(0)
+	const [modalOpen, setModalOpen] = useState(false)
 	// const [completedState, setCompletedState] = useState(nul);
 
 	// const [color, setColor] =useState(colorBoardDefault);
 	const dispatch = useDispatch()
-	// const isValidGuess = useSelector(state => state.isValidGuess)
+	const isValidGuess = useSelector(state => state.isValidGuess)
 	// const addAcceptedGuess = useSelector(state => state.isValidGuess)
 
 	//componentDidMount equivalent-----------------
-	// const alert = useSelector(state => state.wordle.alert)
-	console.log("BOARD", board)
-	console.log("ALERT", alert)
-	// console.log("Is this guess valid?", isValidGuess)
-	console.log("GUESS", guess)
+	const alert = useSelector(state => state.wordle.alert)
+	console.log('BOARD', board)
+	console.log('answer=====', answer)
+	console.log('ALERT', alert)
+	console.log('Is this guess valid?', isValidGuess)
+	console.log('GUESS', guess)
 
 	// console.log('ALERT IS', alert)
-
 
 	useEffect(() => {
 		dispatch(fetchAcceptedGuesses())
@@ -74,23 +76,24 @@ function WordleApp() {
 			}
 		}
 		setBoard(boardCopy)
-		setMessage('');
+		setMessage('')
 	}
-
 
 	function handleSubmit() {
 		let newGuess = board[currentRow].join('').toLowerCase()
-		if (data.includes(newGuess)) {
-			setGuess(newGuess)
-			dispatch(addAcceptedGuess(newGuess))
-		} else{
-			setMessage("This is not a valid word!");
-		}
+		setGuess(newGuess)
+		dispatch(addAcceptedGuess(newGuess))
+	}
+	const redirectToGame = () => {
+		window.location.pathname = '/wordle'
+	}
+	const redirectToLearning = () => {
+		window.location.pathname = '/learning'
 	}
 
-	// useEffect(() => {
-	// 	setMessage(alert);
-	// }, [alert])
+	useEffect(() => {
+		setMessage(alert)
+	}, [alert])
 	/*
 		function handleSubmit() {
 			let newGuess = board[currentRow].join('').toLowerCase()
@@ -99,7 +102,6 @@ function WordleApp() {
 			// setGuessCounter((guessCounter) => {return guessCounter + 1});
 			setGuessCounter(guessCounter + 1);
 		}
-	
 		useEffect(() => {
 			if (isValidGuess) {
 				console.log("GBEASDZNGBASDFNBASNDBNABG", guess)
@@ -123,19 +125,13 @@ function WordleApp() {
 	// 	}
 	// }, [validGuess])
 
-	// useEffect(() => {
-	// 	setValidGuess(null);
-	// }, [currentRow])
+	useEffect(() => {
+		setValidGuess(null)
+	}, [currentRow])
 
-	// useEffect(() => {
-	// 	if (winningState) {
-
-	// 	} else if (winningState === false) {
-
-	// 	}
-	// }, [winningState])
 	const [cheatsheetOpen, setCheatsheetOpen] = useState(false)
 	const [currentLetter, setCurrentLetter] = useState(null)
+
 	return (
 		<div className="wordle-app">
 			<Sidebar />
@@ -151,9 +147,26 @@ function WordleApp() {
 					setAnswer,
 					winningState,
 					setWinningState,
-					// validGuess,
-					// setValidGuess
+					validGuess,
+					setValidGuess,
+					modalOpen,
+					setModalOpen
 				}}>
+				{/* {winningState === false ? <Modal /> : null} */}
+				{/* <>
+					{modalOpen && <WinningStateModal setOpenModal={setModalOpen} />}
+					{winningState === false && <div>Sorry! Try Again</div>}
+					{winningState === true && <div>You Win!!</div>}
+					{winningState !== null && (
+						<div>
+							{' '}
+							<button onClick={redirectToGame}>Start a New Game</button>
+							<button onClick={redirectToLearning}>Practice Again</button>
+						</div>
+					)}
+				</> */}
+				{winningState !== null && modalOpen && <GameOver />}
+
 				<div className="container">
 					<button
 						id="btn-cheatsheet"
@@ -183,17 +196,21 @@ function WordleApp() {
 						<h3>
 							{(translation === 'delete' &&
 								'Click the button to delete your last submission') ||
-								translation && translation !== 'delete' && `Click the button to submit letter ${translation}`}
+								(translation &&
+									translation !== 'delete' &&
+									`Click the button to submit letter ${translation}`)}
 						</h3>
 						{/* <h2>Detecting: {translation}</h2> */}
 						{/* <button id='wordle-capture' onClick={handleOnClick}>{translation === 'O' && 'Delete' || `Click to capture letter`} </button> */}
-						{(board[currentRow].includes('') && translation !== 'delete' && (
-							<button
-								className="btn-wordle header__link"
-								onClick={handleOnClick}>
-								Click to capture letter
-							</button>
-						)) ||
+						{(board[currentRow] &&
+							board[currentRow].includes('') &&
+							translation !== 'delete' && (
+								<button
+									className="btn-wordle header__link"
+									onClick={handleOnClick}>
+									Click to capture letter
+								</button>
+							)) ||
 							(translation === 'delete' && (
 								<button
 									className="btn-wordle header__link"
@@ -201,13 +218,15 @@ function WordleApp() {
 									Click to Delete
 								</button>
 							))}
-						{translation !== 'delete' && !board[currentRow].includes('') && (
-							<button
-								className="btn-wordle header__link"
-								onClick={handleSubmit}>
-								Submit
-							</button>
-						)}
+						{translation !== 'delete' &&
+							board[currentRow] &&
+							!board[currentRow].includes('') && (
+								<button
+									className="btn-wordle header__link"
+									onClick={handleSubmit}>
+									Submit
+								</button>
+							)}
 						<WordleDetection />
 					</div>
 					<div id="board-parent">
@@ -218,7 +237,6 @@ function WordleApp() {
 		</div>
 	)
 }
-
 
 const mapStateToProps = state => {
 	return {

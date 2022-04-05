@@ -16,7 +16,7 @@ import Learning from './components/Learning'
 import WordleApp from './components/WordleApp'
 import Idle from './components/Idle'
 import About from './components/About'
-import WinningPage from './components/Wordle/EndGame'
+// import WinningPage from './components/Wordle/EndGame'
 import LosingPage from './components/Wordle/LosingPage'
 
 class Routes extends React.Component {
@@ -78,7 +78,7 @@ class Routes extends React.Component {
 								<Route exact path="/signin" component={AuthForm} />
 								<Route exact path="/learning" component={Learning} />
 								<Route exact path="/wordle" component={WordleApp} />
-								<Route exact path="/wordle/winning-page" component={WinningPage} />
+								{/* <Route exact path="/wordle/winning-page" component={WinningPage} /> */}
 								<Route exact path="/wordle/losing-page" component={LosingPage} />
 							</Switch>
 						</Router>
@@ -95,7 +95,7 @@ class Routes extends React.Component {
 							<Route exact path="/signin" component={AuthForm} />
 							<Route exact path="/learning" component={Learning} />
 							<Route exact path="/wordle" component={WordleApp} />
-							<Route exact path="/wordle/winning-page" component={WinningPage} />
+							{/* <Route exact path="/wordle/winning-page" component={WinningPage} /> */}
 							<Route exact path="/wordle/losing-page" component={LosingPage} />
 						</Switch>
 					</Router>
