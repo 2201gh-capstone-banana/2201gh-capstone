@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import YouTube from 'react-youtube'
 
 import Brand from './Brand'
-//https://youtu.be/tkMg8g8vVUo
+
 function Home() {
 	function videoOnReady(event) {
 		event.target.playVideoAt(50)
@@ -25,7 +25,6 @@ function Home() {
 		height: '350',
 		width: '600',
 		playerVars: {
-			// https://developers.google.com/youtube/player_parameters
 			autoplay: 1
 		}
 	}
@@ -56,9 +55,6 @@ function Home() {
 					<button className="btn btn-primary" onClick={redirectToGame}>
 						Wordle Game
 					</button>
-					{/* <Link className="header__link" to="/signin">
-						Get started
-					</Link> */}
 				</div>
 			</section>
 		</header>

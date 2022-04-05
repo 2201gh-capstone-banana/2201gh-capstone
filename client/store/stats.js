@@ -14,18 +14,15 @@ const getMaxStreak = statsObj => {
 }
 
 export const fetchMaxStreak = () => {
-	console.log('get to fetchMaxStreak')
 	return async dispatch => {
 		try {
-			console.log('GET TO TRY IN FETCH MAX STREAK')
 			const token = window.localStorage.getItem(TOKEN)
 			const { data } = await axios.get('/api/wordle/stats', {
 				headers: {
 					authorization: token
 				}
 			})
-			console.log('DATA OR MAXSTREAK IS--', data)
-			// const acceptedGuessesArr = data.acceptedGuesses || []
+
 			dispatch(getMaxStreak(data))
 		} catch (error) {
 			console.log(error)

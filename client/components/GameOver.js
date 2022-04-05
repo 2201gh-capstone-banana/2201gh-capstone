@@ -1,19 +1,10 @@
-import React, { useRef, useState, useContext, useEffect, useCallback } from 'react'
+import React, { useContext } from 'react'
 import { WordleAppContext } from './WordleApp'
-import { useSpring, animated } from 'react-spring'
-import { useSelector, useDispatch } from 'react-redux'
 
 const GameOver = () => {
-	// const [modalOpen, setModalOpen] = useState(false)
-	const modalRef = useRef()
-	const { winningState, setWinningState } = useContext(WordleAppContext)
-	// const dispatch = useDispatch()
+	const { winningState } = useContext(WordleAppContext)
 
-	// function handleNewGame() {
-	// 	setWinningState(null);
-	// 	dispatch(fetchAcceptedGuesses());
-	// }
-	const { modalOpen, setModalOpen } = useContext(WordleAppContext)
+	const { setModalOpen } = useContext(WordleAppContext)
 	const redirectToGame = () => {
 		window.location.pathname = '/wordle'
 	}
@@ -32,24 +23,23 @@ const GameOver = () => {
 					<button
 						className="modalbtn"
 						onClick={() => {
-							setOpenModal(false)
+							setModalOpen(false)
 						}}>
 						X
 					</button>
 				</div>
 
-				<div class="leaderboard_container">
+				<div class="leaderboard_container winning-text">
 					{winningState === false && <div>Sorry! Try Again</div>}
 					{winningState === true && <div>You Win!!</div>}
-					<div id="guess-distribution">
-						<div class="no-data">No Data</div>
-					</div>
-					<div class="footer">
-						<button className="btn btn-primary" onClick={redirectToLearning}>
-							Back to Learning Center
+					<div>
+						<button
+							className="btn-winning first"
+							onClick={redirectToLearning}>
+							Learning Center
 						</button>
-						<button className="btn btn-primary" onClick={redirectToGame}>
-							Play a New Game!
+						<button className="btn-winning first" onClick={redirectToGame}>
+							Play Again!
 						</button>
 					</div>
 				</div>

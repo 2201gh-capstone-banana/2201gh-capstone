@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { requireToken, isAdmin } = require('./securityMiddleware')
+const { requireToken } = require('./securityMiddleware')
 const {
 	models: { WordleGame, AcceptedGuess, TargetWord }
 } = require('../db')
@@ -9,57 +9,11 @@ const getRandomIdx = max => {
 	return Math.floor(Math.random() * max)
 }
 
-//find or create
-// router.get('/game', requireToken, async (req, res, next) => {
-// 	try {
-// 		if (!req.user) {
-// 			throw new Error('Unauthorized')
-// 		}
-// 		const latestWordle = await WordleGame.findOne({
-// 			where: { userId: req.user.id },
-// 			include: [{ model: AcceptedGuess }, { model: TargetWord }],
-// 			order: [['createdAt', 'DESC']]
-// 		})
-// 		let previousGuessesArr = latestWordle.acceptedGuesses.map(guess => {
-// 			return guess.content.toUpperCase()
-// 		})
-// 		let targetWord = latestWordle.targetWord.content.toUpperCase()
-// 		if (
-// 			!latestWordle ||
-// 			latestWordle.acceptedGuesses.length === 6 ||
-// 			previousGuessesArr.includes(targetWord)
-// 		) {
-// 			const targetWordList = await TargetWord.findAll({
-// 				attributes: ['content']
-// 			})
-// 			const targetWord = await TargetWord.findByPk(
-// 				getRandomIdx(targetWordList.length)
-// 			)
-// 			// const targetWord = await TargetWord.create({ content: randomWord.content })
-// 			const newWordleGame = await WordleGame.create({
-// 				targetWordId: targetWord.id,
-// 				userId: req.user.id
-// 			})
-// 			const returnNewWordleGame = await WordleGame.findOne({
-// 				where: { id: newWordleGame.id },
-// 				include: [{ model: AcceptedGuess }, { model: TargetWord }],
-// 				order: [['createdAt', 'DESC']]
-// 			})
-// 			res.json(returnNewWordleGame)
-// 		} else {
-// 			res.json(latestWordle)
-// 		}
-// 	} catch (error) {
-// 		console.log('Error in your post new game route')
-// 		next(error)
-// 	}
-// })
-
 router.get('/game', requireToken, async (req, res, next) => {
 	try {
-		// if (!req.user) {
-		//  throw new Error('Unauthorized')
-		// }
+		if (!req.user) {
+			throw new Error('Unauthorized')
+		}
 		let previousGuessesArr, targetWord
 		const latestWordle = await WordleGame.findOne({
 			where: { userId: req.user.id },
@@ -81,7 +35,7 @@ router.get('/game', requireToken, async (req, res, next) => {
 				attributes: ['content']
 			})
 			targetWord = await TargetWord.findByPk(getRandomIdx(targetWordList.length))
-			// const targetWord = await TargetWord.create({ content: randomWord.content })
+
 			const newWordleGame = await WordleGame.create({
 				targetWordId: targetWord.id,
 				userId: req.user.id
@@ -95,61 +49,11 @@ router.get('/game', requireToken, async (req, res, next) => {
 		} else {
 			res.json(latestWordle)
 		}
-		//    res.send(latestWordle)
 	} catch (error) {
 		console.log('Error in your post new game route')
 		next(error)
 	}
 })
-
-// router.post('/addGuess', requireToken, async (req, res, next) => {
-// 	try {
-// 		if (!req.user) {
-// 			throw new Error('Unauthorized');
-// 		  }
-// 		const latestWordle = await WordleGame.findOne({
-// 			where: { userId: req.user.id },
-// 			order: [['createdAt', 'DESC']]
-// 		})
-// 		const newAcceptedGuess = await AcceptedGuess.create({
-// 			wordleGameId: latestWordle.id,
-// 			content: req.body.content
-// 		})
-// 		res.json(newAcceptedGuess)
-// 	} catch (error) {
-// 		console.log('Error in your post new guess route')
-// 		next(error)
-// 	}
-// })
-// router.post('/addGuess', requireToken, async (req, res, next) => {
-// 	try {
-// 		if (!req.user) {
-// 			throw new Error('Unauthorized')
-// 		}
-
-// 		// const isValidWord = await AcceptedWord.findOne({
-// 		// 	where: { content: req.body.content }
-// 		// })
-// 		//isValidWord ? res.send(true) : res.send(false)
-
-// 		// if (isValidWord) {
-// 		const latestWordle = await WordleGame.findOne({
-// 			where: { userId: req.user.id },
-// 			order: [['createdAt', 'DESC']]
-// 		})
-// 		const newAcceptedGuess = await AcceptedGuess.create({
-// 			wordleGameId: latestWordle.id,
-// 			content: req.body.content
-// 		})
-// 		res.json(newAcceptedGuess)
-// 		// } else {
-// 		// 	res.send(false)
-// 		// }
-// 	} catch (error) {
-// 		console.log('Error in your post new guess route')
-// 		next(error)
-// 	}
-// })
 
 router.post('/addGuess', requireToken, async (req, res, next) => {
 	try {
@@ -157,12 +61,6 @@ router.post('/addGuess', requireToken, async (req, res, next) => {
 			throw new Error('Unauthorized')
 		}
 
-		// const isValidWord = await AcceptedWord.findOne({
-		// 	where: { content: req.body.content }
-		// })
-		//isValidWord ? res.send(true) : res.send(false)
-
-		// if (isValidWord) {
 		const latestWordle = await WordleGame.findOne({
 			where: { userId: req.user.id },
 			order: [['createdAt', 'DESC']],
@@ -189,9 +87,6 @@ router.post('/addGuess', requireToken, async (req, res, next) => {
 		}
 
 		res.json(newAcceptedGuess)
-		// } else {
-		// 	res.send(false)
-		// }
 	} catch (error) {
 		console.log('Error in your post new guess route')
 		next(error)
@@ -200,6 +95,9 @@ router.post('/addGuess', requireToken, async (req, res, next) => {
 
 router.get('/stats', requireToken, async (req, res, next) => {
 	try {
+		if (!req.user) {
+			throw new Error('Unauthorized')
+		}
 		const allWordle = await WordleGame.findAll({
 			where: { userId: req.user.id },
 			order: [['createdAt']],
@@ -221,7 +119,7 @@ router.get('/stats', requireToken, async (req, res, next) => {
 			if (arr[arr.length - 1] === 0) {
 				return currentStreak
 			} else {
-				for (let i = arr.length - 1; i > 0; i--) {
+				for (let i = arr.length - 1; i >= 0; i--) {
 					if (arr[i] === 1) currentStreak++
 					else if (arr[i] === 0) break
 				}
@@ -242,27 +140,3 @@ router.get('/stats', requireToken, async (req, res, next) => {
 		next(err)
 	}
 })
-
-// router.post('/acceptedWord', async (req, res, next) => {
-// 	try {
-// 		const isValidWord = await AcceptedWord.findOne({
-// 			where: { content: req.body.content }
-// 		})
-// 		isValidWord ? res.send(true) : res.send(false)
-// 	} catch (error) {
-// 		console.log('Err')
-// 		next(error)
-// 	}
-// })
-
-// router.get('/:id/latestWordle', async (req, res, next) => {
-// 	try {
-// 		const latestWordle = await WordleGame.findOne({
-// 			where: { userId: req.params.id },
-// 			order: [['createdAt', 'DESC']]
-// 		})
-// 		res.json(latestWordle)
-// 	} catch (err) {
-// 		next(err)
-// 	}
-// })
