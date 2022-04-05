@@ -2,11 +2,11 @@ import React from 'react'
 
 const ContactRow = props => {
     const { developer } = props;
-    const { id, name, linkedInURL, gitHubURL } = developer;
+    const { id, name, linkedInURL, gitHubURL, bitmoji } = developer;
     return (
         <div className="developer-row">
             <ul>
-                <li>{name} | <span> <a href={linkedInURL}> <img src="linkedIn_logo.png" className="linkedInLogo" /></a> </span>| <span> <a href={gitHubURL}> <img src="github_logo.png" className="gitHubLogo" /></a></span> </li>
+                <li className='developer-info'><div className="bitmoji" ><img src={bitmoji}/></div>{name} | <div className="linkedInLogo" > <a href={linkedInURL}> <img src="linkedIn_logo.png" /></a> </div> | <div className="gitHubLogo" > <a href={gitHubURL}> <img src="github_logo.png"/></a></div> </li>
             </ul>
         </div>
     )
