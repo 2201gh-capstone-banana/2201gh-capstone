@@ -218,7 +218,9 @@ router.get('/stats', requireToken, async (req, res, next) => {
 
 		const findCurrentStreak = arr => {
 			let currentStreak = 0
-			if (arr[arr.length - 1] === 0) {
+			if (arr.length === 1 && arr[0] === 1) {
+				currentStreak = 1
+			} else if (arr[arr.length - 1] === 0) {
 				return currentStreak
 			} else {
 				for (let i = arr.length - 1; i > 0; i--) {

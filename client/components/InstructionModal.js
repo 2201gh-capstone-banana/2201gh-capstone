@@ -14,28 +14,28 @@ const InstructionModal = props => {
 						X
 					</button>
 				</div>
-				<div class="instructions">
+				<div className="instructions">
 					<p>
 						Guess the <strong>WORDLE</strong> in six tries.
 					</p>
-					<p>
+					<div>
 						Each guess must be a valid five-letter word.
 						<p>
 							Hold your hand up to the camera and click to capture the
 							letter. Make thumb down gesture for deleting. And click submit
 							when ready.
 						</p>
-					</p>
+					</div>
 					<p>
 						After each guess, the color of the tiles will change to show how
 						close your guess was to the word.
 					</p>
-					<div class="examples">
+					<div className="examples">
 						<p>
 							<strong>Examples</strong>
 						</p>
-						<div class="example">
-							<div class="row">
+						<div className="example">
+							<div className="row">
 								<span className="row_letter row_green">W</span>
 								<span className="row_letter">E</span>
 								<span className="row_letter">A</span>
@@ -47,8 +47,8 @@ const InstructionModal = props => {
 								correct spot.
 							</p>
 						</div>
-						<div class="example">
-							<div class="row">
+						<div className="example">
+							<div className="row">
 								<span className="row_letter">P</span>
 								<span className="row_letter row_yellow">I</span>
 								<span className="row_letter">L</span>
@@ -60,8 +60,8 @@ const InstructionModal = props => {
 								wrong spot.
 							</p>
 						</div>
-						<div class="example">
-							<div class="row">
+						<div className="example">
+							<div className="row">
 								<span className="row_letter">V</span>
 								<span className="row_letter">A</span>
 								<span className="row_letter">G</span>
@@ -74,11 +74,7 @@ const InstructionModal = props => {
 							</p>
 						</div>
 					</div>
-					<p>
-						{/* <strong>
-							A new WORDLE will be available each day!<strong></strong>
-						</strong> */}
-					</p>
+					<p></p>
 					<strong>
 						<strong></strong>
 					</strong>

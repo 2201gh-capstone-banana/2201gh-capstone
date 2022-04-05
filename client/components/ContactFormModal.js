@@ -33,26 +33,6 @@ const ContactFormModal = ({ setOpenModal }) => {
 					</button>
 				</div>
 
-				{/* <form ref={form} onSubmit={sendEmail}>
-					<input
-						type="text"
-						name="name"
-						placeholder="Enter your full name"
-						required
-					/>
-					<input
-						type="email"
-						name="email"
-						placeholder="Enter your email"
-						required
-					/>
-					<textarea
-						name="message"
-						rows="7"
-						placeholder="Your message"
-						required></textarea>
-					<button type="submit">Send Message</button>
-				</form> */}
 				<div class="wrapper">
 					<h2>CONTACT US</h2>
 					<form action="" method="POST" ref={form} onSubmit={sendEmail}>

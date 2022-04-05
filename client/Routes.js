@@ -7,23 +7,22 @@ import IdleTimer from 'react-idle-timer'
 import { autoSignin, signout } from './store/auth'
 
 /* Components. */
-import LandingPage from './components/LandingPage'
+
 import AuthForm from './components/AuthForm'
-import Main from './components/Main'
+
 import Navbar from './components/Navbar'
 import Home from './components/Home'
 import Learning from './components/Learning'
 import WordleApp from './components/WordleApp'
 import Idle from './components/Idle'
 import About from './components/About'
-// import WinningPage from './components/Wordle/EndGame'
 import LosingPage from './components/Wordle/LosingPage'
 
 class Routes extends React.Component {
 	constructor() {
 		super()
 		this.state = {
-			warningTimer: 780000 /* 13 minutes...i hope */,
+			warningTimer: 780000 /* 13 minutes...*/,
 			isTimedOut: false
 		}
 
@@ -45,7 +44,6 @@ class Routes extends React.Component {
 			/* If the user hasn't interacted after warning. */
 			if (this.state.isTimedOut) {
 				this.props.signout()
-				// window.location.href = '/'
 			}
 		}, 120000) /* 2 minutes. */
 	}
@@ -57,7 +55,6 @@ class Routes extends React.Component {
 	render() {
 		return (
 			<>
-
 				{this.props.correctUser ? (
 					<IdleTimer
 						ref={this.idelTimerRef}
@@ -74,12 +71,14 @@ class Routes extends React.Component {
 								?
 								<Route exact path="/" component={Home} />
 								<Route exact path="/about" component={About} />
-								<Route exact path="/main" component={Main} />
 								<Route exact path="/signin" component={AuthForm} />
 								<Route exact path="/learning" component={Learning} />
 								<Route exact path="/wordle" component={WordleApp} />
-								{/* <Route exact path="/wordle/winning-page" component={WinningPage} /> */}
-								<Route exact path="/wordle/losing-page" component={LosingPage} />
+								<Route
+									exact
+									path="/wordle/losing-page"
+									component={LosingPage}
+								/>
 							</Switch>
 						</Router>
 					</IdleTimer>
@@ -91,12 +90,14 @@ class Routes extends React.Component {
 							?
 							<Route exact path="/" component={Home} />
 							<Route exact path="/about" component={About} />
-							<Route exact path="/main" component={Main} />
 							<Route exact path="/signin" component={AuthForm} />
 							<Route exact path="/learning" component={Learning} />
 							<Route exact path="/wordle" component={WordleApp} />
-							{/* <Route exact path="/wordle/winning-page" component={WinningPage} /> */}
-							<Route exact path="/wordle/losing-page" component={LosingPage} />
+							<Route
+								exact
+								path="/wordle/losing-page"
+								component={LosingPage}
+							/>
 						</Switch>
 					</Router>
 				)}

@@ -8,14 +8,7 @@ import { useDispatch } from 'react-redux'
 const LeaderBoard = () => {
 	const [modalOpen, setModalOpen] = useState(false)
 	const dispatch = useDispatch()
-	// const {winningState, setWinningState} = useContext(WordleAppContext)
-	// useEffect(() => {
-	// 	if(winningState){
-	// 		setModalOpen(true);
-	// 	} if (winningState === false){
-	// 		setModalOpen(true)
-	// 	}
-	// }, [winningState])
+
 	return (
 		<>
 			<AiIcons.AiOutlineBarChart

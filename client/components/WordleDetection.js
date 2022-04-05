@@ -21,8 +21,6 @@ export const WordleDetection = () => {
 	const [timer, setTimer] = useState(3)
 	const [finalAns, setFinalAns] = useState([])
 
-
-
 	const netRef = useRef(null)
 
 	useEffect(() => {
@@ -30,43 +28,39 @@ export const WordleDetection = () => {
 			try {
 				const net = await handpose.load()
 				netRef.current = net
-				// setTimeout(() => webcamInit(), 100)
-				await webcamInit();
+
+				await webcamInit()
 			} catch (error) {
-				throw (error);
+				throw error
 			}
 		}
-		const webcamInit = () => new Promise((resolve, reject) => {
-			const checkIfReady = () => {
+		const webcamInit = () =>
+			new Promise((resolve, reject) => {
+				const checkIfReady = () => {
+					if (
+						webcamRef.current !== 'undefined' &&
+						webcamRef.current !== null &&
+						webcamRef.current.video.readyState === 4
+					) {
+						const video = webcamRef.current.video
+						const videoWidth = webcamRef.current.video.videoWidth
+						const videoHeight = webcamRef.current.video.videoHeight
+						// Set video width
+						webcamRef.current.video.width = videoWidth
+						webcamRef.current.video.height = videoHeight
 
-				if (
-					webcamRef.current !== 'undefined' &&
-					webcamRef.current !== null &&
-					webcamRef.current.video.readyState === 4
-				) {
-					const video = webcamRef.current.video
-					const videoWidth = webcamRef.current.video.videoWidth
-					const videoHeight = webcamRef.current.video.videoHeight
-					// Set video width
-					webcamRef.current.video.width = videoWidth
-					webcamRef.current.video.height = videoHeight
+						//  Set canvas height and width
+						canvasRef.current.width = videoWidth
+						canvasRef.current.height = videoHeight
 
-					//  Set canvas height and width
-					canvasRef.current.width = videoWidth
-					canvasRef.current.height = videoHeight
-
-					window.requestAnimationFrame(loop)
-					resolve('Web cam initialized');
-				} else {
-					// console.log('Web cam did not initialize')
-					console.log('called but not resolved');
-					window.requestAnimationFrame(checkIfReady);
-					// reject("Web cam did not initialize");
+						window.requestAnimationFrame(loop)
+						resolve('Web cam initialized')
+					} else {
+						window.requestAnimationFrame(checkIfReady)
+					}
 				}
-			}
-			window.requestAnimationFrame(checkIfReady);
-			// setTimeout(checkIfReady, 100);
-		})
+				window.requestAnimationFrame(checkIfReady)
+			})
 
 		async function loop() {
 			await detect(netRef.current)
@@ -86,7 +80,10 @@ export const WordleDetection = () => {
 			drawHand(hand, ctx)
 
 			if (hand.length > 0) {
-				const gestureEstimator = new fp.GestureEstimator([...letters.allLetters, deleteGesture])
+				const gestureEstimator = new fp.GestureEstimator([
+					...letters.allLetters,
+					deleteGesture
+				])
 
 				// 8 is the confidence level
 				const gesture = await gestureEstimator.estimate(hand[0].landmarks, 8)
@@ -96,7 +93,6 @@ export const WordleDetection = () => {
 					const maxScore = score.indexOf(Math.max.apply(null, score))
 					const gestureName = gesture.gestures[maxScore].name
 					setTranslation(gestureName)
-					// setTimeout(handleSubmit(), 3000)
 				}
 			} else if (hand.length === 0) {
 				setTranslation(null)
@@ -104,9 +100,7 @@ export const WordleDetection = () => {
 			}
 		}
 		loadModel()
-		// window.location.reload();
 	}, [])
-
 
 	return (
 		<div className="webcam-detection">
@@ -115,13 +109,5 @@ export const WordleDetection = () => {
 		</div>
 	)
 }
-/*
- * CONTAINER
- */
-// const mapState = state => {
-// 	return {
-// 		username: state.auth.username
-// 	}
-// }
 
 export default WordleDetection

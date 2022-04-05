@@ -6,7 +6,7 @@ import { fetchAllLetters } from './store/letters'
 
 const App = () => {
 	const dispatch = useDispatch()
-	//componentDidMount equivalent
+
 	useEffect(() => {
 		dispatch(fetchAllLetters())
 	}, [])

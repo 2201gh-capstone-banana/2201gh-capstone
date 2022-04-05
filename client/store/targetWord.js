@@ -19,9 +19,9 @@ export const fetchTargetWord = () => {
 					authorization: token
 				}
 			})
-			// const acceptedGuessesArr = data.acceptedGuesses || []
+
 			const targetWord = data.targetWord
-			console.log('TARGET WORD IS', targetWord)
+
 			dispatch(getTargetWord(targetWord))
 		} catch (error) {
 			console.log(error)

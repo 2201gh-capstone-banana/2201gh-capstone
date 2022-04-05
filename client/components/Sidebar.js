@@ -7,7 +7,7 @@ import { IconContext } from 'react-icons'
 import { WordleAppContext } from './WordleApp'
 import LeaderBoard from './LeaderBoard'
 import ContactForm from './ContactForm'
-import Sheet from './Sheet'
+
 import CheatSheet from './CheatSheet'
 import Instruction from './Instruction'
 
@@ -16,37 +16,17 @@ function Sidebar() {
 	const [cheatsheetOpen, setCheatsheetOpen] = useState(false)
 	const [currentLetter, setCurrentLetter] = useState(null)
 	const showSidebar = () => setSidebar(!sidebar)
-	// const { winningState, setWinningState } = useContext(WordleAppContext)
 
 	return (
 		<>
 			<IconContext.Provider value={{ color: '#fff' }}>
 				<div className="sidebar">
-					{/* <Link to="#" className="menu-bars">
-						<FaIcons.FaBars onClick={showSidebar} color="black" />
-					</Link> */}
 					<div></div>
 					<h1 className="sidebar__header">Wordle</h1>
 					<div className="left__bar">
 						<LeaderBoard />
 						<ContactForm />
 						<Instruction />
-						{/* <div>
-							<AiIcons.AiOutlineCalendar
-								className="openModalBtn"
-								color="black"
-								onClick={() => {
-									setCheatsheetOpen(!cheatsheetOpen)
-								}}
-							/>
-
-							{cheatsheetOpen ? (
-								<CheatSheet
-									cheatsheetOpen={[cheatsheetOpen, setCheatsheetOpen]}
-									currentLetter={[currentLetter, setCurrentLetter]}
-								/>
-							) : null}
-						</div> */}
 					</div>
 				</div>
 				<nav className={sidebar ? 'sidebar-menu active' : 'sidebar-menu'}>

@@ -101,7 +101,7 @@ export const autoSignin = () => {
 				})
 
 				let action
-				// console.log('data or MATCH-----', data)
+
 				if (data) {
 					action = _autoSignin(token)
 				} else {
@@ -137,13 +137,7 @@ const authReducer = (state = init, action) => {
 	switch (action.type) {
 		case MANUAL_SIGNIN:
 			/* If manual signin worked. Reset/remove alert message by setting it to an empty string. */
-			// console.log('ACTION.USERID', {
-			// 	...state,
-			// 	alert: '',
-			// 	token: action.token,
-			// 	correctUser: true,
-			// 	userId: action.userId
-			// })
+
 			return {
 				...state,
 				alert: '',
