@@ -25,7 +25,7 @@ function Navbar(props) {
 						<FontAwesomeIcon icon={click ? faX : faAlignJustify} />
 					</div>
 					<ul className={click ? 'nav-menu active' : 'nav-menu'}>
-						<li>
+						<li className="no-bullets">
 							<Link
 								to="/"
 								className="nav-links"
@@ -34,7 +34,7 @@ function Navbar(props) {
 							</Link>
 						</li>
 
-						<li>
+						<li className="no-bullets">
 							<Link
 								to="/learning"
 								className="nav-links"
@@ -43,7 +43,7 @@ function Navbar(props) {
 							</Link>
 						</li>
 
-						<li>
+						<li className="no-bullets">
 							<Link
 								to="/about"
 								className="nav-links"
@@ -52,7 +52,7 @@ function Navbar(props) {
 							</Link>
 						</li>
 
-						<li>
+						<li className="no-bullets">
 							<Link
 								to="/wordle"
 								className="nav-links"
@@ -60,11 +60,10 @@ function Navbar(props) {
 								Game
 							</Link>
 						</li>
-						
 
 						{/* Show the signout only if the user is not logged in */}
 						{!props.correctUser ? (
-							<li>
+							<li className="no-bullets">
 								<Link
 									to="/signin"
 									className="nav-links"
@@ -76,7 +75,7 @@ function Navbar(props) {
 
 						{/* Show the signout only if user is logged in. */}
 						{props.correctUser ? (
-							<li>
+							<li className="no-bullets">
 								<Link
 									to="/"
 									className="nav-links"
