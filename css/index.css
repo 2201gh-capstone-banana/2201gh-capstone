@@ -13,6 +13,7 @@
 @import url('contact.css');
 @import url('InstructionModal.css');
 @import url('congratsModal.css');
+@import url('GameOver.css');
 /* Global variables. */
 :root {
 	--fnt-siz: 17px;
