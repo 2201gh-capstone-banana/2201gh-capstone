@@ -127,8 +127,8 @@ function Learning() {
 		? console.log('new image is', image[currentLetter][0])
 		: console.log('nothing')
 	return (
-		<div className="App">
-			<header className="App-header">
+		<div className="learning-app">
+			{/* <header className="App-header"> */}
 				<div className="container">
 					<button
 						id="btn-cheatsheet"
@@ -231,7 +231,7 @@ function Learning() {
 						}}
 					/>
 				) : null}
-			</header>
+			{/* </header> */}
 			{translation ? (
 				<div
 					style={{
