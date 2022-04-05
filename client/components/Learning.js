@@ -133,7 +133,7 @@ function Learning() {
 		? console.log('new image is', image[currentLetter][0])
 		: console.log('nothing')
 	return (
-		<div className="App">
+		<div className="learning-app">
 			<header className="App-header">
 				<div className="container">
 					<button

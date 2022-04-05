@@ -2,7 +2,7 @@ import React from 'react'
 
 const Brand = () => {
 	return (
-		<section className="header__section">
+		<section className="brand_section">
 			<img src="logo.svg" alt="website logo" className="header__logo" />
 			<h1 className="header__title">Be My Voice</h1>
 		</section>

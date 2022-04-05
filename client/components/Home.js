@@ -31,8 +31,9 @@ function Home() {
 	}
 	const videoId = 'tkMg8g8vVUo'
 	return (
-		<header className="header">
-			<section className="header__section">
+		<div className="header">
+			<div className='media-content'>
+			{/* <section className="header__section"> */}
 				<Brand />
 				<YouTube
 					videoId={videoId}
@@ -41,6 +42,7 @@ function Home() {
 					onPlay={videoOnPlay}
 					onStateChange={videoStateChange}
 				/>
+				</div>
 				<p className="header__about-main">
 					Be My Voice is a translation web app that uses machine learning models
 					to translate American sign language.
@@ -60,8 +62,8 @@ function Home() {
 						Get started
 					</Link> */}
 				</div>
-			</section>
-		</header>
+			{/* </section> */}
+		</div>
 	)
 }
 
