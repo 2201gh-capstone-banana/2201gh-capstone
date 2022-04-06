@@ -86,7 +86,7 @@ class Routes extends React.Component {
 							<Route exact path="/about" component={About} />
 							<Route exact path="/signin" component={AuthForm} />
 							<Route exact path="/learning" component={Learning} />
-							<Route exact path="/wordle" component={WordleApp} />
+							<Route exact path="/wordle" component={AuthForm} />
 						</Switch>
 					</Router>
 				)}

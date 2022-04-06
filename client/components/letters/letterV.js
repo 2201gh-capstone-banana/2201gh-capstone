@@ -2,26 +2,6 @@ import { Finger, FingerCurl, FingerDirection, GestureDescription } from 'fingerp
 
 const letterV = new GestureDescription('V')
 
-// //Thumb
-// letterV.addCurl(Finger.Thumb, FingerCurl.HalfCurl, 1.0);
-// letterV.addDirection(Finger.Index, FingerDirection.DiagonalUpLeft, 0.70);
-
-// //Index
-// letterV.addCurl(Finger.Index, FingerCurl.NoCurl, 1);
-// letterV.addDirection(Finger.Index, FingerDirection.DiagonalUpRight, 0.70);
-
-// //Middle
-// letterV.addCurl(Finger.Middle, FingerCurl.NoCurl, 1);
-// letterV.addDirection(Finger.Middle, FingerDirection.VerticalUp, 0.70);
-
-// //Ring
-// letterV.addCurl(Finger.Ring, FingerCurl.FullCurl, 1);
-// letterV.addDirection(Finger.Ring, FingerDirection.VerticalUp, 0.70);
-
-// //Pinky
-// letterV.addCurl(Finger.Pinky, FingerCurl.FullCurl, 1);
-// letterV.addDirection(Finger.Pinky, FingerDirection.DiagonalUpLeft, 0.70);
-
 letterV.addCurl(Finger.Thumb, FingerCurl.HalfCurl, 0.9)
 letterV.addCurl(Finger.Thumb, FingerCurl.NoCurl, 1)
 letterV.addDirection(Finger.Thumb, FingerDirection.DiagonalUpRight, 1.0)

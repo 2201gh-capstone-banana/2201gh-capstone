@@ -7,7 +7,6 @@ const Alphabet = require('./models/Alphabet')
 const TargetWord = require('./models/TargetWord')
 const AcceptedGuess = require('./models/AcceptedGuess')
 const WordleGame = require('./models/WordleGame')
-// const AcceptedWord = require('./models/AcceptedWord')
 
 
 //associations could go here!
@@ -21,9 +20,6 @@ WordleGame.belongsTo(TargetWord)
 User.hasMany(WordleGame)
 WordleGame.belongsTo(User)
 
-// TargetWord.belongsToMany(User, { through: WordleGame })
-// User.belongsToMany(TargetWord, { through: WordleGame })
-
 WordleGame.hasMany(AcceptedGuess)
 AcceptedGuess.belongsTo(WordleGame, { foreignKey: 'wordleGameId' })
 
@@ -34,7 +30,6 @@ module.exports = {
 		Alphabet,
 		TargetWord,
 		WordleGame,
-		// AcceptedWord,
 		AcceptedGuess
 	}
 }

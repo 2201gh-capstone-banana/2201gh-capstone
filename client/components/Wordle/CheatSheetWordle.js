@@ -3,10 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { WordleAppContext } from './WordleApp'
 
 function CheatSheetWordle(props) {
-    // let [currentLetter, setCurrentLetter] = props.currentLetter
     let [cheatsheetOpen, setCheatsheetOpen] = props.cheatsheetOpen
-    // let [board, setBoard] = props.currentBoard
-    // let [currentRow, setCurrentRow] = props.currentRow
     const { board, setBoard, currentRow, setCurrentRow } = useContext(WordleAppContext)
 
     const allLetterInfo = useSelector(state => state.lettersReducer)
@@ -30,7 +27,6 @@ function CheatSheetWordle(props) {
                         key={ele.id}
                         className="card"
                         onClick={() => {
-                            // setCurrentLetter(ele.letter)
                             setCheatsheetOpen(!cheatsheetOpen)
                             handleFillInBoard(ele.letter)
                         }}>

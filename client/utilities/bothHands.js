@@ -9,7 +9,6 @@ const fingerJoints = {
 
 //drawing function
 export const drawBothHands = (prediction, ctx) => {
-  // console.log("get in draw hand");
   if (prediction.length > 0) {
     prediction.forEach((prediction) => {
       //extract landmarks
