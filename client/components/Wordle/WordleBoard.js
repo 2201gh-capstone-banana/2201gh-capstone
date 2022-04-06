@@ -5,9 +5,6 @@ import WordRow from './WordRow'
 import { WordleAppContext } from '../WordleApp'
 
 function WordleBoard() {
-	// const [currentRow, setCurrentRow] = useState(0)
-	// const [attempts, setAttempts] = useState(0);
-
 	const {
 		board,
 		setBoard,

@@ -123,12 +123,11 @@ function Learning() {
 		}
 	}
 
-	image && image[currentLetter]
-		? console.log('new image is', image[currentLetter][0])
-		: console.log('nothing')
+	// image && image[currentLetter]
+	// 	? console.log('new image is', image[currentLetter][0])
+	// 	: console.log('nothing')
 	return (
 		<div className="learning-app">
-			{/* <header className="App-header"> */}
 				<div className="container">
 					<button
 						id="btn-cheatsheet"

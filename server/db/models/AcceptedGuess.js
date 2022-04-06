@@ -9,13 +9,6 @@ const AcceptedGuess = db.define('acceptedGuess', {
 			notEmpty: true
 		}
 	},
-	// rowNum: {
-	// 	type: Sequelize.INTEGER,
-	// 	allowNull:false,
-	// 	validate: {
-	// 		notEmpty:true
-	// 	}
-	// }
 })
 
 module.exports = AcceptedGuess
