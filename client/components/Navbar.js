@@ -24,67 +24,69 @@ function Navbar(props) {
 					<div className="menu-icon" onClick={handleClick}>
 						<FontAwesomeIcon icon={click ? faX : faAlignJustify} />
 					</div>
-					<ul className={click ? 'nav-menu active' : 'nav-menu'}>
-						<li className="no-bullets">
-							<Link
-								to="/"
-								className="nav-links"
-								onClick={closeMobileMenu}>
-								Home
-							</Link>
-						</li>
-
-						<li className="no-bullets">
-							<Link
-								to="/learning"
-								className="nav-links"
-								onClick={closeMobileMenu}>
-								Learning
-							</Link>
-						</li>
-
-						<li className="no-bullets">
-							<Link
-								to="/about"
-								className="nav-links"
-								onClick={closeMobileMenu}>
-								About
-							</Link>
-						</li>
-
-						<li className="no-bullets">
-							<Link
-								to="/wordle"
-								className="nav-links"
-								onClick={closeMobileMenu}>
-								Game
-							</Link>
-						</li>
-
-						{/* Show the signout only if the user is not logged in */}
-						{!props.correctUser ? (
-							<li className="no-bullets">
-								<Link
-									to="/signin"
-									className="nav-links"
-									onClick={closeMobileMenu}>
-									Sign In
-								</Link>
-							</li>
-						) : null}
-
-						{/* Show the signout only if user is logged in. */}
-						{props.correctUser ? (
+					{click ? (
+						<ul className="nav-menu active">
 							<li className="no-bullets">
 								<Link
 									to="/"
 									className="nav-links"
-									onClick={closeAndSignOut}>
-									Sign Out
+									onClick={closeMobileMenu}>
+									Home
 								</Link>
 							</li>
-						) : null}
-					</ul>
+
+							<li className="no-bullets">
+								<Link
+									to="/learning"
+									className="nav-links"
+									onClick={closeMobileMenu}>
+									Learning
+								</Link>
+							</li>
+
+							<li className="no-bullets">
+								<Link
+									to="/about"
+									className="nav-links"
+									onClick={closeMobileMenu}>
+									About
+								</Link>
+							</li>
+
+							<li className="no-bullets">
+								<Link
+									to="/wordle"
+									className="nav-links"
+									onClick={closeMobileMenu}>
+									Game
+								</Link>
+							</li>
+
+							{/* Show the signout only if the user is not logged in */}
+							{!props.correctUser ? (
+								<li className="no-bullets">
+									<Link
+										to="/signin"
+										className="nav-links"
+										onClick={closeMobileMenu}>
+										Sign In
+									</Link>
+								</li>
+							) : null}
+
+							{/* Show the signout only if user is logged in. */}
+							{props.correctUser ? (
+								<li className="no-bullets">
+									<Link
+										to="/"
+										className="nav-links"
+										onClick={closeAndSignOut}>
+										Sign Out
+									</Link>
+								</li>
+							) : null}
+						</ul>
+					) : null}
 				</div>
 			</nav>
 		</>
