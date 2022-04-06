@@ -23,3 +23,11 @@ Michael has been watching a TV show that includes characters who exclusively use
 * Redux
 * React webcam
 * Heroku
+
+## Website
+https://be-my-voice.herokuapp.com/
+
+## Team Members
+* Amber Lin: https://github.com/amberlinyq | https://www.linkedin.com/in/amberlin97/
+* Anh 'Kaia' Duong: https://github.com/AnaniaDuo | https://www.linkedin.com/in/anh-kaia-duong/
+* Kelsey Roy: https://github.com/kroy94 | https://www.linkedin.com/in/kelseytroy/
