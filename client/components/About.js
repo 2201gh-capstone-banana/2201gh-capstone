@@ -37,7 +37,7 @@ const About = () => {
 					newly acquired ASL skills in a fun and interactive setting.
 				</AboutRow>
 				<AboutRow
-					img="https://placehold.jp/350x350.png">
+					img="tech.jpg">
 					Be My Voice was built with Node.js, Express, and Sequelize on the server. For the front-end
 					client side, we used React, Redux, and JavaScript. The Tensorflow.js Hand Pose
 					Detection model was used to assess and translate ASL signs in real-time and
