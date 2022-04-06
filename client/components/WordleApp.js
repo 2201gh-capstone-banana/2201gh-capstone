@@ -10,7 +10,7 @@ import Sidebar from './Sidebar'
 import CheatSheetWordle from './CheatSheetWordle'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-
+import { data } from './Wordle/wordleUtilities/data'
 import GameOver from './GameOver'
 
 export const WordleAppContext = createContext()
@@ -28,9 +28,6 @@ function WordleApp() {
 	const [modalOpen, setModalOpen] = useState(false)
 
 	const dispatch = useDispatch()
-	const isValidGuess = useSelector(state => state.isValidGuess)
-
-	const alert = useSelector(state => state.wordle.alert)
 
 	useEffect(() => {
 		dispatch(fetchAcceptedGuesses())
@@ -66,17 +63,13 @@ function WordleApp() {
 
 	function handleSubmit() {
 		let newGuess = board[currentRow].join('').toLowerCase()
-		setGuess(newGuess)
-		dispatch(addAcceptedGuess(newGuess))
+		if (data.includes(newGuess)) {
+			setGuess(newGuess)
+			dispatch(addAcceptedGuess(newGuess))
+		} else {
+			setMessage("This is not a valid word!");
+		}
 	}
-
-	useEffect(() => {
-		setMessage(alert)
-	}, [alert])
-
-	useEffect(() => {
-		setValidGuess(null)
-	}, [currentRow])
 
 	const [cheatsheetOpen, setCheatsheetOpen] = useState(false)
 	const [currentLetter, setCurrentLetter] = useState(null)

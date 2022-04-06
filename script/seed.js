@@ -134,20 +134,8 @@ async function seed() {
 			textUrl: letterTextUrl[i]
 		})
 	}
-	// const allowedWords = data.allowedWords
+
 	const targetWords = data.targetWords
-
-	// for (let i = 0; i < allowedWords.length; i++) {
-	// 	await AcceptedWord.create({
-	// 		content: allowedWords[i]
-	// 	})
-	// }
-
-	// for (let i = 0; i < targetWords.length; i++) {
-	// 	await AcceptedWord.create({
-	// 		content: targetWords[i]
-	// 	})
-	// }
 
 	for (let i = 0; i < targetWords.length; i++) {
 		await TargetWord.create({

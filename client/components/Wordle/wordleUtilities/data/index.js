@@ -1,5 +1,4 @@
 export const data = [
-  'lllll',
   'aback',
   'abase',
   'abate',
