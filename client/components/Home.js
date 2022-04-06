@@ -53,7 +53,7 @@ function Home() {
 						Learning Center
 					</button>
 					<button className="btn btn-primary" onClick={redirectToGame}>
-						Wordle Game
+						Game Center
 					</button>
 				</div>
 			</section>
