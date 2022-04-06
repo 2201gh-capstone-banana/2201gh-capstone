@@ -3,10 +3,10 @@
 ## Intro & Goal
 The problem: Approximately 250,000-500,000 Americans (and some Canadians) use American Sign Language, yet we at Be My Voice believe that number should be higher. Our goal is to make American Sign Language accessible to those who have not yet been exposed to this language and to use these translations to increase knowledge and understanding of ASL. 
 
-Be My Voice is a translation web app that uses machine learning models to translate American sign language.
+Be My Voice is an instructional web app designed to teach its users the basics of American Sign Language, or ASL.  It includes a Lesson Center for those who want to learn ASL, and a Game Center for those interested in practicing their newly acquired ASL skills in a fun and interactive setting.
 
 ## Who is it for?
-The web app is for people who want to translate basic ASL phrases or are interested in learning more about ASL.
+The web app is for those who want to learn ASL and are interested in practicing their newly acquired ASL skills in a fun and interactive setting
 
 ## User Story:
 
