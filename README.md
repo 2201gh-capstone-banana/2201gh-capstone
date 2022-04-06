@@ -6,7 +6,7 @@ The problem: Approximately 250,000-500,000 Americans (and some Canadians) use Am
 Be My Voice is an instructional web app designed to teach its users the basics of American Sign Language, or ASL.  It includes a Lesson Center for those who want to learn ASL, and a Game Center for those interested in practicing their newly acquired ASL skills in a fun and interactive setting.
 
 ## Who is it for?
-The web app is for those who want to learn ASL and are interested in practicing their newly acquired ASL skills in a fun and interactive setting
+The web app is for those who want to learn ASL and are interested in practicing their newly acquired ASL skills in a fun and interactive setting.
 
 ## User Story:
 
