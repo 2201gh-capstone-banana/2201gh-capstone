@@ -12971,5 +12971,3 @@ export const data = [
   'zymes',
   'zymic'
 ];
-
-// export default data;
