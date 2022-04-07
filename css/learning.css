@@ -1,27 +1,55 @@
-/* .learning-app{
-    background-color: white;
+.learning-main{
     height: 100vh;
-    width: 100vw;
-} */
+    background-color: white;
+    width:100vw;
+}
 
-/* .learning-webcam{
-position: absolute;
-margin-left: auto;
-margin-right: auto;
-margin-top: 8%;
-left: 0;
-right: 0;
-text-align: center;
-/* z-index: 9; */
-/* width: 900;
-height: 600; */
-/* marginLeft: 'auto',
-marginRight: 'auto',
-marginTop: '8%',
+.learning-container{
+    display: flex;
+    justify-content: center;
+}
 
-left: 0,
-right: 0,
-textAlign: 'center',
-zindex: 9,
-width: 900,
-height: 600 */
+.webcam-container{
+    display: flex;
+    justify-content: center;
+}
+
+.learning-webcam{
+    position: absolute;
+    height: 65vh;
+    width:55vw;
+    z-index: 0;
+}
+
+.learning-canvas{
+    position: absolute;
+    height: 65vh;
+    width:55vw;
+    z-index: 0;
+}
+
+.learning-translation{
+    font-size: 2rem;
+}
+
+.learning-detection{
+    height: 55px;
+    display: flex;
+    justify-content: center;
+}
+
+.learning-image{
+    display: flex;
+    justify-content: center;
+}
+
+.learning-img-gesture{
+    position: relative;
+    margin-top: 20px;
+    height: 100px;
+}
+
+.learning-checkmark{
+    width: 100px;
+}
+
