@@ -123,131 +123,61 @@ function Learning() {
 		}
 	}
 
-	// image && image[currentLetter]
-	// 	? console.log('new image is', image[currentLetter][0])
-	// 	: console.log('nothing')
 	return (
-		<div className="learning-app">
-				<div className="container">
-					<button
-						id="btn-cheatsheet"
-						className="header__link"
-						onClick={() => {
-							setCheatsheetOpen(!cheatsheetOpen)
-						}}>
-						Cheat Sheet
-					</button>
-					{!currentLetter && <Loading />}
-					{cheatsheetOpen ? (
-						<CheatSheet
-							cheatsheetOpen={[cheatsheetOpen, setCheatsheetOpen]}
-							currentLetter={[currentLetter, setCurrentLetter]}
-						/>
-					) : null}
-				</div>
-				{congratsModalOpen && (
-					<CongratsModal
-						congratsModalOpen={[congratsModalOpen, setCongratsModalOpen]}
+		<div className="learning-main">
+			<div className="learning-container">
+				<button
+					id="btn-cheatsheet"
+					className="header__link abs"
+					onClick={() => {
+						setCheatsheetOpen(!cheatsheetOpen)
+					}}>
+					Cheat Sheet
+				</button>
+				{!currentLetter && <Loading />}
+				{cheatsheetOpen ? (
+					<CheatSheet
+						cheatsheetOpen={[cheatsheetOpen, setCheatsheetOpen]}
+						currentLetter={[currentLetter, setCurrentLetter]}
 					/>
-				)}
-
-				<Webcam
-					ref={webcamRef}
-					className=" bg-yellow-300 border-4 border-gray-600"
-					style={{
-						position: 'absolute',
-						marginLeft: 'auto',
-						marginRight: 'auto',
-						marginTop: '8%',
-
-						left: 0,
-						right: 0,
-						textAlign: 'center',
-						zindex: 9,
-						width: 900,
-						height: 600
-					}}
+				) : null}
+			</div>
+			<div className="learning-detection">
+				{translation ? (
+					<div className="learning-translation">Detecting {translation}</div>
+				) : null}
+			</div>
+			{congratsModalOpen && (
+				<CongratsModal
+					congratsModalOpen={[congratsModalOpen, setCongratsModalOpen]}
 				/>
-				<canvas
-					ref={canvasRef}
-					style={{
-						position: 'absolute',
-						marginLeft: 'auto',
-						marginRight: 'auto',
-						marginTop: '8%',
+			)}
 
-						left: 0,
-						right: 0,
-						textAlign: 'center',
-						zindex: 9,
-						width: 900,
-						height: 600
-					}}
-				/>
+			<div className="learning-container">
+				<Webcam ref={webcamRef} className="learning-webcam" />
+				<canvas ref={canvasRef} className="learning-canvas" />
 
 				{image && image[currentLetter] ? (
-					<div>
-						<img
-							src={image[currentLetter][0]}
-							style={{
-								position: 'relative',
-								marginLeft: 'auto',
-								marginRight: 'auto',
-								left: 30,
-								bottom: '-20vh',
-								right: 100,
-								textAlign: 'center',
-								height: 100
-							}}
-						/>
+					<div className="learning-image">
 						<img
 							src={image[currentLetter][1]}
-							style={{
-								position: 'relative',
-								marginLeft: 'auto',
-								marginRight: 'auto',
-								left: -100,
-								bottom: '-10vh',
-								right: 100,
-								textAlign: 'center',
-								height: 100
-							}}
+							className="learning-img-gesture"
 						/>
+						<img
+							src={image[currentLetter][0]}
+							className="learning-img-gesture"
+						/>
+						<div className="learning-checkmark">
+							{translation && translation === currentLetter ? (
+								<img
+									src="checkmark.gif"
+									className="learning-img-gesture"
+								/>
+							) : null}
+						</div>
 					</div>
 				) : null}
-
-				{translation && translation === currentLetter ? (
-					<img
-						src="checkmark.gif"
-						style={{
-							position: 'relative',
-							marginLeft: 'auto',
-							marginRight: 'auto',
-							left: 110,
-							right: 0,
-							textAlign: 'center',
-							height: 100
-						}}
-					/>
-				) : null}
-			{/* </header> */}
-			{translation ? (
-				<div
-					style={{
-						fontSize: 30,
-						position: 'absolute',
-						marginLeft: 'auto',
-						marginRight: 'auto',
-						left: 0,
-						right: 0,
-						top: '90vh',
-						textAlign: 'center',
-						height: '10%',
-						width: '40%'
-					}}>
-					Detecting {translation}
-				</div>
-			) : null}
+			</div>
 		</div>
 	)
 }
