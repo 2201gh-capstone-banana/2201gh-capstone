@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import YouTube from 'react-youtube'
+import ReactPlayer from "react-player";
 
 import Brand from './Brand'
 
@@ -22,28 +23,39 @@ function Home() {
 	}
 
 	const opts = {
-		height: '350',
-		width: '600',
+		// height: '350',
+		// width: '600',
 		playerVars: {
 			autoplay: 1
 		}
 	}
-	const videoId = 'tkMg8g8vVUo'
-	// const videoId = 'KMUV4vjJqLM'
+	// const videoId = 'tkMg8g8vVUo'
+	const videoId = 'KMUV4vjJqLM'
 
 	return (
-		<header className="header">
+		<div className="home">
 			<Brand />
 
-			<div className="youtube">
-				<YouTube
+			{/* <div className="youtube"> */}
+			{/* <YouTube
 					videoId={videoId}
 					opts={opts}
 					onReady={videoOnReady}
 					onPlay={videoOnPlay}
 					onStateChange={videoStateChange}
-				/>
-			</div>
+				/> */}
+			{/* <video loop autoPlay>
+					<source
+						src="Capstone_BeMyVoice_4Minutes.mp4"
+						type="video/mp4"
+					/>
+				</video> */}
+			<ReactPlayer
+				loop
+				autoplay
+				url="https://youtu.be/KMUV4vjJqLM"
+			/>
+			{/* </div> */}
 
 			<p className="header__about-main">
 				Be My Voice is a translation web app that uses machine learning models to
@@ -61,7 +73,7 @@ function Home() {
 					Game Center
 				</button>
 			</div>
-		</header>
+		</div>
 	)
 }
 
