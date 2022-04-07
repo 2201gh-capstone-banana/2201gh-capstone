@@ -134,6 +134,7 @@ function Learning() {
 					}}>
 					Cheat Sheet
 				</button>
+				{!currentLetter && <Loading />}
 				{cheatsheetOpen ? (
 					<CheatSheet
 						cheatsheetOpen={[cheatsheetOpen, setCheatsheetOpen]}
