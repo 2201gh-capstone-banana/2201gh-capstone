@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import YouTube from 'react-youtube'
-import ReactPlayer from "react-player";
+import ReactPlayer from 'react-player'
 
 import Brand from './Brand'
 
@@ -50,11 +50,22 @@ function Home() {
 						type="video/mp4"
 					/>
 				</video> */}
-			<ReactPlayer
+			{/* <ReactPlayer
 				loop
 				autoplay
 				url="https://youtu.be/KMUV4vjJqLM"
-			/>
+			/> */}
+			<div className="iframe-container">
+				<iframe
+					width="560"
+					height="315"
+					src="https://www.youtube.com/embed/KMUV4vjJqLM"
+					title="YouTube video player"
+					frameborder="0"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+					allowfullscreen></iframe>
+			</div>
+
 			{/* </div> */}
 
 			<p className="header__about-main">

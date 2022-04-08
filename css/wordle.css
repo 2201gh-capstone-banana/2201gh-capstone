@@ -1,8 +1,7 @@
-
 .wordle-app {
 	width: 100vw;
 
-height: 100vh;
+	height: calc(100vh - 50px);
 	font-family: Helvetica, Arial, sans-serif;
 }
 

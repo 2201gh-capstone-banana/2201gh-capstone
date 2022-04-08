@@ -1,55 +1,54 @@
-.learning-main{
-    height: 100vh;
-    background-color: white;
-    width:100vw;
+.learning-main {
+	height: calc(100vh - 50px);
+	background-color: white;
+	width: 100vw;
 }
 
-.learning-container{
-    display: flex;
-    justify-content: center;
+.learning-container {
+	display: flex;
+	justify-content: center;
 }
 
-.webcam-container{
-    display: flex;
-    justify-content: center;
+.webcam-container {
+	display: flex;
+	justify-content: center;
 }
 
-.learning-webcam{
-    position: absolute;
-    height: 65vh;
-    width:55vw;
-    z-index: 0;
+.learning-webcam {
+	position: absolute;
+	height: 65vh;
+	width: 55vw;
+	z-index: 0;
 }
 
-.learning-canvas{
-    position: absolute;
-    height: 65vh;
-    width:55vw;
-    z-index: 0;
+.learning-canvas {
+	position: absolute;
+	height: 65vh;
+	width: 55vw;
+	z-index: 0;
 }
 
-.learning-translation{
-    font-size: 2rem;
+.learning-translation {
+	font-size: 2rem;
 }
 
-.learning-detection{
-    height: 55px;
-    display: flex;
-    justify-content: center;
+.learning-detection {
+	height: 55px;
+	display: flex;
+	justify-content: center;
 }
 
-.learning-image{
-    display: flex;
-    justify-content: center;
+.learning-image {
+	display: flex;
+	justify-content: center;
 }
 
-.learning-img-gesture{
-    position: relative;
-    margin-top: 20px;
-    height: 100px;
+.learning-img-gesture {
+	position: relative;
+	margin-top: 20px;
+	height: 100px;
 }
 
-.learning-checkmark{
-    width: 100px;
+.learning-checkmark {
+	width: 100px;
 }
-
