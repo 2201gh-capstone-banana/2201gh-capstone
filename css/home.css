@@ -1,7 +1,7 @@
 /* Header styles. */
 
 .home {
-	height: 100vh;
+	height: calc(100vh - 50px);
 	/* margin-top: -50px; */
 	width: 100%;
 	display: flex;
@@ -98,3 +98,34 @@
 
 
 } */
+
+/* .iframe-container {
+	position: relative;
+	width: 100%;
+	padding-top: 40.25%;
+	height: 0;
+	left: 25%;
+	
+}
+.iframe-container iframe {
+	position: absolute;
+	align-content: center;
+	top: 0;
+	left: 0;
+	width: 50%;
+	height: 50%;
+} */
+.iframe-container {
+	position: relative;
+	width: 100%;
+	padding-bottom: 20.25%;
+	height: 0;
+}
+.iframe-container iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 50%;
+	height: 100%;
+	margin-left: 25%;
+}
