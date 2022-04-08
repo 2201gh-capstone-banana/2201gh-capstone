@@ -78,6 +78,7 @@
 	padding: 2rem;
 	width: 100%;
 	display: table;
+	font-family: var(--fnt-fmly);
 }
 
 .nav-links:hover {
