@@ -46,7 +46,8 @@
     "react-spring": "^9.0.0-rc.3",
     "react-webcam": "^7.0.0",
     "react-youtube": "^7.14.0",
-    "sequelize": "^6.3.5",
+    "sequelize": "^6.25.8",
+    "sequelize-cli": "^6.5.2",
     "styled-components": "^5.3.5"
   },
   "devDependencies": {
