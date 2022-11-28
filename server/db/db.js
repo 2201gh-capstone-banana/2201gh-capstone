@@ -21,7 +21,9 @@ if(process.env.DATABASE_URL){
   };
 }
 
-const db = new Sequelize(`postgres://be_my_voice_user:vKovX0SZWbFe2hETl4erZNPuehFH7Dt9@dpg-ce2ft96n6mpu84q36s4g-a.oregon-postgres.render.com/be_my_voice`);
+const db = new Sequelize(process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`, config)
+  
+  // `postgres://be_my_voice_user:vKovX0SZWbFe2hETl4erZNPuehFH7Dt9@dpg-ce2ft96n6mpu84q36s4g-a.oregon-postgres.render.com/be_my_voice`);
 //   {
 //   // process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`, config)
 //   database: "be_my_voice",
@@ -37,4 +39,4 @@ const db = new Sequelize(`postgres://be_my_voice_user:vKovX0SZWbFe2hETl4erZNPueh
 //     }
 //   },
 // });
-module.exports = {db}
+module.exports = db;
