@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const pkg = require('../../package.json')
+const DATABASE_URL = `postgres://be_my_voice_user:vKovX0SZWbFe2hETl4erZNPuehFH7Dt9@dpg-ce2ft96n6mpu84q36s4g-a.oregon-postgres.render.com/be_my_voice`
 
 const databaseName = pkg.name + (process.env.NODE_ENV === 'test' ? '-test' : '')
 
