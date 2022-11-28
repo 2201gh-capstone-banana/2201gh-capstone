@@ -21,19 +21,20 @@ if(process.env.DATABASE_URL){
   };
 }
 
-const db = new Sequelize({
-  // process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`, config)
-  database: "be_my_voice",
-  username: "be_my_voice_user",
-  password: "vKovX0SZWbFe2hETl4erZNPuehFH7Dt9",
-  host: "postgres://be_my_voice_user:vKovX0SZWbFe2hETl4erZNPuehFH7Dt9@dpg-ce2ft96n6mpu84q36s4g-a/be_my_voice",
-  port: 5432,
-  dialect: "postgres",
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false // <<<<<<< YOU NEED THIS
-    }
-  },
-});
+const db = new Sequelize(`postgres://be_my_voice_user:vKovX0SZWbFe2hETl4erZNPuehFH7Dt9@dpg-ce2ft96n6mpu84q36s4g-a.oregon-postgres.render.com/be_my_voice`);
+//   {
+//   // process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`, config)
+//   database: "be_my_voice",
+//   username: "be_my_voice_user",
+//   password: "vKovX0SZWbFe2hETl4erZNPuehFH7Dt9",
+//   host: "postgres://be_my_voice_user:vKovX0SZWbFe2hETl4erZNPuehFH7Dt9@dpg-ce2ft96n6mpu84q36s4g-a/be_my_voice",
+//   port: 5432,
+//   dialect: "postgres",
+//   dialectOptions: {
+//     ssl: {
+//       require: true,
+//       rejectUnauthorized: false // <<<<<<< YOU NEED THIS
+//     }
+//   },
+// });
 module.exports = {db}
