@@ -20,5 +20,10 @@ module.exports = {
 				use: [{ loader: 'style-loader' }, { loader: 'css-loader' }]
 			}
 		]
+	},
+	performance: {
+		hints: false,
+		maxEntrypointSize: 512000,
+		maxAssetSize: 512000
 	}
 }
